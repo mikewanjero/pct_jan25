@@ -12,7 +12,7 @@ const PersonalInfo = () => {
   return (
     <Container className="multi-step-form d-inline-flex">
       <Card className="form-card">
-        <Row>
+        <Row style={{ padding: "14px" }}>
           <Col md={4}>
             <Sidebar />
           </Col>
