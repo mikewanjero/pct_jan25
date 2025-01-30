@@ -1,32 +1,39 @@
-/* eslint-disable no-unused-vars */
-import React from "react";
-import { useLocation } from "react-router-dom";
-import "../styles/custom.scss";
+/* eslint-disable react/prop-types */
+import { Container, ListGroup, ProgressBar } from "react-bootstrap";
+import { FaUser, FaGraduationCap, FaBriefcase, FaCamera } from "react-icons/fa";
 
-const Sidebar = () => {
-  const location = useLocation();
+const Sidebar = ({ step }) => {
   const steps = [
-    "Personal Information",
-    "Education",
-    "Work Experience",
-    "User Photo",
+    { id: 1, name: "Personal Information", icon: <FaUser /> },
+    { id: 2, name: "Education", icon: <FaGraduationCap /> },
+    { id: 3, name: "Work Experience", icon: <FaBriefcase /> },
+    { id: 4, name: "User Photo", icon: <FaCamera /> },
   ];
-  const stepIndex = steps.findIndex((step) =>
-    location.pathname.includes(step.toLowerCase().replace(" ", "-"))
-  );
 
   return (
-    <div className="sidebar">
-      <h3>indeed</h3>
-      <h4>Step {stepIndex + 1}</h4>
-      <ul className="progress-list">
-        {steps.map((step, index) => (
-          <li key={index} className={index <= stepIndex ? "active" : ""}>
-            {step}
-          </li>
+    <Container className="bg-dark text-white p-4 h-100 d-flex flex-column justify-content-between">
+      <div>
+        <h3 className="text-uppercase fw-bold">Indeed</h3>
+        <h4>Step {step}</h4>
+        <p>Complete your profile to get closer to companies.</p>
+      </div>
+
+      <ListGroup variant="flush">
+        {steps.map((s) => (
+          <ListGroup.Item
+            key={s.id}
+            className={`d-flex align-items-center ${
+              s.id === step ? "fw-bold text-primary" : "text-muted"
+            }`}
+            style={{ background: "transparent", border: "none" }}
+          >
+            {s.icon} <span className="ms-2">{s.name}</span>
+          </ListGroup.Item>
         ))}
-      </ul>
-    </div>
+      </ListGroup>
+
+      <ProgressBar now={(step / steps.length) * 100} variant="primary" />
+    </Container>
   );
 };
 
