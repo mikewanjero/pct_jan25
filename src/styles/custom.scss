@@ -1,5 +1,94 @@
 @import "bootstrap/scss/bootstrap";
 
+//Container display
+.container {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #f8f9fa;
+}
+
+//Card display
+.card {
+  width: 90%;
+  height: 90%;
+  display: flex;
+  flex-direction: row;
+  background: white;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+//Left side panel
+.left-side {
+  width: 30%;
+  background: #2c3e50;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+//Right side panel
+.right-side {
+  flex: 1;
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+//More form elements
+.input-text {
+  display: flex;
+  justify-content: space-between;
+  gap: 15px;
+
+  .input-div {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+  }
+
+  input,
+  select {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+  }
+
+  span {
+    position: absolute;
+    top: 12px;
+    left: 10px;
+    font-size: 14px;
+    color: #666;
+  }
+}
+
+//Button display
+.buttons {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 20px;
+}
+
+.next-button {
+  background: #007bff;
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 5px;
+  font-size: 6px;
+  cursor: pointer;
+}
+
 //Sidebar display
 .sidebar {
   background: #1d3557;
