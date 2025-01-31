@@ -1,9 +1,53 @@
 import { useNavigate } from "react-router-dom";
 import { Button, Form } from "react-bootstrap";
 import Sidebar from "./Sidebar";
+import TermsSection from "./Subscription/TermsSection";
+import PackageInfo from "./Subscription/PackageInfo";
+import { useState, useEffect } from "react";
+import axios from "axios";
 
 const ActActivation = () => {
   const navigate = useNavigate();
+  const [companyDetails, setCompanyDetails] = useState({
+    companyName: "",
+    companyID: "",
+  });
+  const [packageInfo, setPackageInfo] = useState({
+    name: "",
+    branches: "",
+    users: "",
+  });
+  const [termsChecked, setTermsChecked] = useState(false);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(
+          `http://102.37.102.247:5028/api/NewClients/GetClientsDetails?cuscode=K68W3X`,
+          {
+            headers: {
+              accesskey:
+                "R0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9",
+            },
+          }
+        );
+        const {
+          psCompanyName: companyName,
+          psCusCode: companyID,
+          packageName: name,
+          psBranchCount: branches,
+          psUserCount: users,
+        } = response.data;
+
+        setCompanyDetails({ companyName, companyID });
+        setPackageInfo({ name, branches, users });
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   return (
     <div className="container">
@@ -17,17 +61,11 @@ const ActActivation = () => {
           </div>
 
           <Form>
-            <div className="input-row">
-              {" "}
-              {/* Added input-row div */}
+            <div className="input-column">
               <Form.Group controlId="email" className="flex-grow-1">
-                {" "}
-                {/* Added flex-grow-1 */}
                 <Form.Control type="email" placeholder="Email" required />
               </Form.Group>
               <Form.Group controlId="businessEmail" className="flex-grow-1">
-                {" "}
-                {/* Added flex-grow-1 */}
                 <Form.Control
                   type="email"
                   placeholder="Business Email (optional)"
@@ -35,17 +73,11 @@ const ActActivation = () => {
               </Form.Group>
             </div>
 
-            <div className="input-row">
-              {" "}
-              {/* Added input-row div */}
+            <div className="input-column">
               <Form.Group controlId="username" className="flex-grow-1">
-                {" "}
-                {/* Added flex-grow-1 */}
                 <Form.Control type="text" placeholder="Username" required />
               </Form.Group>
               <Form.Group controlId="phone" className="flex-grow-1">
-                {" "}
-                {/* Added flex-grow-1 */}
                 <Form.Control type="tel" placeholder="Phone" required />
               </Form.Group>
             </div>
@@ -53,6 +85,16 @@ const ActActivation = () => {
             <Form.Group controlId="password">
               <Form.Control type="password" placeholder="Password" required />
             </Form.Group>
+
+            <PackageInfo
+              companyName={companyDetails.companyName}
+              packageInfo={packageInfo}
+            />
+
+            <TermsSection
+              termsChecked={termsChecked}
+              onChange={(e) => setTermsChecked(e.target.checked)}
+            />
 
             <div className="d-flex justify-content-between mt-3">
               <Button
@@ -63,20 +105,10 @@ const ActActivation = () => {
                 Previous
               </Button>
 
-              <Button className="next-btn">Activate My Account</Button>
+              <Button className="next-btn" disabled={!termsChecked}>
+                Activate My Account
+              </Button>
             </div>
-
-            <Form.Group controlId="terms" className="mt-3">
-              <Form.Check
-                type="checkbox"
-                label={
-                  <span>
-                    I agree to the <a href="#">Terms & Conditions</a> and{" "}
-                    <a href="#">Privacy Policy</a>
-                  </span>
-                }
-              />
-            </Form.Group>
           </Form>
         </div>
       </div>
