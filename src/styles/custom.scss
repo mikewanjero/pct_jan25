@@ -10,6 +10,21 @@ body {
   justify-content: center;
   align-items: center;
   min-height: 100vh;
+  min-width: 100vw;
+}
+
+.form-container {
+  display: flex;
+  background: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  width: 800px;
+  overflow: hidden;
+}
+
+.form-content {
+  flex-grow: 1;
+  padding: 40px;
 }
 
 .form-wrapper {
@@ -48,6 +63,23 @@ body {
   flex: 1;
 }
 
+.sidebar h3 {
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.step {
+  font-size: 16px;
+  margin-bottom: 15px;
+  opacity: 0.6;
+}
+
+.step.active {
+  font-weight: bold;
+  opacity: 1;
+}
+
 .upload-box {
   border: 2px dashed #007bff;
   background: #f8f9fa;
@@ -62,7 +94,7 @@ body {
 }
 
 .next-btn {
-  background-color: #007bff;
+  background-color: #11ff00;
   border: none;
   padding: 10px 20px;
   width: 150px;
@@ -74,5 +106,21 @@ body {
 }
 
 .next-btn:hover {
-  background-color: #0056b3;
+  background-color: #00b31b;
+}
+
+.previous-btn {
+  background-color: #ff3700;
+  border: none;
+  padding: 10px 20px;
+  width: 150px;
+  font-size: 16px;
+  font-weight: bold;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.previous-btn:hover {
+  background-color: #b31500;
 }
