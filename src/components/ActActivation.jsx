@@ -1,65 +1,51 @@
 import { useNavigate } from "react-router-dom";
 import { Button, Form } from "react-bootstrap";
-import Sidebar from "../components/Sidebar";
 
 const ActActivation = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="d-flex">
-      <Sidebar currentStep={3} />
-      <div className="form-container">
-        <h2>Complete the Account Activation Process</h2>
+    <div className="container">
+      <div className="form-wrapper">
+        <div className="form-header">
+          <h2>Complete the Account Activation</h2>
+          <p>Fill in the details to activate your account.</p>
+        </div>
+
         <Form>
           <Form.Group controlId="email">
-            <Form.Label>Email</Form.Label>
-            <Form.Control
-              type="email"
-              placeholder="Enter your email"
-              required
-            />
+            <Form.Control type="email" placeholder="Email" required />
           </Form.Group>
+
           <Form.Group controlId="username">
-            <Form.Label>Username</Form.Label>
-            <Form.Control
-              type="text"
-              placeholder="Choose a username"
-              required
-            />
+            <Form.Control type="text" placeholder="Username" required />
           </Form.Group>
+
           <Form.Group controlId="phone">
-            <Form.Label>Phone</Form.Label>
-            <Form.Control
-              type="tel"
-              placeholder="Enter your phone number"
-              required
-            />
+            <Form.Control type="tel" placeholder="Phone" required />
           </Form.Group>
+
           <Form.Group controlId="password">
-            <Form.Label>Password</Form.Label>
-            <Form.Control
-              type="password"
-              placeholder="Create a password"
-              required
-            />
+            <Form.Control type="password" placeholder="Password" required />
           </Form.Group>
-          <Form.Group controlId="terms">
+
+          <Form.Group controlId="terms" className="mt-3">
             <Form.Check
               type="checkbox"
-              label="I agree to the Terms & Conditions"
-              required
+              label="I agree to the Terms and Privacy Policy"
             />
           </Form.Group>
-          <Button
-            variant="secondary"
-            className="mt-3 me-2"
-            onClick={() => navigate("/step2")}
-          >
-            Previous
-          </Button>
-          <Button variant="success" className="mt-3">
-            Activate My Account
-          </Button>
+
+          <div className="d-flex justify-content-between mt-3">
+            <Button
+              variant="secondary"
+              onClick={() => navigate("/master-doc-upload")}
+            >
+              Previous
+            </Button>
+
+            <Button className="next-btn">Activate My Account</Button>
+          </div>
         </Form>
       </div>
     </div>
