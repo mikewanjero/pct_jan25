@@ -10,8 +10,8 @@ function App() {
       <div className="container">
         <Routes>
           <Route path="/" element={<TrainingSheet />} />
-          <Route path="/step2" element={<MasterDoc />} />
-          <Route path="/step3" element={<ActActivation />} />
+          <Route path="/master-doc-upload" element={<MasterDoc />} />
+          <Route path="/acct-activation" element={<ActActivation />} />
         </Routes>
       </div>
     </Router>
