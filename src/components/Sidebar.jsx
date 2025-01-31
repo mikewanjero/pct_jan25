@@ -13,7 +13,7 @@ const Sidebar = ({ step }) => {
   return (
     <Container className="bg-dark text-white p-4 h-100 d-flex flex-column justify-content-between">
       <div>
-        <h3 className="text-uppercase fw-bold">Indeed</h3>
+        <h3 className="fw-bold">CoreBase Solutions Limited™</h3>
         <h4>Step {step}</h4>
         <p>Complete your profile to get closer to companies.</p>
       </div>
