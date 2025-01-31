@@ -17,27 +17,41 @@ const ActActivation = () => {
           </div>
 
           <Form>
-            <Form.Group controlId="email">
-              <Form.Control type="email" placeholder="Email" required />
-            </Form.Group>
+            <div className="input-row">
+              {" "}
+              {/* Added input-row div */}
+              <Form.Group controlId="email" className="flex-grow-1">
+                {" "}
+                {/* Added flex-grow-1 */}
+                <Form.Control type="email" placeholder="Email" required />
+              </Form.Group>
+              <Form.Group controlId="businessEmail" className="flex-grow-1">
+                {" "}
+                {/* Added flex-grow-1 */}
+                <Form.Control
+                  type="email"
+                  placeholder="Business Email (optional)"
+                />
+              </Form.Group>
+            </div>
 
-            <Form.Group controlId="username">
-              <Form.Control type="text" placeholder="Username" required />
-            </Form.Group>
-
-            <Form.Group controlId="phone">
-              <Form.Control type="tel" placeholder="Phone" required />
-            </Form.Group>
+            <div className="input-row">
+              {" "}
+              {/* Added input-row div */}
+              <Form.Group controlId="username" className="flex-grow-1">
+                {" "}
+                {/* Added flex-grow-1 */}
+                <Form.Control type="text" placeholder="Username" required />
+              </Form.Group>
+              <Form.Group controlId="phone" className="flex-grow-1">
+                {" "}
+                {/* Added flex-grow-1 */}
+                <Form.Control type="tel" placeholder="Phone" required />
+              </Form.Group>
+            </div>
 
             <Form.Group controlId="password">
               <Form.Control type="password" placeholder="Password" required />
-            </Form.Group>
-
-            <Form.Group controlId="terms" className="mt-3">
-              <Form.Check
-                type="checkbox"
-                label="I agree to the Terms and Privacy Policy"
-              />
             </Form.Group>
 
             <div className="d-flex justify-content-between mt-3">
@@ -51,6 +65,18 @@ const ActActivation = () => {
 
               <Button className="next-btn">Activate My Account</Button>
             </div>
+
+            <Form.Group controlId="terms" className="mt-3">
+              <Form.Check
+                type="checkbox"
+                label={
+                  <span>
+                    I agree to the <a href="#">Terms & Conditions</a> and{" "}
+                    <a href="#">Privacy Policy</a>
+                  </span>
+                }
+              />
+            </Form.Group>
           </Form>
         </div>
       </div>
