@@ -1,4 +1,4 @@
-@use "bootstrap/scss/bootstrap";
+@use "bootstrap";
 
 $font-family-sans-serif: "Poppins", sans-serif;
 
@@ -106,13 +106,19 @@ body {
   }
 }
 
+.form-elements {
+  display: flex;
+  flex-direction: column;
+  height: 50%;
+}
+
 .form-inputs {
+  display: flex;
   flex: 1;
+  flex-direction: column;
+  justify-content: space-between;
   padding-right: 20px;
   border-right: 1px solid $cadet-gray-light;
-  display: flex; // Enable flexbox for the column
-  flex-direction: column; // Arrange items vertically
-  gap: 16px; // Add gap between form groups
 
   @media (max-width: 768px) {
     padding-right: 0;
@@ -121,16 +127,28 @@ body {
     padding-bottom: 20px;
   }
 
-  .form-group {
-    // Target form-groups within form-inputs
-    margin-bottom: 0; // Remove default margin from form-groups
-    flex-grow: 1; // Allow form-groups to expand and fill available space
+  .input-column {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
 
-    .form-control {
-      // Target form-controls within form-groups
-      height: 100%; // Make the inputs stretch to fill the height of their parent
+    .form-group {
+      // Target form-groups within form-inputs
+      display: flex;
+      flex: 1;
+      flex-direction: column;
+      justify-content: space-evenly;
+
+      .form-control {
+        // Target form-controls within form-groups
+        flex-grow: 1; // Allow form-groups to expand and fill available space
+      }
     }
   }
+}
+
+.d-flex.justify-content-start.mt-3 {
+  margin-top: auto; // Pushes button to the bottom
 }
 
 // Mobile Responsive Design
@@ -171,7 +189,8 @@ body {
 .form-sections {
   display: flex;
   gap: 16px; // Adjust gap as needed
-  height: 100%; // Ensure sections take full height of form-content
+  height: auto;
+  align-items: stretch;
 
   @media (max-width: 768px) {
     // Responsive adjustment
@@ -192,6 +211,8 @@ body {
 .sidebar {
   background: linear-gradient(180deg, $caramel, $caramel-light);
   padding: 15px;
+  display: flex;
+  flex-direction: column;
   justify-content: center;
 }
 
