@@ -4,10 +4,10 @@ export default function PackageInfo({ companyName, packageInfo }) {
   return (
     <>
       <div className="w-100 border p-3 rounded shadow bg-light mb-2">
-        <h2 className="text-primary fw-semibold text-center">{companyName}</h2>
+        <h2 className="fw-semibold text-center">{companyName}</h2>
         <h2
           className="text-caramel fw-semibold text-center"
-          style={{ fontSize: "1.5rem", color: "$caramel" }}
+          style={{ fontSize: "1.5rem", color: "#c58c4f" }}
         >
           {packageInfo.name}
         </h2>
