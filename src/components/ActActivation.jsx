@@ -1,4 +1,3 @@
-// src/components/ActActivation.jsx
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button, Form } from "react-bootstrap";
@@ -6,7 +5,6 @@ import phamacoreLogo from "../assets/images/phamacore.png";
 import Sidebar from "./Sidebar";
 import TermsSection from "./Subscription/TermsSection";
 import PackageInfo from "./Subscription/PackageInfo";
-
 import axios from "axios";
 
 const ActActivation = () => {
