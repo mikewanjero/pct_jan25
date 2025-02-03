@@ -1,9 +1,12 @@
+// src/components/ActActivation.jsx
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button, Form } from "react-bootstrap";
+import phamacoreLogo from "../assets/images/phamacore.png";
 import Sidebar from "./Sidebar";
 import TermsSection from "./Subscription/TermsSection";
 import PackageInfo from "./Subscription/PackageInfo";
-import { useState, useEffect } from "react";
+
 import axios from "axios";
 
 const ActActivation = () => {
@@ -55,61 +58,82 @@ const ActActivation = () => {
         <Sidebar currentStep={2} />
 
         <div className="form-content">
+          {/* Header */}
+          <div className="d-flex flex-column align-items-center mb-4">
+            <img src={phamacoreLogo} alt="logo" className="w-40 h-40" />
+            <h1 className="text-caramel display-5 fw-bold">
+              phAMACore<sup>™</sup>Cloud
+            </h1>
+          </div>
           <div className="form-header">
             <h2>Complete the Account Activation</h2>
             <p>Fill in the details to activate your account.</p>
           </div>
 
-          <Form>
-            <div className="input-column">
-              <Form.Group controlId="email" className="flex-grow-1">
-                <Form.Control type="email" placeholder="Email" required />
-              </Form.Group>
-              <Form.Group controlId="businessEmail" className="flex-grow-1">
-                <Form.Control
-                  type="email"
-                  placeholder="Business Email (optional)"
-                />
-              </Form.Group>
+          <div className="form-sections">
+            <div className="form-inputs">
+              {/* Left side: Form inputs */}
+              <Form className="form-elements">
+                <div className="input-column">
+                  <Form.Group controlId="email" className="flex-grow-1">
+                    <Form.Control type="email" placeholder="Email" required />
+                  </Form.Group>
+                  <Form.Group controlId="businessEmail" className="flex-grow-1">
+                    <Form.Control
+                      type="email"
+                      placeholder="Business Email (optional)"
+                    />
+                  </Form.Group>
+                </div>
+
+                <div className="input-column">
+                  <Form.Group controlId="username" className="flex-grow-1">
+                    <Form.Control type="text" placeholder="Username" required />
+                  </Form.Group>
+                  <Form.Group controlId="phone" className="flex-grow-1">
+                    <Form.Control type="tel" placeholder="Phone" required />
+                  </Form.Group>
+                </div>
+
+                <Form.Group controlId="password">
+                  <Form.Control
+                    type="password"
+                    placeholder="Password"
+                    required
+                  />
+                </Form.Group>
+              </Form>
+              <div className="d-flex justify-content-start mt-3">
+                {/* Adjusted alignment */}
+                <Button
+                  className="previous-btn"
+                  variant="secondary"
+                  onClick={() => navigate("/master-doc-upload")}
+                >
+                  Previous
+                </Button>
+              </div>
             </div>
-
-            <div className="input-column">
-              <Form.Group controlId="username" className="flex-grow-1">
-                <Form.Control type="text" placeholder="Username" required />
-              </Form.Group>
-              <Form.Group controlId="phone" className="flex-grow-1">
-                <Form.Control type="tel" placeholder="Phone" required />
-              </Form.Group>
+            {/* Divider line */}
+            <div className="section-divider"></div>
+            <div className="form-details">
+              {/* Right side: Package & Terms */}
+              <PackageInfo
+                companyName={companyDetails.companyName}
+                packageInfo={packageInfo}
+              />
+              <TermsSection
+                termsChecked={termsChecked}
+                onChange={(e) => setTermsChecked(e.target.checked)}
+              />
+              <div className="d-flex justify-content-end mt-3">
+                {/* Adjusted alignment */}
+                <Button className="next-btn" disabled={!termsChecked}>
+                  Activate My Account
+                </Button>
+              </div>
             </div>
-
-            <Form.Group controlId="password">
-              <Form.Control type="password" placeholder="Password" required />
-            </Form.Group>
-
-            <PackageInfo
-              companyName={companyDetails.companyName}
-              packageInfo={packageInfo}
-            />
-
-            <TermsSection
-              termsChecked={termsChecked}
-              onChange={(e) => setTermsChecked(e.target.checked)}
-            />
-
-            <div className="d-flex justify-content-between mt-3">
-              <Button
-                className="previous-btn"
-                variant="secondary"
-                onClick={() => navigate("/master-doc-upload")}
-              >
-                Previous
-              </Button>
-
-              <Button className="next-btn" disabled={!termsChecked}>
-                Activate My Account
-              </Button>
-            </div>
-          </Form>
+          </div>
         </div>
       </div>
     </div>
