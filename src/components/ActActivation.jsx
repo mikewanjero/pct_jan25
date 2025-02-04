@@ -100,6 +100,12 @@ const ActActivation = () => {
                     required
                   />
                 </Form.Group>
+                <div className="d-flex justify-content-start mt-3">
+                  {/* Adjusted alignment */}
+                  <Button className="next-btn" disabled={!termsChecked}>
+                    Activate My Account
+                  </Button>
+                </div>
               </Form>
               <div className="d-flex justify-content-start mt-3">
                 {/* Adjusted alignment */}
@@ -124,12 +130,6 @@ const ActActivation = () => {
                 termsChecked={termsChecked}
                 onChange={(e) => setTermsChecked(e.target.checked)}
               />
-              <div className="d-flex justify-content-end mt-3">
-                {/* Adjusted alignment */}
-                <Button className="next-btn" disabled={!termsChecked}>
-                  Activate My Account
-                </Button>
-              </div>
             </div>
           </div>
         </div>
