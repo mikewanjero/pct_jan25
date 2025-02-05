@@ -5,9 +5,9 @@ import axios from "axios";
 import phamacoreLogo from "../assets/images/phamacore.png";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
-import Sidebar from "./Sidebar";
-import TermsSection from "./Subscription/TermsSection";
-import PackageInfo from "./Subscription/PackageInfo";
+import Sidebar from "../Sidebar/Sidebar";
+import TermsSection from "../Subscription/TermsSection";
+import PackageInfo from "../Subscription/PackageInfo";
 
 const ActActivation = () => {
   const navigate = useNavigate();

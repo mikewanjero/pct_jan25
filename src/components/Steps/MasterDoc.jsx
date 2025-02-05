@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { Button, Form } from "react-bootstrap";
 import phamacoreLogo from "../assets/images/phamacore.png";
-import Sidebar from "./Sidebar";
+import Sidebar from "../Sidebar/Sidebar";
 
 const MasterDoc = () => {
   const navigate = useNavigate();
