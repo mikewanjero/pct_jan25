@@ -14,8 +14,8 @@ const TrainingSheet = () => {
         <div className="form-content">
           {/* Header */}
           <div className="d-flex flex-column align-items-center mb-4">
-            <img src={phamacoreLogo} alt="logo" className="w-40 h-40" />
-            <h1 className="text-caramel display-5 fw-bold">
+            <img src={phamacoreLogo} alt="logo" className="w-20 h-20" />
+            <h1 className="display-6 fw-bold" style={{ color: "#c58c4f" }}>
               phAMACore<sup>™</sup>Cloud
             </h1>
           </div>

@@ -8,7 +8,7 @@ const Sidebar = ({ currentStep }) => {
 
   return (
     <div className={`sidebar ${currentStep === 2 ? "step-3" : ""}`}>
-      <h3>Step {currentStep + 1}</h3>
+      <h3 style={{ color: "#9c6e3f" }}>Step {currentStep + 1}</h3>
       <div className="sidebar-steps">
         {steps.map((step, index) => (
           <p
