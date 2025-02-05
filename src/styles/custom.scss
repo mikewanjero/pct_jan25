@@ -1,8 +1,7 @@
 @use "bootstrap";
 @use "sass:color";
 @use "sass:map";
-@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap");
-@import "@fontsource/poppins";
+@use "@fontsource/poppins";
 
 $font-family-sans-serif: "Poppins", sans-serif;
 
@@ -242,6 +241,44 @@ body {
 
 .input-row .form-control {
   flex: 1;
+}
+
+.phone-container {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.phone-input {
+  width: 350px;
+  height: 40px;
+  border-radius: 4px;
+  border: 1px solid $cadet-gray-light;
+  padding-left: 50px !important;
+}
+
+.phone-dropdown-btn {
+  background: transparent !important;
+  border: none !important;
+}
+
+.react-tel-input {
+  width: 100% !important;
+
+  .form-control {
+    width: 100% !important;
+    height: 40px;
+    border-radius: 4px;
+    border: 1px solid $cadet-gray-light;
+    padding-left: 50px !important;
+    font-family: "Poppins", sans-serif !important;
+  }
+
+  .flag-dropdown {
+    background: transparent !important;
+    border: none !important;
+    font-family: "Poppins", sans-serif !important;
+  }
 }
 
 .sidebar {
