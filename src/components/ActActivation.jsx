@@ -1,11 +1,13 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button, Form } from "react-bootstrap";
+import axios from "axios";
 import phamacoreLogo from "../assets/images/phamacore.png";
+import PhoneInput from "react-phone-input-2";
+import "react-phone-input-2/lib/style.css";
 import Sidebar from "./Sidebar";
 import TermsSection from "./Subscription/TermsSection";
 import PackageInfo from "./Subscription/PackageInfo";
-import axios from "axios";
 
 const ActActivation = () => {
   const navigate = useNavigate();
@@ -18,6 +20,7 @@ const ActActivation = () => {
     branches: "",
     users: "",
   });
+  const [phoneNumber, setPhoneNumber] = useState("");
   const [termsChecked, setTermsChecked] = useState(false);
 
   useEffect(() => {
@@ -89,7 +92,11 @@ const ActActivation = () => {
                     <Form.Control type="text" placeholder="Username" required />
                   </Form.Group>
                   <Form.Group controlId="phone" className="flex-grow-1">
-                    <Form.Control type="tel" placeholder="Phone" required />
+                    <PhoneInput
+                      country={"ke"}
+                      value={phoneNumber}
+                      onChange={(phone) => setPhoneNumber(phone)}
+                    />
                   </Form.Group>
                 </div>
 
