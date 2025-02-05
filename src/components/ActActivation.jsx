@@ -96,6 +96,9 @@ const ActActivation = () => {
                       country={"ke"}
                       value={phoneNumber}
                       onChange={(phone) => setPhoneNumber(phone)}
+                      inputClass="form-control phone-input"
+                      containerClass="phone-container"
+                      buttonClass="phone-dropdown-btn"
                     />
                   </Form.Group>
                 </div>
