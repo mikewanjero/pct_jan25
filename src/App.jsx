@@ -1,7 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import TrainingSheet from "./components/TrainingSheet";
-import MasterDoc from "./components/MasterDoc";
-import ActActivation from "./components/ActActivation";
+import TrainingSheet from "./components/Steps/TrainingSheet";
+import MasterDoc from "./components/Steps/MasterDoc";
+import ActActivation from "./components/Steps/ActActivation";
 import "./styles/custom.scss";
 
 function App() {
