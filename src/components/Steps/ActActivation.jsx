@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button, Form } from "react-bootstrap";
 import axios from "axios";
-import phamacoreLogo from "../assets/images/phamacore.png";
+import phamacoreLogo from "../../assets/images/phamacore.png";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
 import Sidebar from "../Sidebar/Sidebar";
@@ -61,8 +61,8 @@ const ActActivation = () => {
         <div className="form-content">
           {/* Header */}
           <div className="d-flex flex-column align-items-center mb-4">
-            <img src={phamacoreLogo} alt="logo" className="w-40 h-40" />
-            <h1 className="text-caramel display-5 fw-bold">
+            <img src={phamacoreLogo} alt="logo" className="w-20 h-20" />
+            <h1 className="display-6 fw-bold" style={{ color: "#c58c4f" }}>
               phAMACore<sup>™</sup>Cloud
             </h1>
           </div>

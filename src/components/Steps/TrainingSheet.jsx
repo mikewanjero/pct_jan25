@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { Button, Form } from "react-bootstrap";
-import phamacoreLogo from "../assets/images/phamacore.png";
+import phamacoreLogo from "../../assets/images/phamacore.png";
 import Sidebar from "../Sidebar/Sidebar";
 
 const TrainingSheet = () => {
