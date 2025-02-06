@@ -25,15 +25,15 @@ const FileUpload = ({ onFileUpload }) => {
   };
 
   // Simulating file(s) upload
-  const simulateUpload = () => {
-    console.log("Uploading files: ", files);
-    alert("Files uploaded successfully");
-  };
+  // const simulateUpload = () => {
+  //   console.log("Uploading files: ", files);
+  //   alert("Files uploaded successfully");
+  // };
 
   // File Types to Upload
   const { getRootProps, getInputProps } = useDropzone({
     onDrop,
-    accept: "image/*, application/pdf",
+    accept: ".xlsx", // Only Excel files to be uploaded
     multiple: true,
   });
 
@@ -48,29 +48,35 @@ const FileUpload = ({ onFileUpload }) => {
 
       {/* Displaying uploaded files*/}
       {files.length > 0 && (
-        <div className="file-preview">
-          {files.map((file) => (
-            <div className="file-item" key={file.name}>
-              <span>{file.name}</span>
-              <button
-                onClick={() => removeFile(file.name)}
-                className="delete-btn"
-              >
-                <BsFillTrashFill />
-              </button>
-            </div>
-          ))}
+        <div className="file-list">
+          <h5>Uploaded File(s)</h5>
+          <ul>
+            {files.map((file) => (
+              <li key={file.name} className="file-item">
+                <span>{file.name}</span>
+                <Button
+                  className="delete-btn"
+                  onClick={() => removeFile(file.name)}
+                >
+                  <BsFillTrashFill />
+                </Button>
+              </li>
+            ))}
+          </ul>
         </div>
       )}
+    </div>
+  );
+};
 
-      {/* Upload Button*/}
+{
+  /* Upload Button
       {files.length > 0 && (
         <Button onClick={simulateUpload} className="upload-btn">
           Upload Files
         </Button>
       )}
-    </div>
-  );
-};
+    </div> */
+}
 
 export default FileUpload;
