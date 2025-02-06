@@ -22,11 +22,11 @@ const TrainingSheet = () => {
           </div>
           <div className="form-header">
             <h2>Upload Required Training Document</h2>
-            <p>Max file size: 5MB | Max 3 files</p>
           </div>
 
           <Form>
             <div className="upload-box">
+              <p>Max file size: 5MB | Max 3 files</p>
               <FileUpload
                 onFileUpload={(files) => console.log("Uploaded files:", files)}
               />
