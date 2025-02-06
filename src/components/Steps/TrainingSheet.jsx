@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { Button, Form } from "react-bootstrap";
+import FileUpload from "../Upload/FileUpload";
 import phamacoreLogo from "../../assets/images/phamacore.png";
 import Sidebar from "../Sidebar/Sidebar";
 
@@ -25,13 +26,11 @@ const TrainingSheet = () => {
           </div>
 
           <Form>
-            <Form.Group controlId="trainingFile">
-              <div className="upload-box">
-                <p>Click or Drag files here to upload</p>
-                <Form.Control type="file" multiple hidden />
-              </div>
-            </Form.Group>
-
+            <div className="upload-box">
+              <FileUpload
+                onFileUpload={(files) => console.log("Uploaded files:", files)}
+              />
+            </div>
             <Button
               className="next-btn mt-3"
               onClick={() => navigate("/master-doc-upload")}
