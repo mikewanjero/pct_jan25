@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { Button, Form } from "react-bootstrap";
+import { Button, Form, InputGroup } from "react-bootstrap";
 import axios from "axios";
+import { BsEye, BsEyeSlash } from "react-icons/bs";
 import phamacoreLogo from "../../assets/images/phamacore.png";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
@@ -20,6 +21,7 @@ const ActActivation = () => {
     branches: "",
     users: "",
   });
+  const [passwordVisible, setPasswordVisible] = useState(false);
   const [phoneNumber, setPhoneNumber] = useState("");
   const [termsChecked, setTermsChecked] = useState(false);
 
@@ -104,11 +106,24 @@ const ActActivation = () => {
                 </div>
 
                 <Form.Group controlId="password">
-                  <Form.Control
-                    type="password"
-                    placeholder="Password"
-                    required
-                  />
+                  <InputGroup>
+                    <Form.Control
+                      type="password"
+                      placeholder="Password"
+                      required
+                    />
+                    <Button
+                      variant="outline-secondary"
+                      onClick={() => setPasswordVisible(!passwordVisible)}
+                      className="password-toggle"
+                    >
+                      {passwordVisible ? (
+                        <BsEyeSlash size={20} />
+                      ) : (
+                        <BsEye size={20} />
+                      )}
+                    </Button>
+                  </InputGroup>
                 </Form.Group>
                 <div className="d-flex justify-content-start mt-3">
                   {/* Adjusted alignment */}
