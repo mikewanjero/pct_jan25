@@ -125,9 +125,12 @@ const ActActivation = () => {
                     </Button>
                   </InputGroup>
                 </Form.Group>
-                <div className="d-flex justify-content-start mt-3">
+                <div className="d-flex w-100 mt-3">
                   {/* Adjusted alignment */}
-                  <Button className="next-btn" disabled={!termsChecked}>
+                  <Button
+                    className="activate-btn w-100"
+                    disabled={!termsChecked}
+                  >
                     Activate My Account
                   </Button>
                 </div>

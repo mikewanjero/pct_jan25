@@ -402,6 +402,23 @@ body {
   font-size: 14px;
 }
 
+.activate-btn {
+  background-color: $caramel !important;
+  padding: 10px 20px;
+  width: 100%;
+  font-size: 16px;
+  font-weight: bold;
+  color: white;
+  border-color: #c69867;
+  border-radius: 5px;
+  cursor: pointer;
+  text-align: center;
+}
+
+.activate-btn:hover {
+  background-color: #c69867 !important;
+}
+
 .next-btn {
   background-color: $caramel !important;
   border: none;
