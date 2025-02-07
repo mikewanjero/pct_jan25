@@ -86,10 +86,6 @@ body {
     border: 2px dashed #000000;
     border-radius: 5px;
 
-    &:hover {
-      background-color: $caramel-light;
-    }
-
     h5 {
       margin-top: 10px;
       margin-bottom: 25px;
@@ -111,6 +107,10 @@ body {
       border-radius: 5px;
       margin-top: 3px;
       font-size: 14px;
+
+      &:hover {
+        background-color: $caramel-light;
+      }
 
       .delete-btn {
         background-color: red;
