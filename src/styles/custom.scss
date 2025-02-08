@@ -258,16 +258,15 @@ body {
 
     .sidebar-steps {
       flex-direction: row;
-      justify-content: center;
+      justify-content: space-around;
       margin-top: 0;
-      gap: 2rem;
+      gap: 1rem;
     }
 
     .step {
       flex-direction: column;
       text-align: center;
       padding: 0.5rem;
-      gap: 0.5rem;
     }
   }
 
@@ -341,38 +340,44 @@ body {
   padding: 15px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-}
+  justify-content: flex-start;
 
-.sidebar h3 {
-  font-size: 20px;
-  font-weight: bold;
-  margin-bottom: 20px;
+  h3 {
+    font-size: 40px;
+    font-weight: bold;
+    margin-top: 40px;
+    margin-bottom: 60px;
+    text-align: center;
+  }
 
   .sidebar-steps {
-    flex: 1;
     display: flex;
+    flex: 1;
     flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 15px 0;
   }
 
   .step {
-    position: relative;
     display: flex;
     align-items: center;
-    gap: 1rem;
-    color: $white-seashell;
+    justify-content: center;
+    width: 80%;
+    color: $eerie-black;
     padding: 1rem;
     border-radius: 8px;
     font-size: 16px;
-    margin-bottom: 15px;
     opacity: 0.6;
-    z-index: 1;
+    transition: opacity 0.3s ease;
+    text-align: center;
   }
-}
 
-.step.active {
-  font-weight: bold;
-  opacity: 1;
+  .step.active {
+    font-weight: bold;
+    opacity: 1;
+  }
 }
 
 .step-number {
