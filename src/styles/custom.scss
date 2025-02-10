@@ -439,10 +439,34 @@ body {
   color: white;
   border-radius: 5px;
   cursor: pointer;
+  width: 150px;
+  height: 45px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  transition: background-color 0.9s ease-in-out;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
 }
 
 .next-btn:hover {
   background-color: #c69867 !important;
+}
+
+.next-btn:hover .btn-text {
+  transform: translateX(50px);
+  opacity: 0;
+}
+
+.next-btn .btn-icon {
+  right: -30px;
+}
+.next-btn:hover .btn-icon {
+  right: 50%;
+  transform: translateX(50%);
+  opacity: 1;
 }
 
 .previous-btn {
@@ -455,8 +479,44 @@ body {
   color: white;
   border-radius: 5px;
   cursor: pointer;
+  width: 150px;
+  height: 45px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  transition: background-color 0.9s ease-in-out;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
 }
 
 .previous-btn:hover {
   background-color: #c69867 !important;
+}
+
+.previous-btn .btn-icon {
+  left: -30px;
+}
+
+.previous-btn:hover .btn-text {
+  transform: translateX(-50px);
+  opacity: 0;
+}
+
+.previous-btn:hover .btn-icon {
+  left: 50%;
+  transform: translateX(-50%);
+  opacity: 1;
+}
+
+.btn-text {
+  transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+}
+
+.btn-icon {
+  font-size: 18px;
+  opacity: 0;
+  transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+  position: absolute;
 }
