@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button, Form, InputGroup } from "react-bootstrap";
 import axios from "axios";
-import { BsEye, BsEyeSlash } from "react-icons/bs";
+import { BsArrowLeft, BsEye, BsEyeSlash } from "react-icons/bs";
 import phamacoreLogo from "../../assets/images/phamacore.png";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
@@ -143,7 +143,8 @@ const ActActivation = () => {
                   variant="secondary"
                   onClick={() => navigate("/master-doc-upload")}
                 >
-                  Previous
+                  <span className="btn-text">Previous</span>
+                  <BsArrowLeft className="btn-icon" />
                 </Button>
               </div>
             </div>

@@ -1,3 +1,4 @@
+import { BsArrowLeft, BsArrowRight } from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
 import { Button, Form } from "react-bootstrap";
 import FileUpload from "../Upload/FileUpload";
@@ -38,14 +39,16 @@ const MasterDoc = () => {
                 variant="secondary"
                 onClick={() => navigate("/")}
               >
-                Previous
+                <span className="btn-text">Previous</span>
+                <BsArrowLeft className="btn-icon" />
               </Button>
 
               <Button
                 className="next-btn"
                 onClick={() => navigate("/acct-activation")}
               >
-                Next
+                <span className="btn-text">Next</span>
+                <BsArrowRight className="btn-icon" />
               </Button>
             </div>
           </Form>

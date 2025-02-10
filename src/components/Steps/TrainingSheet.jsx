@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { Button, Form } from "react-bootstrap";
+import { BsArrowRight } from "react-icons/bs";
 import FileUpload from "../Upload/FileUpload";
 import phamacoreLogo from "../../assets/images/phamacore.png";
 import Sidebar from "../Sidebar/Sidebar";
@@ -35,7 +36,8 @@ const TrainingSheet = () => {
               className="next-btn mt-3"
               onClick={() => navigate("/master-doc-upload")}
             >
-              Next
+              <span className="btn-text">Next</span>
+              <BsArrowRight className="btn-icon" />
             </Button>
           </Form>
         </div>
