@@ -76,6 +76,7 @@ const ActActivation = () => {
           <div className="form-sections">
             <div className="form-inputs">
               {/* Left side: Form inputs */}
+              <h2 className="text-danger">Activate Subscription</h2>
               <Form className="form-elements">
                 <div className="input-column">
                   <Form.Group controlId="email" className="flex-grow-1">
@@ -152,11 +153,11 @@ const ActActivation = () => {
               {/* Right side: Package & Terms */}
               {companyDetails.companyName && companyDetails.companyID && (
                 <div className="company-info">
-                  <h5>
+                  <h3>
                     {companyDetails.companyName && companyDetails.companyID
                       ? `${companyDetails.companyName} - ${companyDetails.companyID}`
                       : "Details not Fetched"}
-                  </h5>
+                  </h3>
                 </div>
               )}
               <PackageInfo
