@@ -46,7 +46,7 @@ const ActActivation = () => {
     // Validate form data
     if (!formData.email) newErrors.email = "Email is required";
     if (!formData.username) newErrors.username = "Username is required";
-    if (!phoneNumber) newErrors.phoneNumber = "Phone number is required";
+    if (!phoneNumber) newErrors.phoneNumber = "Please enter your phone number";
     if (!formData.password) newErrors.password = "Password is required";
     if (!termsChecked)
       newErrors.termsChecked = "You must agree to the terms and conditions.";
@@ -202,11 +202,13 @@ const ActActivation = () => {
                   <Button
                     className="activate-btn w-100"
                     disabled={!termsChecked}
+                    type="submit"
                   >
                     Activate My Account
                   </Button>
                 </div>
               </Form>
+
               <div className="d-flex justify-content-start mt-3">
                 {/* Adjusted alignment */}
                 <Button
