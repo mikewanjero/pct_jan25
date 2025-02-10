@@ -414,7 +414,7 @@ body {
   font-size: 16px;
   font-weight: bold;
   color: white;
-  border-color: #c69867;
+  border-color: #c69867 !important;
   border-radius: 5px;
   cursor: pointer;
   text-align: center;
@@ -427,6 +427,7 @@ body {
 .next-btn {
   background-color: $caramel !important;
   border: none;
+  border-color: #c69867 !important;
   padding: 10px 20px;
   width: 150px;
   font-size: 16px;
@@ -442,7 +443,7 @@ body {
 
 .previous-btn {
   background-color: $caramel !important;
-  border: none;
+  border-color: #c69867 !important;
   padding: 10px 20px;
   width: 150px;
   font-size: 16px;
