@@ -35,7 +35,7 @@ const TrainingSheet = () => {
               className="next-btn mt-3"
               onClick={() => navigate("/master-doc-upload")}
             >
-              Next Step
+              Next
             </Button>
           </Form>
         </div>

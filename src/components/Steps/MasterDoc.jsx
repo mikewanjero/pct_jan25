@@ -45,7 +45,7 @@ const MasterDoc = () => {
                 className="next-btn"
                 onClick={() => navigate("/acct-activation")}
               >
-                Next Step
+                Next
               </Button>
             </div>
           </Form>
