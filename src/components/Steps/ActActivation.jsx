@@ -150,6 +150,13 @@ const ActActivation = () => {
             <div className="section-divider"></div>
             <div className="form-details">
               {/* Right side: Package & Terms */}
+              {companyDetails.companyName && companyDetails.companyID && (
+                <div className="company-info">
+                  <h5>
+                    {companyDetails.companyName} - {companyDetails.companyID}
+                  </h5>
+                </div>
+              )}
               <PackageInfo
                 companyName={companyDetails.companyName}
                 packageInfo={packageInfo}
