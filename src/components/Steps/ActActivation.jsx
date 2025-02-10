@@ -109,7 +109,7 @@ const ActActivation = () => {
                 <Form.Group controlId="password">
                   <InputGroup>
                     <Form.Control
-                      type="password"
+                      type={passwordVisible ? "text" : "password"}
                       placeholder="Password"
                       required
                     />
