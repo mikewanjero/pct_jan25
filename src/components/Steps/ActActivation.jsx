@@ -153,7 +153,9 @@ const ActActivation = () => {
               {companyDetails.companyName && companyDetails.companyID && (
                 <div className="company-info">
                   <h5>
-                    {companyDetails.companyName} - {companyDetails.companyID}
+                    {companyDetails.companyName && companyDetails.companyID
+                      ? `${companyDetails.companyName} - ${companyDetails.companyID}`
+                      : "Details not Fetched"}
                   </h5>
                 </div>
               )}
