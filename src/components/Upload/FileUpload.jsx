@@ -69,14 +69,4 @@ const FileUpload = ({ onFileUpload }) => {
   );
 };
 
-{
-  /* Upload Button
-      {files.length > 0 && (
-        <Button onClick={simulateUpload} className="upload-btn">
-          Upload Files
-        </Button>
-      )}
-    </div> */
-}
-
 export default FileUpload;
