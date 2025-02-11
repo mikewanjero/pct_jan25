@@ -27,7 +27,9 @@ const MasterDoc = () => {
 
           <Form>
             <div className="upload-box">
-              <p>Max file size: 5MB | Max 3 files</p>
+              <p>
+                Max file size: <strong>5MB</strong> | Max: 3 files
+              </p>
               <FileUpload
                 onFileUpload={(files) => console.log("Uploaded files:", files)}
               />
