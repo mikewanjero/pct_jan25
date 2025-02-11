@@ -49,7 +49,7 @@ const FileUpload = ({ onFileUpload }) => {
       {/* Displaying uploaded files*/}
       {files.length > 0 && (
         <div className="file-list">
-          <h5>Uploaded File(s)</h5>
+          <h3>Uploaded File(s)</h3>
           <ul>
             {files.map((file) => (
               <li key={file.name} className="file-item">
