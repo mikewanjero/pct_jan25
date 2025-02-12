@@ -4,19 +4,42 @@ import { useDropzone } from "react-dropzone";
 import { Button } from "react-bootstrap";
 import { BsFillTrashFill, BsCloudUpload } from "react-icons/bs";
 
+const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB
+const MAX_FILES = 3;
+
 const FileUpload = ({ onFileUpload }) => {
   const [files, setFiles] = useState([]);
 
   // Dropped files
   const onDrop = useCallback(
     (acceptedFiles) => {
+      // Check if the files exceed the maximum size
+      const validFiles = acceptedFiles.filter(
+        (file) => file.size <= MAX_FILE_SIZE
+      );
+
+      if (acceptedFiles.length !== validFiles.length) {
+        alert(
+          `One or more files exceed the maximum size of ${
+            MAX_FILE_SIZE / 1024 / 1024
+          }MB.`
+        );
+      }
+
+      // Check if the files exceed the maximum limit
+      if (files.length + acceptedFiles.length > MAX_FILES) {
+        alert(`You can only upload ${MAX_FILES} files.`);
+        return;
+      }
+
+      // Add preview to the files
       const uploadedFiles = acceptedFiles.map((file) =>
         Object.assign(file, { preview: URL.createObjectURL(file) })
       );
-      setFiles((prevFiles) => [...prevFiles, ...uploadedFiles]);
-      if (onFileUpload) onFileUpload(uploadedFiles);
+      setFiles((prevFiles) => [...prevFiles, ...uploadedFiles]); // Update files state
+      if (onFileUpload) onFileUpload(uploadedFiles); // Call the parent function
     },
-    [onFileUpload]
+    [onFileUpload, files] // Dependencies
   );
 
   // Removing a file
