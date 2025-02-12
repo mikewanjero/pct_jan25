@@ -33,11 +33,11 @@ const FileUpload = ({ onFileUpload }) => {
       }
 
       // Add preview to the files
-      const uploadedFiles = acceptedFiles.map((file) =>
+      const uploadedFiles = validFiles.map((file) =>
         Object.assign(file, { preview: URL.createObjectURL(file) })
       );
       setFiles((prevFiles) => [...prevFiles, ...uploadedFiles]); // Update files state
-      if (onFileUpload) onFileUpload(uploadedFiles); // Call the parent function
+      if (onFileUpload) onFileUpload([...files, ...uploadedFiles]); // Call the parent function
     },
     [onFileUpload, files] // Dependencies
   );
