@@ -1,5 +1,6 @@
-@use "bootstrap";
+@use "bootstrap" as *;
 @use "sass:color";
+@use "sass:math";
 @use "sass:map";
 @use "@fontsource/poppins";
 
