@@ -22,6 +22,9 @@ const ActActivation = () => {
     companyName: "",
     companyID: "",
   });
+  const [cusCode, setCusCode] = useState("");
+  const [error, setError] = useState(""); // Error state for the form
+  const [loading, setLoading] = useState(false);
   const [packageInfo, setPackageInfo] = useState({
     name: "",
     branches: "",
@@ -59,11 +62,13 @@ const ActActivation = () => {
     }
   };
 
+  // Fetching client details
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          `http://102.37.102.247:5028/api/NewClients/GetClientsDetails?cuscode=K68W3X`,
+          // `http://102.37.102.247:5028/api/NewClients/GetClientsDetails?cuscode=${dynamicCusCode || cusCode}`,
+          `http://102.37.102.247:5028/api/NewClients/GetClientsDetails?cuscode=J89MUZ`,
           {
             headers: {
               accesskey:
@@ -71,6 +76,7 @@ const ActActivation = () => {
             },
           }
         );
+        // Destructure the response data
         const {
           psCompanyName: companyName,
           psCusCode: companyID,
@@ -79,15 +85,29 @@ const ActActivation = () => {
           psUserCount: users,
         } = response.data;
 
+        // Validation when companyID is empty
+        if (!companyID) {
+          throw new Error("Company ID is missing.");
+        }
+
         setCompanyDetails({ companyName, companyID });
         setPackageInfo({ name, branches, users });
+        setLoading(false);
+
+        // Redirect the URL if the companyID is not equal to customer code
+        if (companyID !== cusCode) {
+          setCusCode(companyID);
+          navigate(`/${companyID}`, { replace: true });
+        }
       } catch (error) {
         console.error("Error fetching data:", error);
+        setError("Failed to fetch company details.");
+        setLoading(false);
       }
     };
 
     fetchData();
-  }, []);
+  }, [cusCode, navigate]);
 
   return (
     <div className="container">
@@ -228,7 +248,9 @@ const ActActivation = () => {
               {companyDetails.companyName && companyDetails.companyID && (
                 <div className="company-info">
                   <h3>
-                    {companyDetails.companyName && companyDetails.companyID
+                    {loading
+                      ? error
+                      : companyDetails.companyName && companyDetails.companyID
                       ? `${companyDetails.companyName} - ${companyDetails.companyID}`
                       : "Details not Fetched"}
                   </h3>
