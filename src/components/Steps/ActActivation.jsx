@@ -101,7 +101,9 @@ const ActActivation = () => {
         setLoading(false);
         console.error("Error activating account:", error.response?.data); // Log the error
         const errorMessage =
-          error.response?.data?.message || "Failed to activate account."; // Get the error message
+          error.response?.data?.message ||
+          error.message ||
+          "Failed to activate account."; // Get the error message
         setToastMessage(`Error: ${errorMessage}`);
         setShowToast(true);
 
