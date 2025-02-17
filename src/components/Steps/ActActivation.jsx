@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { Button, Form, InputGroup } from "react-bootstrap";
+import { Button, Form, InputGroup, Toast } from "react-bootstrap";
 import axios from "axios";
 import { BsArrowLeft, BsEye, BsEyeSlash } from "react-icons/bs";
 import phamacoreLogo from "../../assets/images/phamacore.png";
@@ -34,6 +34,8 @@ const ActActivation = () => {
   const [phoneNumber, setPhoneNumber] = useState("");
   const [termsChecked, setTermsChecked] = useState(false);
   const [errors, setErrors] = useState({});
+  const [toastMessage, setToastMessage] = useState(null); // Toast message
+  const [showToast, setShowToast] = useState(false); // Show toast
 
   //Function to handle form changes
   const handleChange = (e) => {
@@ -42,7 +44,7 @@ const ActActivation = () => {
   };
 
   //Function to handle form submission
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     let newErrors = {};
 
@@ -58,7 +60,61 @@ const ActActivation = () => {
 
     if (Object.keys(newErrors).length === 0) {
       // Proceed with form submission
-      console.log("Form submitted:", formData);
+      const requestData = {
+        email: formData.email,
+        businessEmail: formData.businessEmail,
+        username: formData.username,
+        password: formData.password,
+        phone: phoneNumber,
+      };
+      console.log("Form submitted:", {
+        ...requestData,
+        password: "******",
+        termsChecked,
+      });
+      setLoading(true);
+
+      // Call the API to activate the client
+      try {
+        const response = await axios.post(
+          "http:/102.37.102.247:5028/api/NewClients/ActivateClient",
+          requestData,
+          {
+            headers: {
+              Accept: "application/json",
+              "Content-Type": "application/json",
+              accesskey:
+                "R0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9",
+            },
+          }
+        );
+        setLoading(false);
+        setToastMessage("Account Activated Successfully!");
+        setShowToast(true);
+        console.log("Response:", response.data);
+
+        // Redirect to the next step
+        setTimeout(() => {
+          window.location.href = "https://phamacoreonline.co.ke/"; // Redirect to the next page
+        }, 2200);
+      } catch (error) {
+        setLoading(false);
+        console.error("Error activating account:", error.response?.data); // Log the error
+        const errorMessage =
+          error.response?.data?.message || "Failed to activate account."; // Get the error message
+        setToastMessage(`Error: ${errorMessage}`);
+        setShowToast(true);
+
+        // Reset the form data after submission failure
+        setFormData({
+          email: "",
+          businessEmail: "",
+          username: "",
+          password: "",
+        });
+        setPhoneNumber("");
+        setTermsChecked(false);
+      }
     }
   };
 
@@ -268,6 +324,17 @@ const ActActivation = () => {
           </div>
         </div>
       </div>
+      {/* Toast message */}
+      <Toast
+        show={showToast}
+        onClose={() => setShowToast(false)}
+        delay={4000}
+        autohide
+        bg={toastMessage.includes("Error") ? "danger" : "success"}
+        className="position-fixed bottom-0 end-0 m-4"
+      >
+        <Toast.Body>{toastMessage}</Toast.Body>
+      </Toast>
     </div>
   );
 };
