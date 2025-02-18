@@ -1,14 +1,15 @@
 /* eslint-disable react/prop-types */
 import { useState, useCallback } from "react";
 import { useDropzone } from "react-dropzone";
-import { Button } from "react-bootstrap";
+import { Button, Toast, ToastContainer } from "react-bootstrap";
 import { BsFillTrashFill, BsCloudUpload } from "react-icons/bs";
 
-const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB
+const MAX_FILE_SIZE = 5 * 1024 * 1024;
 const MAX_FILES = 3;
 
 const FileUpload = ({ onFileUpload }) => {
   const [files, setFiles] = useState([]);
+  const [toast, setToast] = useState({ show: false, message: "", type: "" });
 
   // Dropped files
   const onDrop = useCallback(
@@ -18,19 +19,46 @@ const FileUpload = ({ onFileUpload }) => {
         (file) => file.size <= MAX_FILE_SIZE
       );
 
+      // Check if the files exceed the maximum size
       if (acceptedFiles.length !== validFiles.length) {
-        alert(
-          `One or more files exceed the maximum size of ${
+        setToast({
+          show: true,
+          message: `One or more files exceed the maximum size of ${
             MAX_FILE_SIZE / 1024 / 1024
-          }MB.`
-        );
+          }MB`, // Show the toast message
+          type: "error", // error, success, warning, info
+        });
+        return;
       }
 
       // Check if the files exceed the maximum limit
       if (files.length + acceptedFiles.length > MAX_FILES) {
-        alert(`You can only upload ${MAX_FILES} files.`);
+        setToast({
+          show: true,
+          message: `You can only upload ${MAX_FILES} files`,
+          type: "error",
+        });
+      }
+
+      // Check if file is the right type
+      const invalidFileType = acceptedFiles.some(
+        (file) => !file.name.endsWith(".xlsx")
+      );
+      if (invalidFileType) {
+        setToast({
+          show: true,
+          message: "Only Excel files are allowed",
+          type: "error",
+        });
         return;
       }
+
+      // Success message for valid files
+      setToast({
+        show: true,
+        message: "Files uploaded successfully",
+        type: "success",
+      });
 
       // Add preview to the files
       const uploadedFiles = validFiles.map((file) =>
@@ -58,10 +86,27 @@ const FileUpload = ({ onFileUpload }) => {
     onDrop,
     accept: ".xlsx", // Only Excel files to be uploaded
     multiple: true,
+    maxSize: MAX_FILE_SIZE,
   });
 
   return (
     <div className="file-upload-container">
+      {/* Toast Notification */}
+      <ToastContainer className="toast-container">
+        {/* Show the toast message */}
+        {toast.show && (
+          <Toast
+            onClose={() => setToast({ ...toast, show: false })} // Close the toast message
+            show={toast.show} // Show the toast message
+            delay={3000} // Delay of 3 seconds
+            autohide // Hide the toast message automatically
+            className={`toast ${toast.type}`} // Toast type: error, success, warning, info
+          >
+            <Toast.Body>{toast.message}</Toast.Body>
+          </Toast>
+        )}
+      </ToastContainer>
+
       {/* Drag and Drop Zone */}
       <div {...getRootProps({ className: "dropzone" })}>
         <input {...getInputProps()} />
