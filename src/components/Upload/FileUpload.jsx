@@ -11,9 +11,19 @@ const FileUpload = ({ onFileUpload }) => {
   const [files, setFiles] = useState([]);
   const [toast, setToast] = useState({ show: false, message: "", type: "" });
 
+  const showToast = (message, type) => {
+    setToast({ show: true, message, type });
+  };
+
   // Dropped files
   const onDrop = useCallback(
     (acceptedFiles) => {
+      // Check if the files exceed the maximum limit
+      if (files.length + acceptedFiles.length > MAX_FILES) {
+        showToast(`You can only upload ${MAX_FILES} files`, "error");
+        return;
+      }
+
       // Check if the files exceed the maximum size
       const validFiles = acceptedFiles.filter(
         (file) => file.size <= MAX_FILE_SIZE
@@ -21,23 +31,12 @@ const FileUpload = ({ onFileUpload }) => {
 
       // Check if the files exceed the maximum size
       if (acceptedFiles.length !== validFiles.length) {
-        setToast({
-          show: true,
-          message: `One or more files exceed the maximum size of ${
+        showToast(
+          `One or more files exceed the maximum size of ${
             MAX_FILE_SIZE / 1024 / 1024
-          }MB`, // Show the toast message
-          type: "error", // error, success, warning, info
-        });
-        return;
-      }
-
-      // Check if the files exceed the maximum limit
-      if (files.length + acceptedFiles.length > MAX_FILES) {
-        setToast({
-          show: true,
-          message: `You can only upload ${MAX_FILES} files`,
-          type: "error",
-        });
+          }MB`,
+          "error"
+        );
       }
 
       // Check if file is the right type
@@ -45,22 +44,14 @@ const FileUpload = ({ onFileUpload }) => {
         (file) => !file.name.endsWith(".xlsx")
       );
       if (invalidFileType) {
-        setToast({
-          show: true,
-          message: "Only Excel files are allowed",
-          type: "error",
-        });
+        showToast("Only Excel files are allowed", "error");
         return;
       }
 
       // Success message for valid files
-      setToast({
-        show: true,
-        message: "Files uploaded successfully",
-        type: "success",
-      });
+      showToast("Files uploaded successfully.", "success");
 
-      // Add preview to the files
+      // Add mew file
       const uploadedFiles = validFiles.map((file) =>
         Object.assign(file, { preview: URL.createObjectURL(file) })
       );
@@ -92,7 +83,7 @@ const FileUpload = ({ onFileUpload }) => {
   return (
     <div className="file-upload-container">
       {/* Toast Notification */}
-      <ToastContainer className="toast-container">
+      <ToastContainer className="toast-container p-3" position="middle-center">
         {/* Show the toast message */}
         {toast.show && (
           <Toast
