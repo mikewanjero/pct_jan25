@@ -9,10 +9,10 @@ const MAX_FILES = 3;
 
 const FileUpload = ({ onFileUpload }) => {
   const [files, setFiles] = useState([]);
-  const [toast, setToast] = useState({ show: false, message: "", type: "" });
+  const [toast, setToast] = useState({ show: false, message: "", bg: "" });
 
-  const showToast = (message, type) => {
-    setToast({ show: true, message, type });
+  const showToast = (message, bg) => {
+    setToast({ show: true, message, bg });
   };
 
   // Dropped files
@@ -20,11 +20,11 @@ const FileUpload = ({ onFileUpload }) => {
     (acceptedFiles) => {
       // Check if the files exceed the maximum limit
       if (files.length + acceptedFiles.length > MAX_FILES) {
-        showToast(`You can only upload ${MAX_FILES} files`, "error");
+        showToast(`You can only upload up to ${MAX_FILES} files`, "warning");
         return;
       }
 
-      // Check if the files exceed the maximum size
+      // Function to check if the files exceed the maximum size
       const validFiles = acceptedFiles.filter(
         (file) => file.size <= MAX_FILE_SIZE
       );
@@ -35,21 +35,24 @@ const FileUpload = ({ onFileUpload }) => {
           `One or more files exceed the maximum size of ${
             MAX_FILE_SIZE / 1024 / 1024
           }MB`,
-          "error"
+          "danger"
         );
       }
 
       // Check if file is the right type
       const invalidFileType = acceptedFiles.some(
-        (file) => !file.name.endsWith(".xlsx")
+        (file) =>
+          ![".xlsx", ".xls", ".csv", ".ods"].some((ext) =>
+            file.name.endsWith(ext)
+          ) // Check if the file type is not allowed
       );
       if (invalidFileType) {
-        showToast("Only Excel files are allowed", "error");
+        showToast("Only Excel files are allowed", "danger");
         return;
       }
 
       // Success message for valid files
-      showToast("Files uploaded successfully.", "success");
+      showToast("File(s) uploaded successfully.", "success");
 
       // Add mew file
       const uploadedFiles = validFiles.map((file) =>
@@ -75,7 +78,15 @@ const FileUpload = ({ onFileUpload }) => {
   // File Types to Upload
   const { getRootProps, getInputProps } = useDropzone({
     onDrop,
-    accept: ".xlsx", // Only Excel files to be uploaded
+    accept: {
+      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet": [
+        ".xlsx",
+      ], // Excel 2007-2025
+      "application/vnd.ms-excel": [".xls"], // Excel 97-2003
+      "application/csv": [".csv"], // Comma-separated values
+      "text/csv": [".csv"], // Comma-separated values
+      "application/vnd.oasis.opendocument.spreadsheet": [".ods"], // OpenDocument Spreadsheet
+    },
     multiple: true,
     maxSize: MAX_FILE_SIZE,
   });
@@ -91,9 +102,9 @@ const FileUpload = ({ onFileUpload }) => {
             show={toast.show} // Show the toast message
             delay={3000} // Delay of 3 seconds
             autohide // Hide the toast message automatically
-            className={`toast ${toast.type}`} // Toast type: error, success, warning, info
+            bg={toast.bg} // Toast background color
           >
-            <Toast.Body>{toast.message}</Toast.Body>
+            <Toast.Body className="text-white">{toast.message}</Toast.Body>
           </Toast>
         )}
       </ToastContainer>
