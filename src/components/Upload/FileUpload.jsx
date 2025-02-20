@@ -37,13 +37,14 @@ const FileUpload = ({ onFileUpload }) => {
           }MB`,
           "danger"
         );
+        return;
       }
 
       // Check if file is the right type
       const invalidFileType = acceptedFiles.some(
         (file) =>
           ![".xlsx", ".xls", ".csv", ".ods"].some((ext) =>
-            file.name.endsWith(ext)
+            file.name.toLowerCase().endsWith(ext)
           ) // Check if the file type is not allowed
       );
       if (invalidFileType) {
@@ -51,15 +52,17 @@ const FileUpload = ({ onFileUpload }) => {
         return;
       }
 
-      // Success message for valid files
-      showToast("File(s) uploaded successfully.", "success");
+      // If the file is valid, add the file to upload box
+      if (validFiles.length > 0) {
+        const uploadedFiles = validFiles.map((file) =>
+          Object.assign(file, { preview: URL.createObjectURL(file) })
+        );
+        setFiles((prevFiles) => [...prevFiles, ...uploadedFiles]); // Update files state
+        if (onFileUpload) onFileUpload([...files, ...uploadedFiles]); // Call the parent function
 
-      // Add mew file
-      const uploadedFiles = validFiles.map((file) =>
-        Object.assign(file, { preview: URL.createObjectURL(file) })
-      );
-      setFiles((prevFiles) => [...prevFiles, ...uploadedFiles]); // Update files state
-      if (onFileUpload) onFileUpload([...files, ...uploadedFiles]); // Call the parent function
+        // Success message for valid files
+        showToast("File(s) uploaded successfully.", "success");
+      }
     },
     [onFileUpload, files] // Dependencies
   );
