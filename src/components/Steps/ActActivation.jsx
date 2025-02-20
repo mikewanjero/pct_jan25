@@ -34,7 +34,7 @@ const ActActivation = () => {
   const [phoneNumber, setPhoneNumber] = useState("");
   const [termsChecked, setTermsChecked] = useState(false);
   const [errors, setErrors] = useState({});
-  const [toastMessage, setToastMessage] = useState(null); // Toast message
+  const [toastMessage, setToastMessage] = useState(""); // Toast message
   const [showToast, setShowToast] = useState(false); // Show toast
 
   //Function to handle form changes
@@ -332,7 +332,7 @@ const ActActivation = () => {
         onClose={() => setShowToast(false)}
         delay={4000}
         autohide
-        bg={toastMessage.includes("Error") ? "danger" : "success"}
+        bg={toastMessage?.includes("Error") ? "danger" : "success"}
         className="position-fixed bottom-0 end-0 m-4"
       >
         <Toast.Body>{toastMessage}</Toast.Body>
