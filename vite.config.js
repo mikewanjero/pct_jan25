@@ -7,9 +7,7 @@ import { fileURLToPath } from "url";
 export default defineConfig({
   css: {
     preprocessorOptions: {
-      scss: {
-        additionalData: `@use "bootstrap" as *;`,
-      },
+      scss: {},
     },
   },
   plugins: [react()],
