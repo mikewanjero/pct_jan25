@@ -5,6 +5,13 @@ import { fileURLToPath } from "url";
 
 // https://vite.dev/config/
 export default defineConfig({
+  css: {
+    preprocessorOptions: {
+      scss: {
+        additionalData: `@use "bootstrap" as *;`,
+      },
+    },
+  },
   plugins: [react()],
   resolve: {
     "@styles": path.resolve(
