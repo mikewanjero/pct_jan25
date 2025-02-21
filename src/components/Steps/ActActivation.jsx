@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { Button, Form, InputGroup, Toast } from "react-bootstrap";
 import axios from "axios";
 import { BsArrowLeft, BsEye, BsEyeSlash } from "react-icons/bs";
@@ -12,6 +12,8 @@ import PackageInfo from "../Subscription/PackageInfo";
 
 const ActActivation = () => {
   const navigate = useNavigate();
+  const { id } = useParams();
+
   const [formData, setFormData] = useState({
     email: "",
     businessEmail: "",
@@ -22,7 +24,7 @@ const ActActivation = () => {
     companyName: "",
     companyID: "",
   });
-  const [cusCode, setCusCode] = useState("");
+  const [cusCode, setCusCode] = useState(id);
   const [error, setError] = useState(""); // Error state for the form
   const [loading, setLoading] = useState(false);
   const [packageInfo, setPackageInfo] = useState({
@@ -36,6 +38,13 @@ const ActActivation = () => {
   const [errors, setErrors] = useState({});
   const [toastMessage, setToastMessage] = useState(""); // Toast message
   const [showToast, setShowToast] = useState(false); // Show toast
+
+  // Set the customer code from the URL
+  useEffect(() => {
+    if (id) {
+      setCusCode(id);
+    }
+  }, [id]);
 
   //Function to handle form changes
   const handleChange = (e) => {
@@ -61,6 +70,7 @@ const ActActivation = () => {
     if (Object.keys(newErrors).length === 0) {
       // Proceed with form submission
       const requestData = {
+        cusCode: cusCode,
         email: formData.email,
         businessEmail: formData.businessEmail,
         username: formData.username,
@@ -77,7 +87,7 @@ const ActActivation = () => {
       // Call the API to activate the client
       try {
         const response = await axios.post(
-          "http:/102.37.102.247:5028/api/NewClients/ActivateClient",
+          "http://corebasevm.southafricanorth.cloudapp.azure.com:5028/api/NewClients/ActivateClient",
           requestData,
           {
             headers: {
@@ -126,7 +136,8 @@ const ActActivation = () => {
       try {
         const response = await axios.get(
           // `http://102.37.102.247:5028/api/NewClients/GetClientsDetails?cuscode=${dynamicCusCode || cusCode}`,
-          `http://102.37.102.247:5028/api/NewClients/GetClientsDetails?cuscode=J89MUZ`,
+          // `http://corebasevm.southafricanorth.cloudapp.azure.com:5028/api/Clients/GetClients`
+          `http://corebasevm.southafricanorth.cloudapp.azure.com:5028/api/NewClients/GetClientsDetails?cuscode=CUS0315`,
           {
             headers: {
               accesskey:
@@ -153,19 +164,18 @@ const ActActivation = () => {
         setLoading(false);
 
         // Redirect the URL if the companyID is not equal to customer code
-        if (companyID !== cusCode) {
-          setCusCode(companyID);
-          navigate(`/${companyID}`, { replace: true });
-        }
+        // if (companyID !== cusCode) {
+        //   setCusCode(companyID);
+        //   navigate(`/${companyID}`, { replace: true });
+        // }
       } catch (error) {
         console.error("Error fetching data:", error);
         setError("Failed to fetch company details.");
         setLoading(false);
       }
     };
-
     fetchData();
-  }, [cusCode, navigate]);
+  }, [id]);
 
   return (
     <div className="container">
@@ -314,10 +324,7 @@ const ActActivation = () => {
                   </h3>
                 </div>
               )}
-              <PackageInfo
-                companyName={companyDetails.companyName}
-                packageInfo={packageInfo}
-              />
+              <PackageInfo packageInfo={packageInfo} />
               <TermsSection
                 termsChecked={termsChecked}
                 onChange={(e) => setTermsChecked(e.target.checked)}
