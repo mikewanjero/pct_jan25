@@ -67,6 +67,10 @@ const ActActivation = () => {
 
     setErrors(newErrors);
 
+    // If there are errors, prevent submission
+    if (Object.keys(newErrors).length > 0) return;
+    setLoading(true);
+
     if (Object.keys(newErrors).length === 0) {
       // Proceed with form submission
       const requestData = {
@@ -204,7 +208,8 @@ const ActActivation = () => {
                       placeholder="Email"
                       value={formData.email}
                       onChange={handleChange}
-                      required
+                      className={errors.email ? "is-invalid" : ""}
+                      // required
                     />
                     <Form.Control.Feedback type="invalid">
                       {errors.email}
@@ -230,7 +235,8 @@ const ActActivation = () => {
                       value={formData.username}
                       onChange={handleChange}
                       isInvalid={!!errors.username}
-                      required
+                      className={errors.username ? "is-invalid" : ""}
+                      // required
                     />
                     <Form.Control.Feedback type="invalid">
                       {errors.username}
@@ -244,7 +250,9 @@ const ActActivation = () => {
                         setPhoneNumber(phone);
                         setErrors({ ...errors, phoneNumber: "" }); // Remove error message after the user inputs the number
                       }}
-                      inputClass="form-control phone-input"
+                      inputClass={`form-control phone-input ${
+                        errors.phoneNumber ? "is-invalid" : ""
+                      }`}
                       containerClass="phone-container"
                       buttonClass="phone-dropdown-btn"
                     />
@@ -263,7 +271,8 @@ const ActActivation = () => {
                       value={formData.password}
                       onChange={handleChange}
                       isInvalid={!!errors.password}
-                      required
+                      className={errors.password ? "is-invalid" : ""}
+                      // required
                     />
                     <Button
                       variant="outline-secondary"
