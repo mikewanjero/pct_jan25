@@ -136,7 +136,7 @@ const ActActivation = () => {
       try {
         const response = await axios.get(
           // `http://102.37.102.247:5028/api/NewClients/GetClientsDetails?cuscode=${dynamicCusCode || cusCode}`,
-          // `http://corebasevm.southafricanorth.cloudapp.azure.com:5028/api/Clients/GetClients`
+          // `http://corebasevm.southafricanorth.cloudapp.azure.com:5028/api/Clients/GetClients?ccode=${cusCode}`,
           `http://corebasevm.southafricanorth.cloudapp.azure.com:5028/api/NewClients/GetClientsDetails?cuscode=CUS0315`,
           {
             headers: {
