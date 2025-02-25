@@ -162,15 +162,10 @@ const ActActivation = () => {
         setCompanyDetails({ companyName, companyID });
         setPackageInfo({ name, branches, users });
         setLoading(false);
-
-        // Redirect the URL if the companyID is not equal to customer code
-        // if (companyID !== cusCode) {
-        //   setCusCode(companyID);
-        //   navigate(`/${companyID}`, { replace: true });
-        // }
       } catch (error) {
         console.error("Error fetching data:", error);
         setError("Failed to fetch company details.");
+      } finally {
         setLoading(false);
       }
     };
@@ -317,8 +312,8 @@ const ActActivation = () => {
                 <div className="company-info">
                   <h3>
                     {loading
-                      ? error
-                      : companyDetails.companyName && companyDetails.companyID
+                      ? error || "Loading company details..."
+                      : companyDetails.companyName
                       ? `${companyDetails.companyName} - ${companyDetails.companyID}`
                       : "Details not Fetched"}
                   </h3>
