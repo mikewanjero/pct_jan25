@@ -137,7 +137,7 @@ const ActActivation = () => {
         const response = await axios.get(
           // `http://102.37.102.247:5028/api/NewClients/GetClientsDetails?cuscode=${dynamicCusCode || cusCode}`,
           // `http://corebasevm.southafricanorth.cloudapp.azure.com:5028/api/Clients/GetClients?ccode=${cusCode}`,
-          `http://corebasevm.southafricanorth.cloudapp.azure.com:5028/api/NewClients/GetClientsDetails?cuscode=CUS0315`,
+          `http://corebasevm.southafricanorth.cloudapp.azure.com:5028/api/NewClients/GetClientsDetails?cuscode=QZLUGO`,
           {
             headers: {
               accesskey:
@@ -154,6 +154,7 @@ const ActActivation = () => {
           psUserCount: users,
         } = response.data;
 
+        console.log(companyName, companyID);
         // Validation when companyID is empty
         if (!companyID) {
           throw new Error("Company ID is missing.");
