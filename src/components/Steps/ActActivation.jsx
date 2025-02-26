@@ -1,17 +1,16 @@
 import { useState, useEffect } from "react";
-import { useNavigate, useParams } from "react-router-dom";
-import { Button, Form, InputGroup, Toast } from "react-bootstrap";
+import { useParams } from "react-router-dom";
+import { Button, Form, InputGroup, Toast, Accordion } from "react-bootstrap";
 import axios from "axios";
-import { BsArrowLeft, BsEye, BsEyeSlash } from "react-icons/bs";
+import { BsEye, BsEyeSlash } from "react-icons/bs";
 import phamacoreLogo from "../../assets/images/phamacore.png";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
-import Sidebar from "../Sidebar/Sidebar";
 import TermsSection from "../Subscription/TermsSection";
 import PackageInfo from "../Subscription/PackageInfo";
 
 const ActActivation = () => {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const { id } = useParams();
 
   const [formData, setFormData] = useState({
@@ -39,6 +38,9 @@ const ActActivation = () => {
   const [toastMessage, setToastMessage] = useState(""); // Toast message
   const [showToast, setShowToast] = useState(false); // Show toast
 
+  const [trainingSheet, setTrainingSheet] = useState(null);
+  const [masterDoc, setMasterDoc] = useState(null);
+
   // Set the customer code from the URL
   useEffect(() => {
     if (id) {
@@ -46,13 +48,18 @@ const ActActivation = () => {
     }
   }, [id]);
 
-  //Function to handle form changes
+  // Function to handle form changes
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value }); // Update form data
     setErrors({ ...errors, [e.target.name]: "" }); // Clear errors when typing
   };
 
-  //Function to handle form submission
+  // Function to handle file uploads from accordion
+  const handleFileUpload = (e, FileSetter) => {
+    FileSetter(e.target.files[0]);
+  };
+
+  // Function to handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
     let newErrors = {};
@@ -180,8 +187,6 @@ const ActActivation = () => {
   return (
     <div className="container">
       <div className="form-container">
-        <Sidebar currentStep={2} />
-
         <div className="form-content">
           {/* Header */}
           <div className="d-flex flex-column align-items-center mb-4">
@@ -290,27 +295,47 @@ const ActActivation = () => {
                     </Form.Control.Feedback>
                   </InputGroup>
                 </Form.Group>
-                <div className="d-flex w-100 mt-3">
-                  {/* Adjusted alignment */}
-                  <Button
-                    className="activate-btn w-100"
-                    disabled={!termsChecked}
-                    type="submit"
-                  >
-                    Activate My Account
-                  </Button>
-                </div>
-              </Form>
 
-              <div className="d-flex justify-content-start mt-3">
+                {/* Accordion - File Uploads */}
+                <Accordion defaultActiveKey={0} className="mt-4">
+                  <Accordion.Item eventKey={0}>
+                    <Accordion.Header>Upload Training Sheet</Accordion.Header>
+                    <Accordion.Body>
+                      <Form.Group controlId="trainingSheet">
+                        <Form.Control
+                          type="file"
+                          onChange={(e) =>
+                            handleFileUpload(e, setTrainingSheet)
+                          }
+                        />
+                      </Form.Group>
+                    </Accordion.Body>
+                  </Accordion.Item>
+
+                  <Accordion.Item eventKey={1} className="mt-4">
+                    <Accordion.Header>
+                      Upload Master Document(opt.)
+                    </Accordion.Header>
+                    <Accordion.Body>
+                      <Form.Group controlId="trainingSheet">
+                        <Form.Control
+                          type="file"
+                          onChange={(e) => handleFileUpload(e, setMasterDoc)}
+                        />
+                      </Form.Group>
+                    </Accordion.Body>
+                  </Accordion.Item>
+                </Accordion>
+              </Form>
+              <div className="d-flex w-100 mt-3">
                 {/* Adjusted alignment */}
                 <Button
-                  className="previous-btn"
-                  variant="secondary"
-                  onClick={() => navigate("/master-doc-upload")}
+                  className="activate-btn w-100"
+                  disabled={!termsChecked}
+                  onSubmit={handleSubmit}
+                  type="submit"
                 >
-                  <span className="btn-text">Previous</span>
-                  <BsArrowLeft className="btn-icon" />
+                  Activate My Account
                 </Button>
               </div>
             </div>
