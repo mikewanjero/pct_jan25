@@ -38,8 +38,8 @@ const ActActivation = () => {
   const [toastMessage, setToastMessage] = useState(""); // Toast message
   const [showToast, setShowToast] = useState(false); // Show toast
 
-  const [trainingSheet, setTrainingSheet] = useState(null);
-  const [masterDoc, setMasterDoc] = useState(null);
+  const [trainingSheet, setTrainingSheet] = useState([]);
+  const [masterDoc, setMasterDoc] = useState([]);
 
   // Set the customer code from the URL
   useEffect(() => {
@@ -55,8 +55,42 @@ const ActActivation = () => {
   };
 
   // Function to handle file uploads from accordion
-  const handleFileUpload = (e, FileSetter) => {
-    FileSetter(e.target.files[0]);
+  const handleFileUpload = (e, currentFiles, FileSetter) => {
+    const newFiles = Array.from(e.target.files);
+    const updatedFiles = [...currentFiles, ...newFiles];
+
+    // Check for file type and size
+    let invalidFileType = false;
+    let overSize = false;
+
+    updatedFiles.forEach((file) => {
+      const isExcel =
+        [
+          "application/vnd.ms-excel",
+          "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+        ].includes(file.type) ||
+        [".xls, .xlsx"].some((ext) => file.name.endsWith(ext));
+
+      if (!isExcel) invalidFileType = true;
+      if (file.size > 5 * 1024 * 1024) overSize = true;
+    });
+
+    if (invalidFileType) {
+      setToastMessage("Only Excel files (.xls, .xlsx) are allowed.");
+      setShowToast(true);
+      e.target.value = ""; // Clear the input field
+      return;
+    }
+
+    if (overSize) {
+      setToastMessage("Files must be smaller than 5 MB.");
+      setShowToast(true);
+      e.target.value = ""; // Resetting the input
+      return;
+    }
+
+    FileSetter(updatedFiles); // Update the file state
+    e.target.value = ""; // Resetting input
   };
 
   // Function to handle form submission
@@ -148,7 +182,7 @@ const ActActivation = () => {
         const response = await axios.get(
           // `http://102.37.102.247:5028/api/NewClients/GetClientsDetails?cuscode=${dynamicCusCode || cusCode}`,
           // `http://corebasevm.southafricanorth.cloudapp.azure.com:5028/api/Clients/GetClients?ccode=${cusCode}`,
-          `http://corebasevm.southafricanorth.cloudapp.azure.com:5028/api/NewClients/GetClientsDetails?cuscode=K68W3X`,
+          `http://corebasevm.southafricanorth.cloudapp.azure.com:5028/api/NewClients/GetClientsDetails?cuscode=T7H1PN`,
           {
             headers: {
               accesskey:
@@ -297,17 +331,34 @@ const ActActivation = () => {
                 </Form.Group>
 
                 {/* Accordion - File Uploads */}
-                <Accordion defaultActiveKey={0} className="mt-4">
+                <Accordion className="mt-4">
                   <Accordion.Item eventKey={0}>
                     <Accordion.Header>Upload Training Sheet</Accordion.Header>
                     <Accordion.Body>
                       <Form.Group controlId="trainingSheet">
                         <Form.Control
                           type="file"
+                          multiple
+                          accept=".xls,.xlsx, application/vnd.ms-excel, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
                           onChange={(e) =>
-                            handleFileUpload(e, setTrainingSheet)
+                            handleFileUpload(e, setTrainingSheet, trainingSheet)
                           }
                         />
+                        {trainingSheet.length > 0 && (
+                          <div className="mt-2">
+                            <small>
+                              Selected files ({trainingSheet.length}/3):
+                            </small>
+                            <ul className="list-unstyled">
+                              {trainingSheet.map((file, index) => (
+                                <li key={index} className="text-muted">
+                                  {file.name} (
+                                  {(file.size / 1024 / 1024).toFixed(2)}MB)
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
+                        )}
                       </Form.Group>
                     </Accordion.Body>
                   </Accordion.Item>
@@ -317,11 +368,30 @@ const ActActivation = () => {
                       Upload Master Document(opt.)
                     </Accordion.Header>
                     <Accordion.Body>
-                      <Form.Group controlId="trainingSheet">
+                      <Form.Group controlId="masterDoc">
                         <Form.Control
                           type="file"
-                          onChange={(e) => handleFileUpload(e, setMasterDoc)}
+                          multiple
+                          accept=".xls,.xlsx, application/vnd.ms-excel, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+                          onChange={(e) =>
+                            handleFileUpload(e, setMasterDoc, masterDoc)
+                          }
                         />
+                        {masterDoc.length > 0 && (
+                          <div className="mt-2">
+                            <small>
+                              Selected files ({masterDoc.length}/3):
+                            </small>
+                            <ul className="list-unstyled">
+                              {masterDoc.map((file, index) => (
+                                <li key={index} className="text-muted">
+                                  {file.name} (
+                                  {(file.size / 1024 / 1024).toFixed(2)}MB)
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
+                        )}
                       </Form.Group>
                     </Accordion.Body>
                   </Accordion.Item>
