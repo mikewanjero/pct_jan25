@@ -1,13 +1,22 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { Button, Form, InputGroup, Toast, Accordion } from "react-bootstrap";
+import {
+  Button,
+  Form,
+  InputGroup,
+  Toast,
+  Accordion,
+  ListGroup,
+} from "react-bootstrap";
 import axios from "axios";
-import { BsEye, BsEyeSlash } from "react-icons/bs";
+import { BsEye, BsEyeSlash, BsTrash } from "react-icons/bs";
 import phamacoreLogo from "../../assets/images/phamacore.png";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
 import TermsSection from "../Subscription/TermsSection";
 import PackageInfo from "../Subscription/PackageInfo";
+
+const MAX_FILES = 4;
 
 const ActActivation = () => {
   // const navigate = useNavigate();
@@ -55,42 +64,41 @@ const ActActivation = () => {
   };
 
   // Function to handle file uploads from accordion
-  const handleFileUpload = (e, currentFiles, FileSetter) => {
+  const handleFileUpload = (e, currentFiles, setFiles) => {
     const newFiles = Array.from(e.target.files);
-    const updatedFiles = [...currentFiles, ...newFiles];
 
-    // Check for file type and size
-    let invalidFileType = false;
-    let overSize = false;
+    if (currentFiles.length + newFiles.length > MAX_FILES) {
+      setToastMessage(`You can only upload up to ${MAX_FILES - 1} files.`);
+      setShowToast(true);
+      e.target.value = "";
+      return;
+    }
 
-    updatedFiles.forEach((file) => {
-      const isExcel =
-        [
+    let invalidFile = newFiles.find(
+      (file) =>
+        ![
           "application/vnd.ms-excel",
           "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-        ].includes(file.type) ||
-        [".xls, .xlsx"].some((ext) => file.name.endsWith(ext));
+        ].includes(file.type)
+    );
 
-      if (!isExcel) invalidFileType = true;
-      if (file.size > 5 * 1024 * 1024) overSize = true;
-    });
-
-    if (invalidFileType) {
+    if (invalidFile) {
       setToastMessage("Only Excel files (.xls, .xlsx) are allowed.");
       setShowToast(true);
-      e.target.value = ""; // Clear the input field
+      e.target.value = "";
       return;
     }
 
-    if (overSize) {
-      setToastMessage("Files must be smaller than 5 MB.");
-      setShowToast(true);
-      e.target.value = ""; // Resetting the input
-      return;
-    }
+    setFiles([...currentFiles, ...newFiles]);
+    setToastMessage("File(s) uploaded successfully!");
+    setShowToast(true);
+    e.target.value = "";
+  };
 
-    FileSetter(updatedFiles); // Update the file state
-    e.target.value = ""; // Resetting input
+  // Handle file removal
+  const removeFile = (index, currentFiles, setFiles) => {
+    const updatedFiles = currentFiles.filter((_, i) => i !== index);
+    setFiles(updatedFiles);
   };
 
   // Function to handle form submission
@@ -343,21 +351,31 @@ const ActActivation = () => {
                           onChange={(e) =>
                             handleFileUpload(e, setTrainingSheet, trainingSheet)
                           }
+                          disabled={trainingSheet.length >= MAX_FILES}
                         />
                         {trainingSheet.length > 0 && (
-                          <div className="mt-2">
-                            <small>
-                              Selected files ({trainingSheet.length}/3):
-                            </small>
-                            <ul className="list-unstyled">
-                              {trainingSheet.map((file, index) => (
-                                <li key={index} className="text-muted">
-                                  {file.name} (
-                                  {(file.size / 1024 / 1024).toFixed(2)}MB)
-                                </li>
-                              ))}
-                            </ul>
-                          </div>
+                          <ListGroup className="mt-2">
+                            {trainingSheet.map((file, index) => (
+                              <ListGroup.Item
+                                key={index}
+                                className="d-flex justify-content-between"
+                              >
+                                {file.name} (
+                                {(file.size / 1024 / 1024).toFixed(2)}MB)
+                                <BsTrash
+                                  role="button"
+                                  onClick={() =>
+                                    removeFile(
+                                      index,
+                                      trainingSheet,
+                                      setTrainingSheet
+                                    )
+                                  }
+                                  className="text-danger"
+                                />
+                              </ListGroup.Item>
+                            ))}
+                          </ListGroup>
                         )}
                       </Form.Group>
                     </Accordion.Body>
@@ -376,21 +394,27 @@ const ActActivation = () => {
                           onChange={(e) =>
                             handleFileUpload(e, setMasterDoc, masterDoc)
                           }
+                          disabled={masterDoc.length >= MAX_FILES}
                         />
                         {masterDoc.length > 0 && (
-                          <div className="mt-2">
-                            <small>
-                              Selected files ({masterDoc.length}/3):
-                            </small>
-                            <ul className="list-unstyled">
-                              {masterDoc.map((file, index) => (
-                                <li key={index} className="text-muted">
-                                  {file.name} (
-                                  {(file.size / 1024 / 1024).toFixed(2)}MB)
-                                </li>
-                              ))}
-                            </ul>
-                          </div>
+                          <ListGroup className="mt-2">
+                            {masterDoc.map((file, index) => (
+                              <ListGroup.Item
+                                key={index}
+                                className="d-flex justify-content-between"
+                              >
+                                {file.name} (
+                                {(file.size / 1024 / 1024).toFixed(2)}MB)
+                                <BsTrash
+                                  role="button"
+                                  onClick={() =>
+                                    removeFile(index, masterDoc, setMasterDoc)
+                                  }
+                                  className="text-danger"
+                                />
+                              </ListGroup.Item>
+                            ))}
+                          </ListGroup>
                         )}
                       </Form.Group>
                     </Accordion.Body>
@@ -437,10 +461,15 @@ const ActActivation = () => {
       <Toast
         show={showToast}
         onClose={() => setShowToast(false)}
-        delay={4000}
+        delay={2500}
         autohide
-        bg={toastMessage?.includes("Error") ? "danger" : "success"}
-        className="position-fixed bottom-0 end-0 m-4"
+        bg={
+          toastMessage?.includes("Error") ||
+          toastMessage?.includes("upload up to")
+            ? "warning"
+            : "success"
+        }
+        className="position-fixed middle-0 end-0 m-4"
       >
         <Toast.Body>{toastMessage}</Toast.Body>
       </Toast>
