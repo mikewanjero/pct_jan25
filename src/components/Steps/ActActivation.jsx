@@ -9,7 +9,7 @@ import {
   ListGroup,
 } from "react-bootstrap";
 import axios from "axios";
-import { BsEye, BsEyeSlash, BsTrash } from "react-icons/bs";
+import { BsTrash } from "react-icons/bs";
 import phamacoreLogo from "../../assets/images/phamacore.png";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
@@ -40,6 +40,7 @@ const ActActivation = () => {
     branches: "",
     users: "",
   });
+  // eslint-disable-next-line no-unused-vars
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [phoneNumber, setPhoneNumber] = useState("");
   const [termsChecked, setTermsChecked] = useState(false);
@@ -324,17 +325,6 @@ const ActActivation = () => {
                       className={errors.password ? "is-invalid" : ""}
                       // required
                     />
-                    <Button
-                      variant="outline-secondary"
-                      onClick={() => setPasswordVisible(!passwordVisible)}
-                      className="password-toggle"
-                    >
-                      {passwordVisible ? (
-                        <BsEyeSlash size={20} />
-                      ) : (
-                        <BsEye size={20} />
-                      )}
-                    </Button>
                     <Form.Control.Feedback type="invalid">
                       {errors.password}
                     </Form.Control.Feedback>
