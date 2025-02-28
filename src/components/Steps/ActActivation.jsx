@@ -16,7 +16,7 @@ import "react-phone-input-2/lib/style.css";
 import TermsSection from "../Subscription/TermsSection";
 import PackageInfo from "../Subscription/PackageInfo";
 
-const MAX_FILES = 4;
+const MAX_FILES = 3;
 
 const ActActivation = () => {
   // const navigate = useNavigate();
@@ -65,11 +65,11 @@ const ActActivation = () => {
   };
 
   // Function to handle file uploads from accordion
-  const handleFileUpload = (e, currentFiles, setFiles) => {
+  const handleFileUpload = (e, files, currentFiles, setFiles) => {
     const newFiles = Array.from(e.target.files);
 
     if (currentFiles.length + newFiles.length > MAX_FILES) {
-      setToastMessage(`You can only upload up to ${MAX_FILES - 1} files.`);
+      setToastMessage(`You can only upload up to ${MAX_FILES} files.`);
       setShowToast(true);
       e.target.value = "";
       return;
@@ -90,15 +90,21 @@ const ActActivation = () => {
       return;
     }
 
-    setFiles([...currentFiles, ...newFiles]);
+    // Check for duplicates
+    const uniqueFiles = newFiles.filter(
+      (newFile) => !files.some((file) => file.name !== newFile.name)
+    );
+
+    setFiles([...currentFiles, ...uniqueFiles]);
     setToastMessage("File(s) uploaded successfully!");
     setShowToast(true);
     e.target.value = "";
   };
 
   // Handle file removal
-  const removeFile = (index, currentFiles, setFiles) => {
-    const updatedFiles = currentFiles.filter((_, i) => i !== index);
+  const removeFile = (index, files, setFiles) => {
+    const updatedFiles = [...files];
+    updatedFiles.splice(index, 1);
     setFiles(updatedFiles);
   };
 
@@ -353,8 +359,10 @@ const ActActivation = () => {
                                 key={index}
                                 className="d-flex justify-content-between"
                               >
-                                {file.name} (
-                                {(file.size / 1024 / 1024).toFixed(2)}MB)
+                                <span>
+                                  {file.name} (
+                                  {(file.size / 1024 / 1024).toFixed(2)}MB){" "}
+                                </span>
                                 <BsTrash
                                   role="button"
                                   onClick={() =>
@@ -396,8 +404,10 @@ const ActActivation = () => {
                                 key={index}
                                 className="d-flex justify-content-between"
                               >
-                                {file.name} (
-                                {(file.size / 1024 / 1024).toFixed(2)}MB)
+                                <span>
+                                  {file.name} (
+                                  {(file.size / 1024 / 1024).toFixed(2)}MB)
+                                </span>
                                 <BsTrash
                                   role="button"
                                   onClick={() =>
