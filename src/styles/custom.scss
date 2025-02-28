@@ -29,11 +29,11 @@ body {
   font-family: "Poppins", sans-serif;
 
   h1 {
-    font-size: 22px;
+    font-size: 20px;
   }
 
   h2 {
-    font-size: 20px;
+    font-size: 18px;
   }
 
   h3 {
@@ -41,7 +41,7 @@ body {
   }
 
   h4 {
-    font-size: 12px;
+    font-size: 13px;
   }
 
   h5 {
@@ -55,6 +55,15 @@ body {
 
 * {
   font-family: inherit;
+}
+
+.auth-btn,
+.auth-btn:hover {
+  background-color: #c58c4f !important;
+  border-color: #c99053 !important;
+  font-size: 14px !important;
+  color: #fff !important;
+  height: 2rem !important;
 }
 
 .company-info {
@@ -86,6 +95,17 @@ body {
   min-height: 100vh;
   min-width: 100vw;
   padding: 2rem;
+}
+
+.copy-right .company-lg {
+  font-weight: 600 !important;
+  font-size: 9px !important;
+  color: #5d3915;
+}
+
+.copy-right .company-sm {
+  font-weight: 500 !important;
+  font-size: 9px !important;
 }
 
 .file-upload-container {
