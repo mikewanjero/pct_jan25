@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import React from "react";
+import React, { useState } from "react";
 import corebaseLogo from "../../assets/images/corebaseLogo.png";
 import phamacoreLogo from "../../assets/images/phamacoreLogo.png";
 import {
@@ -9,11 +9,14 @@ import {
   FormLabel,
   Card,
   CardBody,
+  FormCheck,
 } from "react-bootstrap";
 import { FormGroup } from "react-bootstrap";
 import { BsLockFill } from "react-icons/bs";
 
 export default function Login() {
+  const [agreed, setAgreed] = useState(false);
+
   return (
     <div className="container-fluid min-vh-100 d-flex align-items-center">
       <div className="mx-auto">
@@ -36,16 +39,31 @@ export default function Login() {
               </div>
             </div>
             <Form autoComplete="off">
-              <FormGroup className="mb-2">
+              <FormGroup className="mb-3">
                 <FormLabel style={{ fontSize: 13 }}>Customer Name</FormLabel>
                 <FormControl type="cusname" />
               </FormGroup>
-              <FormGroup className="mb-4">
+              <FormGroup className="mb-3">
                 <FormLabel style={{ fontSize: 13 }}>Client Code</FormLabel>
                 <FormControl type="cuscode" />
               </FormGroup>
+
+              <FormGroup>
+                <FormCheck
+                  type="checkbox"
+                  label="I agree to the GDPR & Data Privacy Policy"
+                  checked={agreed}
+                  onChange={(e) => setAgreed(e.target.checked)}
+                  className="mb-2"
+                />
+              </FormGroup>
+
               <div className="d-grid gap-2">
-                <Button type="submit" className="auth auth-btn btn-sm">
+                <Button
+                  type="submit"
+                  className="auth auth-btn btn-sm"
+                  disabled={!agreed}
+                >
                   Login
                 </Button>
               </div>
