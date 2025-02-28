@@ -188,7 +188,6 @@ const ActActivation = () => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          // `http://102.37.102.247:5028/api/NewClients/GetClientsDetails?cuscode=${dynamicCusCode || cusCode}`,
           // `http://corebasevm.southafricanorth.cloudapp.azure.com:5028/api/Clients/GetClients?ccode=${cusCode}`,
           `http://corebasevm.southafricanorth.cloudapp.azure.com:5028/api/NewClients/GetClientsDetails?cuscode=T7H1PN`,
           {
@@ -246,7 +245,11 @@ const ActActivation = () => {
             <div className="form-inputs">
               {/* Left side: Form inputs */}
               <h2 className="text-danger">Activate Subscription</h2>
-              <Form className="form-elements" onSubmit={handleSubmit}>
+              <Form
+                className="form-elements"
+                onSubmit={handleSubmit}
+                autoComplete="off"
+              >
                 <div className="input-column">
                   <Form.Group controlId="email" className="flex-grow-1">
                     <Form.Control
