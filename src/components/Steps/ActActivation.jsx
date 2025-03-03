@@ -112,6 +112,8 @@ const ActActivation = () => {
     if (!formData.password) newErrors.password = "Password is required";
     if (!termsChecked)
       newErrors.termsChecked = "You must agree to the terms and conditions.";
+    if (trainingSheet.length === 0)
+      newErrors.trainingSheet = "Training Sheet(s) upload is required";
 
     setErrors(newErrors);
 
@@ -129,6 +131,7 @@ const ActActivation = () => {
       requestData.append("password", formData.password);
       requestData.append("phone", phoneNumber);
 
+      // eslint-disable-next-line no-unused-vars
       trainingSheet.forEach((file, index) => {
         requestData.append(`trainingSheet`, file);
       });
@@ -183,6 +186,7 @@ const ActActivation = () => {
         });
         setPhoneNumber("");
         setTermsChecked(false);
+        setTrainingSheet([]);
       }
     }
   };
