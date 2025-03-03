@@ -1,15 +1,7 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import {
-  Button,
-  Form,
-  InputGroup,
-  Toast,
-  Accordion,
-  ListGroup,
-} from "react-bootstrap";
+import { Button, Form, InputGroup, Toast, Accordion } from "react-bootstrap";
 import axios from "axios";
-import { BsTrash } from "react-icons/bs";
 import phamacoreLogo from "../../assets/images/phamacoreLogo.png";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
@@ -102,11 +94,11 @@ const ActActivation = () => {
   };
 
   // Handle file removal
-  const removeFile = (index, files, setFiles) => {
-    const updatedFiles = [...files];
-    updatedFiles.splice(index, 1);
-    setFiles(updatedFiles);
-  };
+  // const removeFile = (index, files, setFiles) => {
+  //   const updatedFiles = [...files];
+  //   updatedFiles.splice(index, 1);
+  //   setFiles(updatedFiles);
+  // };
 
   // Function to handle form submission
   const handleSubmit = async (e) => {
@@ -361,39 +353,13 @@ const ActActivation = () => {
                           }
                           disabled={trainingSheet.length >= MAX_FILES}
                         />
-                        {trainingSheet.length > 0 && (
-                          <ListGroup className="mt-2">
-                            {trainingSheet.map((file, index) => (
-                              <ListGroup.Item
-                                key={index}
-                                className="d-flex justify-content-between"
-                              >
-                                <span>
-                                  {file.name} (
-                                  {(file.size / 1024 / 1024).toFixed(2)}MB){" "}
-                                </span>
-                                <BsTrash
-                                  role="button"
-                                  onClick={() =>
-                                    removeFile(
-                                      index,
-                                      trainingSheet,
-                                      setTrainingSheet
-                                    )
-                                  }
-                                  className="text-danger"
-                                />
-                              </ListGroup.Item>
-                            ))}
-                          </ListGroup>
-                        )}
                       </Form.Group>
                     </Accordion.Body>
                   </Accordion.Item>
 
-                  <Accordion.Item eventKey={1} className="mt-4">
+                  <Accordion.Item eventKey={1} className="mt-3">
                     <Accordion.Header>
-                      Upload Master Document(opt.)
+                      Upload Master Document (Optional)
                     </Accordion.Header>
                     <Accordion.Body>
                       <Form.Group controlId="masterDoc">
@@ -406,28 +372,6 @@ const ActActivation = () => {
                           }
                           disabled={masterDoc.length >= MAX_FILES}
                         />
-                        {masterDoc.length > 0 && (
-                          <ListGroup className="mt-2">
-                            {masterDoc.map((file, index) => (
-                              <ListGroup.Item
-                                key={index}
-                                className="d-flex justify-content-between"
-                              >
-                                <span>
-                                  {file.name} (
-                                  {(file.size / 1024 / 1024).toFixed(2)}MB)
-                                </span>
-                                <BsTrash
-                                  role="button"
-                                  onClick={() =>
-                                    removeFile(index, masterDoc, setMasterDoc)
-                                  }
-                                  className="text-danger"
-                                />
-                              </ListGroup.Item>
-                            ))}
-                          </ListGroup>
-                        )}
                       </Form.Group>
                     </Accordion.Body>
                   </Accordion.Item>
