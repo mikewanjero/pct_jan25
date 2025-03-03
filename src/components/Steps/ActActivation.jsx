@@ -121,18 +121,23 @@ const ActActivation = () => {
 
     if (Object.keys(newErrors).length === 0) {
       // Proceed with form submission
-      const requestData = {
-        cusCode: cusCode,
-        email: formData.email,
-        businessEmail: formData.businessEmail,
-        username: formData.username,
-        password: formData.password,
-        phone: phoneNumber,
-      };
+      const requestData = new FormData();
+      requestData.append("cusCode", cusCode);
+      requestData.append("email", formData.email);
+      requestData.append("businessEmail", formData.businessEmail);
+      requestData.append("username", formData.username);
+      requestData.append("password", formData.password);
+      requestData.append("phone", phoneNumber);
+
+      trainingSheet.forEach((file, index) => {
+        requestData.append(`trainingSheet`, file);
+      });
+
       console.log("Form submitted:", {
         ...requestData,
         password: "******",
         termsChecked,
+        trainingSheet: trainingSheet.map((file) => file.name),
       });
       setLoading(true);
 
@@ -144,7 +149,7 @@ const ActActivation = () => {
           {
             headers: {
               Accept: "application/json",
-              "Content-Type": "application/json",
+              "Content-Type": "multipart/form-data",
               accesskey:
                 "R0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9",
             },
