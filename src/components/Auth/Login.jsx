@@ -40,11 +40,11 @@ export default function Login() {
             </div>
             <Form autoComplete="off">
               <FormGroup className="mb-3">
-                <FormLabel style={{ fontSize: 13 }}>Customer Name</FormLabel>
+                <FormLabel style={{ fontSize: 13 }}>User Name</FormLabel>
                 <FormControl type="cusname" />
               </FormGroup>
               <FormGroup className="mb-3">
-                <FormLabel style={{ fontSize: 13 }}>Client Code</FormLabel>
+                <FormLabel style={{ fontSize: 13 }}>Password</FormLabel>
                 <FormControl type="cuscode" />
               </FormGroup>
 
@@ -55,6 +55,7 @@ export default function Login() {
                   checked={agreed}
                   onChange={(e) => setAgreed(e.target.checked)}
                   className="mb-2"
+                  style={{ fontSize: 10 }}
                 />
               </FormGroup>
 
