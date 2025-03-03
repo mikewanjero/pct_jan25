@@ -51,11 +51,28 @@ export default function Login() {
               <FormGroup>
                 <FormCheck
                   type="checkbox"
-                  label="I agree to the GDPR & Data Privacy Policy"
                   checked={agreed}
                   onChange={(e) => setAgreed(e.target.checked)}
                   className="mb-2"
                   style={{ fontSize: 10 }}
+                  label={
+                    <span>
+                      I agree to the
+                      {""}
+                      <a
+                        href="/privacy-policy"
+                        target="blank"
+                        rel="noopener noreferrer"
+                        style={{
+                          color: "rgb(197, 140, 79)",
+                          textDecoration: "none",
+                        }}
+                      >
+                        {" "}
+                        GDPR & Data Privacy Policy
+                      </a>
+                    </span>
+                  }
                 />
               </FormGroup>
 
