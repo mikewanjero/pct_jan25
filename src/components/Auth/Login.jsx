@@ -61,7 +61,7 @@ export default function Login() {
                       {""}
                       <a
                         href="/privacy-policy"
-                        target="blank"
+                        target="_blank"
                         rel="noopener noreferrer"
                         style={{
                           color: "rgb(197, 140, 79)",
@@ -95,7 +95,15 @@ export default function Login() {
                     className="fw-semibold"
                     style={{ color: "rgb(197, 140, 79)" }}
                   >
-                    Forgot Password?
+                    <a
+                      href="/forgot-password"
+                      style={{
+                        color: "rgb(197, 140, 79)",
+                        textDecoration: "none",
+                      }}
+                    >
+                      Forgot Password?
+                    </a>
                   </span>
                 </p>
               </div>
