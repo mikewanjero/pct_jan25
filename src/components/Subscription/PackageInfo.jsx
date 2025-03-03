@@ -9,7 +9,7 @@ export default function PackageInfo({ companyName, packageInfo }) {
           className="text-caramel fw-semibold text-center"
           style={{ fontSize: "1.5rem", color: "#c58c4f" }}
         >
-          {packageInfo.name}
+          <p>Package: {packageInfo.name}</p>
         </h2>
 
         <div className="d-flex justify-content-around mt-2">
