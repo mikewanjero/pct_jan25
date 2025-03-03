@@ -7,8 +7,8 @@ export default function TermsSection({ termsChecked, onChange }) {
   return (
     <>
       <div className="text-muted text-sm mb-4 mt-10">
-        <h4 className="text-dark">Terms & Conditions</h4>
-        <p>
+        {/* <h4 className="text-dark">Terms & Conditions</h4> */}
+        <p style={{ fontSize: 12 }}>
           By Activating My Account, I agree to the CoreBase Solutions
           phAMACoreCloud Agreement.
           <br />
@@ -18,7 +18,7 @@ export default function TermsSection({ termsChecked, onChange }) {
           <em>Check your confirmation email for details.</em>
         </p>
         <br />
-        <p>
+        <p style={{ fontSize: 12 }}>
           I understand I am also creating a new phAMACoreCloud Account. By
           signing up to create an account and subsequent user accounts I accept
           phAMACoreCloud Terms of Use and Privacy Policy as shared in
@@ -33,6 +33,7 @@ export default function TermsSection({ termsChecked, onChange }) {
             name="terms"
             checked={termsChecked}
             onChange={onChange}
+            style={{ fontSize: 14 }}
             label={
               <>
                 By clicking Activate My Account, I agree to the
