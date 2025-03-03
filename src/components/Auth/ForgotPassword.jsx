@@ -23,7 +23,7 @@ export default function ForgotPassword() {
     >
       <div className="mx-auto">
         <Card className="shadow">
-          <CardBody className="p-4">
+          <CardBody className="p-5">
             <div className="text-center">
               <img
                 src={phamacoreLogo}
