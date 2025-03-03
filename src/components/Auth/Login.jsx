@@ -32,9 +32,9 @@ export default function Login() {
             </div>
             <div className="text-center">
               <div className="mb-2">
-                <h2 className="mb-1">Welcome back!</h2>
+                <h2 className="mb-1">Welcome!</h2>
                 <p className="mb-0 text-secondary">
-                  Please enter your credentials to sign in!
+                  Please enter your credentials to sign in.
                 </p>
               </div>
             </div>
