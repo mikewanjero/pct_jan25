@@ -18,7 +18,7 @@ export default function Login() {
   const [agreed, setAgreed] = useState(false);
 
   return (
-    <div className="container-fluid min-vh-100 d-flex align-items-center">
+    <div className="container-fluid d-flex align-items-center">
       <div className="mx-auto">
         <Card className="login-card shadow">
           <CardBody className="p-4">
@@ -61,7 +61,6 @@ export default function Login() {
                       {""}
                       <a
                         href="/privacy-policy"
-                        target="_blank"
                         rel="noopener noreferrer"
                         style={{
                           color: "rgb(197, 140, 79)",
@@ -97,6 +96,7 @@ export default function Login() {
                   >
                     <a
                       href="/forgot-password"
+                      rel="noopener noreferrer"
                       style={{
                         color: "rgb(197, 140, 79)",
                         textDecoration: "none",
