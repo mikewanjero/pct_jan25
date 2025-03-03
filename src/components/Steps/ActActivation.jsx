@@ -10,7 +10,7 @@ import {
 } from "react-bootstrap";
 import axios from "axios";
 import { BsTrash } from "react-icons/bs";
-import phamacoreLogo from "../../assets/images/phamacore.png";
+import phamacoreLogo from "../../assets/images/phamacoreLogo.png";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
 import TermsSection from "../Subscription/TermsSection";
@@ -237,21 +237,30 @@ const ActActivation = () => {
       <div className="form-container">
         <div className="form-content">
           {/* Header */}
-          <div className="d-flex flex-column align-items-center mb-4">
-            <img src={phamacoreLogo} alt="logo" className="w-20 h-20" />
-            <h1 className="display-6 fw-bold" style={{ color: "#c58c4f" }}>
+          <div className="d-flex flex-column align-items-center mb-3">
+            <img
+              src={phamacoreLogo}
+              alt="logo"
+              className="img-fluid d-flex justify-content-center m-auto"
+              width={160}
+            />
+            <h3 className="fw-bold mt-4" style={{ color: "#c58c4f" }}>
               phAMACore<sup>™</sup>Cloud
-            </h1>
+            </h3>
           </div>
           <div className="form-header">
-            <h2>Complete the Account Activation</h2>
-            <p>Fill in the details to activate your account.</p>
+            <h5 style={{ fontWeight: "bold" }}>
+              Complete the Account Activation
+            </h5>
+            <p className="text-secondary">
+              Fill in the details to activate your account.
+            </p>
           </div>
 
           <div className="form-sections">
             <div className="form-inputs">
               {/* Left side: Form inputs */}
-              <h2 className="text-danger">Activate Subscription</h2>
+              <h5 className="text-danger">Activate Subscription</h5>
               <Form
                 className="form-elements"
                 onSubmit={handleSubmit}
