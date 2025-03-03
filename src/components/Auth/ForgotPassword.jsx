@@ -1,5 +1,6 @@
 // eslint-disable-next-line no-unused-vars
 import React from "react";
+import corebaseLogo from "../../assets/images/corebaseLogo.png";
 import phamacoreLogo from "../../assets/images/phamacoreLogo.png";
 import {
   Button,
@@ -16,7 +17,10 @@ export default function ForgotPassword() {
   const navigate = useNavigate();
 
   return (
-    <div className="container-fluid min-vh-100 d-flex align-items-center">
+    <div
+      className="container-fluid d-flex align-items-center"
+      style={{ minWidth: 450, minHeight: 400 }}
+    >
       <div className="mx-auto">
         <Card className="shadow">
           <CardBody className="p-4">
@@ -46,6 +50,7 @@ export default function ForgotPassword() {
                   style={{
                     backgroundColor: "rgb(79, 204, 48)",
                     borderColor: "rgb(79, 204, 48)",
+                    width: 150,
                   }}
                 >
                   Send Reset Link
@@ -57,6 +62,7 @@ export default function ForgotPassword() {
                   style={{
                     backgroundColor: "rgb(197, 140, 79)",
                     borderColor: "rgb(197, 140, 79)",
+                    width: 150,
                   }}
                 >
                   Cancel
@@ -65,6 +71,18 @@ export default function ForgotPassword() {
             </Form>
           </CardBody>
         </Card>
+        <footer id="footer">
+          <div className="copy-right text-center my-2">
+            <p className="m-0 company-sm">Powered by</p>
+            <img
+              src={corebaseLogo}
+              width={15}
+              className="img-fluid"
+              alt="company brand logo"
+            />
+            <p className="m-0 company-lg">CoreBase Solutions</p>
+          </div>
+        </footer>
       </div>
     </div>
   );
