@@ -244,15 +244,15 @@ const ActActivation = () => {
               className="img-fluid d-flex justify-content-center m-auto"
               width={160}
             />
-            <h3 className="fw-bold mt-4" style={{ color: "#c58c4f" }}>
+            <h2 className="fw-bold mt-4" style={{ color: "#c58c4f" }}>
               phAMACore<sup>™</sup>Cloud
-            </h3>
+            </h2>
           </div>
           <div className="form-header">
             <h5 style={{ fontWeight: "bold" }}>
               Complete the Account Activation
             </h5>
-            <p className="text-secondary">
+            <p className="text-secondary fs-6">
               Fill in the details to activate your account.
             </p>
           </div>
