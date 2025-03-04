@@ -38,7 +38,7 @@ export default function TermsSection({ termsChecked, onChange }) {
               <>
                 By clicking Activate My Account, I agree to the
                 <a
-                  href=""
+                  href={"/privacy-policy"}
                   target="_blank"
                   className="text-primary text-decoration-underline ms-1"
                 >
@@ -46,7 +46,7 @@ export default function TermsSection({ termsChecked, onChange }) {
                 </a>{" "}
                 and
                 <a
-                  href=""
+                  href={"/privacy-policy"}
                   target="_blank"
                   className="text-primary text-decoration-underline ms-1"
                 >
