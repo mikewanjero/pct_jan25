@@ -14,9 +14,9 @@ $white: #ffffff;
 $white-seashell: #fff9f3;
 $white-ghost: #f8f8ff;
 
-$cadet-gray: #9da5b1;
-$cadet-gray-light: #dfe2e8;
-$cadet-gray-dark: #6e7a8a;
+// $cadet-gray: #9da5b1;
+// $cadet-gray-light: #dfe2e8;
+// $cadet-gray-dark: #6e7a8a;
 
 $eerie-black: #1b1b1b;
 
@@ -118,7 +118,7 @@ body {
   border-radius: 5px;
   text-align: center;
   cursor: pointer;
-  background-color: $cadet-gray-light;
+  // background-color: $cadet-gray-light;
   transition: background-color 0.3s;
 
   .dropzone {
@@ -150,7 +150,7 @@ body {
       justify-content: space-between;
       align-items: center;
       padding: 8px;
-      border: 1px dashed $cadet-gray;
+      // border: 1px dashed $cadet-gray;
       border-radius: 5px;
       margin-top: 3px;
       font-size: 14px;
@@ -211,7 +211,7 @@ body {
   margin-bottom: 20px;
 
   .form-control {
-    border: 2px solid $cadet-gray-light;
+    border: 2px solid #dfe2e8;
     border-radius: 8px;
     padding: 0.75rem 1.25rem;
     transition: all 0.3s ease;
@@ -237,7 +237,7 @@ body {
   }
 
   .form-check-label {
-    color: $cadet-gray-dark;
+    color: #6e7a8a;
   }
 }
 
@@ -263,12 +263,12 @@ body {
   flex-direction: column;
   justify-content: space-between;
   padding-right: 20px;
-  border-right: 1px solid $cadet-gray-light;
+  border-right: 1px solid #dfe2e8;
 
   @media (max-width: 768px) {
     padding-right: 0;
     border-right: none;
-    border-bottom: 1px solid $cadet-gray-light;
+    border-bottom: 1px solid #dfe2e8;
     padding-bottom: 20px;
   }
 
@@ -371,7 +371,7 @@ body {
   width: 350px;
   height: 40px;
   border-radius: 4px;
-  border: 1px solid $cadet-gray-light;
+  border: 1px solid #dfe2e8;
   padding-left: 50px !important;
 }
 
@@ -387,7 +387,7 @@ body {
     width: 100% !important;
     height: 40px;
     border-radius: 4px;
-    border: 1px solid $cadet-gray-light;
+    border: 1px solid #dfe2e8;
     padding-left: 50px !important;
     font-family: "Poppins", sans-serif !important;
   }
@@ -400,7 +400,7 @@ body {
 }
 
 .sidebar {
-  background: linear-gradient(180deg, $cadet-gray, $cadet-gray-light);
+  background: linear-gradient(180deg, #9da5b1, #dfe2e8);
   padding: 15px;
   display: flex;
   flex-direction: column;
