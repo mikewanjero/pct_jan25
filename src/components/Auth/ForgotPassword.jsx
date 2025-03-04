@@ -33,7 +33,10 @@ export default function ForgotPassword() {
               />
             </div>
             <h2 className="text-center">Reset Password</h2>
-            <p className="text-center text-secondary" style={{ fontSize: 14 }}>
+            <p
+              className="text-center text-secondary p-1 mb-4"
+              style={{ fontSize: 14 }}
+            >
               Enter your username to reset your password
             </p>
             <Form>
