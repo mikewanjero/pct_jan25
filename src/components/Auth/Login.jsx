@@ -40,12 +40,20 @@ export default function Login() {
             </div>
             <Form autoComplete="off">
               <FormGroup className="mb-3">
-                <FormLabel style={{ fontSize: 13 }}>User Name</FormLabel>
-                <FormControl type="cusname" />
+                <FormLabel
+                  style={{ fontSize: 13, color: "rgb(150, 150, 150)" }}
+                >
+                  User Name
+                </FormLabel>
+                <FormControl type="username" />
               </FormGroup>
               <FormGroup className="mb-3">
-                <FormLabel style={{ fontSize: 13 }}>Password</FormLabel>
-                <FormControl type="cuscode" />
+                <FormLabel
+                  style={{ fontSize: 13, color: "rgb(150, 150, 150)" }}
+                >
+                  Password
+                </FormLabel>
+                <FormControl type="password" />
               </FormGroup>
 
               <FormGroup>
