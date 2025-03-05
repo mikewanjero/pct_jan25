@@ -75,17 +75,21 @@ export default function Login() {
             </div>
             <div className="text-center">
               <div className="mb-2">
-                <h2 className="mb-1">Welcome!</h2>
-                <p className="mb-0 text-secondary">
+                <h2 className="mb-1 fs-4">Welcome!</h2>
+                <p className="mb-0 text-secondary" style={{ fontSize: 10 }}>
                   Please enter your credentials to sign in.
                 </p>
               </div>
             </div>
             {error && <p className="text-danger text-center">{error}</p>}
             <Form autoComplete="off" onSubmit={handleLogin}>
-              <FormGroup className="mb-3">
+              <FormGroup className="mb-1">
                 <FormLabel
-                  style={{ fontSize: 13, color: "rgb(150, 150, 150)" }}
+                  style={{
+                    fontSize: 12,
+                    color: "rgb(150, 150, 150)",
+                    marginBottom: 1,
+                  }}
                 >
                   User Name
                 </FormLabel>
@@ -96,9 +100,13 @@ export default function Login() {
                   }
                 />
               </FormGroup>
-              <FormGroup className="mb-3">
+              <FormGroup className="mb-1">
                 <FormLabel
-                  style={{ fontSize: 13, color: "rgb(150, 150, 150)" }}
+                  style={{
+                    fontSize: 12,
+                    color: "rgb(150, 150, 150)",
+                    marginBottom: 1,
+                  }}
                 >
                   Password
                 </FormLabel>
