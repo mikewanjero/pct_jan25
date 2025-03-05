@@ -14,7 +14,7 @@ import {
   InputGroup,
 } from "react-bootstrap";
 import { FormGroup, Toast, ToastContainer } from "react-bootstrap";
-import { BsLockFill, BsEye, BsEyeSlash } from "react-icons/bs";
+import { BsLockFill, BsEyeFill, BsEyeSlashFill } from "react-icons/bs";
 import axios from "axios";
 
 export default function Login() {
@@ -138,7 +138,7 @@ export default function Login() {
                     variant="outline-secondary"
                     onClick={() => setShowPassword(!showPassword)}
                   >
-                    {showPassword ? <BsEyeSlash /> : <BsEye />}
+                    {showPassword ? <BsEyeSlashFill /> : <BsEyeFill />}
                   </Button>
                 </InputGroup>
               </FormGroup>
