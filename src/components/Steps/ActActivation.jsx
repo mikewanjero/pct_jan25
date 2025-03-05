@@ -118,7 +118,10 @@ const ActActivation = () => {
     setErrors(newErrors);
 
     // If there are errors, prevent submission
-    if (Object.keys(newErrors).length > 0) return;
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
+      return;
+    }
     setLoading(true);
 
     if (Object.keys(newErrors).length === 0) {
