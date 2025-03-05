@@ -13,7 +13,7 @@ import {
   FormCheck,
   InputGroup,
 } from "react-bootstrap";
-import { FormGroup } from "react-bootstrap";
+import { FormGroup, Toast, ToastContainer } from "react-bootstrap";
 import { BsLockFill, BsEye, BsEyeSlash } from "react-icons/bs";
 import axios from "axios";
 
@@ -26,6 +26,8 @@ export default function Login() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const [showToast, setShowToast] = useState(false);
+  const [toastMessage, setToastMessage] = useState("");
   const navigate = useNavigate();
 
   // Function to handle user login
@@ -33,7 +35,8 @@ export default function Login() {
     e.preventDefault();
 
     if (!formData.password && !formData.username) {
-      setError("Username and Password are required!");
+      setToastMessage("Username and Password are required!");
+      setShowToast(true);
       return;
     }
 
@@ -51,10 +54,12 @@ export default function Login() {
         localStorage.setItem("authToken", token);
         navigate("/acct-activation");
       } else {
-        setError("Invalid credentials. Please try again");
+        setToastMessage("Invalid credentials. Please try again");
+        setShowToast(true);
       }
     } catch (error) {
-      setError("Failed to login. Please check your credentials.");
+      setToastMessage("Failed to login. Please check your credentials.");
+      setShowToast(true);
     } finally {
       setLoading(false);
     }
@@ -190,6 +195,17 @@ export default function Login() {
             </Form>
           </CardBody>
         </Card>
+        <ToastContainer position="top-center" className="p-3">
+          <Toast
+            onClose={() => setShowToast(false)}
+            show={showToast}
+            delay={3000}
+            autohide
+            bg="danger"
+          >
+            <Toast.Body className="text-white">{toastMessage}</Toast.Body>
+          </Toast>
+        </ToastContainer>
         <footer id="footer">
           <div className="copy-right text-center my-2">
             <p className="m-0 company-sm">Powered by</p>
