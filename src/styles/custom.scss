@@ -168,6 +168,14 @@ body {
   }
 }
 
+#footer,
+.verification-footer {
+  position: fixed !important;
+  left: 0 !important;
+  bottom: 0 !important;
+  width: 100% !important;
+}
+
 // .accordion-body {
 //   position: absolute;
 //   left: 0;
@@ -298,6 +306,8 @@ body {
 
 .login-card {
   width: 450px;
+  max-height: 425px;
+  margin-bottom: 50px;
 }
 
 // Mobile Responsive Design
