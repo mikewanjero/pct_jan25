@@ -388,18 +388,18 @@ const ActActivation = () => {
                     </Accordion.Body>
                   </Accordion.Item>
                 </Accordion>
+                <div className="d-flex w-100 mt-3">
+                  {/* Adjusted alignment */}
+                  <Button
+                    className="activate-btn w-100"
+                    disabled={!termsChecked}
+                    onSubmit={handleSubmit}
+                    type="submit"
+                  >
+                    Activate My Account
+                  </Button>
+                </div>
               </Form>
-              <div className="d-flex w-100 mt-3">
-                {/* Adjusted alignment */}
-                <Button
-                  className="activate-btn w-100"
-                  disabled={!termsChecked}
-                  onSubmit={handleSubmit}
-                  type="submit"
-                >
-                  Activate My Account
-                </Button>
-              </div>
             </div>
             {/* Divider line */}
             <div className="section-divider"></div>
