@@ -28,14 +28,24 @@ export default function Login() {
   const [showPassword, setShowPassword] = useState(false);
   const [showToast, setShowToast] = useState(false);
   const [toastMessage, setToastMessage] = useState("");
+  const [inputErrors, setInputErrors] = useState({
+    username: false,
+    password: false,
+  });
   const navigate = useNavigate();
 
   // Function to handle user login
   const handleLogin = async (e) => {
     e.preventDefault();
 
-    if (!formData.password && !formData.username) {
-      setToastMessage("Username and Password are required!");
+    let errors = {
+      username: !formData.username,
+      password: !formData.password,
+    };
+    setInputErrors(errors);
+
+    if (errors.password || errors.username) {
+      setToastMessage("Username and/or Password are required!");
       setShowToast(true);
       return;
     }
@@ -100,6 +110,7 @@ export default function Login() {
                 </FormLabel>
                 <FormControl
                   type="text"
+                  className={inputErrors.username ? "is-invalid" : ""}
                   onChange={(e) =>
                     setFormData({ ...formData, username: e.target.value })
                   }
@@ -118,6 +129,7 @@ export default function Login() {
                 <InputGroup>
                   <FormControl
                     type={showPassword ? "text" : "password"}
+                    className={inputErrors.password ? "is-invalid" : ""}
                     onChange={(e) =>
                       setFormData({ ...formData, password: e.target.value })
                     }
