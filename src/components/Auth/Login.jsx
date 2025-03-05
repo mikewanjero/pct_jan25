@@ -11,9 +11,10 @@ import {
   Card,
   CardBody,
   FormCheck,
+  InputGroup,
 } from "react-bootstrap";
 import { FormGroup } from "react-bootstrap";
-import { BsLockFill } from "react-icons/bs";
+import { BsLockFill, BsEye, BsEyeSlash } from "react-icons/bs";
 import axios from "axios";
 
 export default function Login() {
@@ -24,6 +25,7 @@ export default function Login() {
   });
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
 
   // Function to handle user login
@@ -88,7 +90,7 @@ export default function Login() {
                   User Name
                 </FormLabel>
                 <FormControl
-                  type="username"
+                  type="text"
                   onChange={(e) =>
                     setFormData({ ...formData, username: e.target.value })
                   }
@@ -100,12 +102,20 @@ export default function Login() {
                 >
                   Password
                 </FormLabel>
-                <FormControl
-                  type="password"
-                  onChange={(e) =>
-                    setFormData({ ...formData, password: e.target.value })
-                  }
-                />
+                <InputGroup>
+                  <FormControl
+                    type={showPassword ? "text" : "password"}
+                    onChange={(e) =>
+                      setFormData({ ...formData, password: e.target.value })
+                    }
+                  />
+                  <Button
+                    variant="outline-secondary"
+                    onClick={() => setShowPassword(!showPassword)}
+                  >
+                    {showPassword ? <BsEyeSlash /> : <BsEye />}
+                  </Button>
+                </InputGroup>
               </FormGroup>
 
               <FormGroup>
@@ -160,6 +170,7 @@ export default function Login() {
                       rel="noopener noreferrer"
                       style={{
                         color: "rgb(197, 140, 79)",
+                        fontSize: 12,
                         textDecoration: "none",
                       }}
                     >
