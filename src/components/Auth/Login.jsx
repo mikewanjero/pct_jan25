@@ -89,7 +89,6 @@ export default function Login() {
                 </FormLabel>
                 <FormControl
                   type="username"
-                  value="username"
                   onChange={(e) =>
                     setFormData({ ...formData, username: e.target.value })
                   }
@@ -103,7 +102,6 @@ export default function Login() {
                 </FormLabel>
                 <FormControl
                   type="password"
-                  value={"password"}
                   onChange={(e) =>
                     setFormData({ ...formData, password: e.target.value })
                   }
