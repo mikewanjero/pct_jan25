@@ -39,6 +39,7 @@ const ActActivation = () => {
   const [errors, setErrors] = useState({});
   const [toastMessage, setToastMessage] = useState("");
   const [showToast, setShowToast] = useState(false);
+  const [toastType, setToastType] = useState("");
   const [trainingSheet, setTrainingSheet] = useState([]);
   const [masterDoc, setMasterDoc] = useState([]);
 
@@ -62,6 +63,7 @@ const ActActivation = () => {
 
     if (newFiles.length > MAX_FILES) {
       setToastMessage(`You can only upload up to ${MAX_FILES} files.`);
+      setToastType("danger");
       setShowToast(true);
       e.target.value = "";
       return;
@@ -72,6 +74,10 @@ const ActActivation = () => {
     } else if (name === "masterDoc") {
       setMasterDoc(newFiles.slice(0, MAX_FILES));
     }
+
+    setToastMessage("File(s) uploaded successfully!");
+    setToastType("success");
+    setShowToast(true);
   };
 
   // Function to handle form submission
@@ -90,6 +96,13 @@ const ActActivation = () => {
       newErrors.trainingSheet = "Training Sheet(s) upload is required!";
 
     setErrors(newErrors);
+
+    if (trainingSheet.length === 0) {
+      setToastMessage("Please upload training sheet before submitting.");
+      setToastType("warning");
+      setShowToast(true);
+      return;
+    }
 
     // If there are errors, prevent submission
     if (Object.keys(newErrors).length > 0) {
@@ -145,6 +158,7 @@ const ActActivation = () => {
         );
         setLoading(false);
         setToastMessage("Account Activated Successfully!");
+        setToastType("success");
         setShowToast(true);
         console.log("Response:", response.data);
 
@@ -159,6 +173,7 @@ const ActActivation = () => {
         // error.response?.data?.message ||
         // error.message ||
         setToastMessage(`Error: ${errorMessage}`);
+        setToastType("danger");
         setShowToast(true);
 
         // Reset the form data after submission failure
@@ -439,15 +454,19 @@ const ActActivation = () => {
         onClose={() => setShowToast(false)}
         delay={2500}
         autohide
-        bg={
-          toastMessage?.includes("Error") ||
-          toastMessage?.includes("upload up to")
-            ? "danger"
-            : "success"
-        }
+        bg={toastType}
         className="position-fixed top-0 translate-middle-x start-50 mt-3"
       >
-        <Toast.Body>{toastMessage}</Toast.Body>
+        <Toast.Body
+          style={{
+            color:
+              toastType === "danger" || toastType === "success"
+                ? "white"
+                : "black",
+          }}
+        >
+          {toastMessage}
+        </Toast.Body>
       </Toast>
     </div>
   );
