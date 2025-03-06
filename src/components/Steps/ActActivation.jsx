@@ -39,7 +39,6 @@ const ActActivation = () => {
   const [errors, setErrors] = useState({});
   const [toastMessage, setToastMessage] = useState("");
   const [showToast, setShowToast] = useState(false);
-
   const [trainingSheet, setTrainingSheet] = useState([]);
   const [masterDoc, setMasterDoc] = useState([]);
 
