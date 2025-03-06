@@ -358,6 +358,15 @@ const ActActivation = () => {
                           accept=".xls,.xlsx, application/vnd.ms-excel, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
                           onChange={handleFileChange}
                         />
+                        <div className="mt-2">
+                          {trainingSheet.length > 0 && (
+                            <ul>
+                              {trainingSheet.map((file, index) => (
+                                <li key={index}>{file.name}</li>
+                              ))}
+                            </ul>
+                          )}
+                        </div>
                       </Form.Group>
                     </Accordion.Body>
                   </Accordion.Item>
@@ -375,6 +384,15 @@ const ActActivation = () => {
                           accept=".xls,.xlsx, application/vnd.ms-excel, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
                           onChange={handleFileChange}
                         />
+                        <div className="mt-2">
+                          {masterDoc.length > 0 && (
+                            <ul>
+                              {masterDoc.map((file, index) => (
+                                <li key={index}>{file.name}</li>
+                              ))}
+                            </ul>
+                          )}
+                        </div>
                       </Form.Group>
                     </Accordion.Body>
                   </Accordion.Item>
