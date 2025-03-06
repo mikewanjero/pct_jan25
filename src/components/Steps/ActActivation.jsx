@@ -155,11 +155,9 @@ const ActActivation = () => {
       } catch (error) {
         setLoading(false);
         console.error("Error activating account:", error.response?.data); // Log the error
-        const errorMessage =
-          error.response?.data?.message ||
-          error.message ||
-          "Failed to activate account.";
-
+        const errorMessage = "Failed to activate account. Invalid credentials";
+        // error.response?.data?.message ||
+        // error.message ||
         setToastMessage(`Error: ${errorMessage}`);
         setShowToast(true);
 
