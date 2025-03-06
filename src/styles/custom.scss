@@ -262,7 +262,8 @@ body {
 .form-elements {
   display: flex;
   flex-direction: column;
-  height: 80%;
+  height: auto;
+  gap: 16px;
 }
 
 .form-inputs {
@@ -283,14 +284,13 @@ body {
   .input-column {
     display: flex;
     flex-direction: column;
-    flex: 1;
+    gap: 16px;
 
     .form-group {
       // Target form-groups within form-inputs
       display: flex;
-      flex: 1;
       flex-direction: column;
-      justify-content: space-evenly;
+      gap: 8px;
 
       .form-control {
         // Target form-controls within form-groups
@@ -492,6 +492,7 @@ body {
   border-radius: 5px;
   cursor: pointer;
   text-align: center;
+  margin-top: 16px;
 }
 
 .activate-btn:hover {
