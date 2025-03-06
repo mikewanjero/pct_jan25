@@ -58,18 +58,19 @@ const ActActivation = () => {
   // Function to handle file changes(upload)
   const handleFileChange = (e) => {
     const { name, files } = e.target;
+    let newFiles = Array.from(files);
 
-    if (name === "trainingSheet") {
-      setTrainingSheet(Array.from(files).slice(0, MAX_FILES)); // Limit to 3 files
-    } else if (name === "masterDoc") {
-      setMasterDoc(Array.from(files).slice(0, MAX_FILES)); // Limit to 3 files
-    }
-
-    if (files.length > MAX_FILES) {
+    if (newFiles.length > MAX_FILES) {
       setToastMessage(`You can only upload up to ${MAX_FILES} files.`);
       setShowToast(true);
       e.target.value = "";
       return;
+    }
+
+    if (name === "trainingSheet") {
+      setTrainingSheet(newFiles.slice(0, MAX_FILES));
+    } else if (name === "masterDoc") {
+      setMasterDoc(newFiles.slice(0, MAX_FILES));
     }
   };
 
@@ -358,7 +359,6 @@ const ActActivation = () => {
                           multiple
                           accept=".xls,.xlsx, application/vnd.ms-excel, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
                           onChange={handleFileChange}
-                          disabled={trainingSheet.length >= MAX_FILES}
                         />
                       </Form.Group>
                     </Accordion.Body>
@@ -376,7 +376,6 @@ const ActActivation = () => {
                           multiple
                           accept=".xls,.xlsx, application/vnd.ms-excel, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
                           onChange={handleFileChange}
-                          disabled={masterDoc.length >= MAX_FILES}
                         />
                       </Form.Group>
                     </Accordion.Body>
