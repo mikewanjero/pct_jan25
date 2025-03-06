@@ -57,7 +57,7 @@ const ActActivation = () => {
   };
 
   // Function to handle file uploads from accordion
-  const handleFileUpload = (e, files, currentFiles, setFiles) => {
+  const handleFileUpload = (e, currentFiles, setFiles) => {
     const newFiles = Array.from(e.target.files);
 
     if (currentFiles.length + newFiles.length > MAX_FILES) {
@@ -84,7 +84,7 @@ const ActActivation = () => {
 
     // Check for duplicates
     const uniqueFiles = newFiles.filter(
-      (newFile) => !files.some((file) => file.name !== newFile.name)
+      (newFile) => !currentFiles.some((file) => file.name === newFile.name)
     );
 
     setFiles([...currentFiles, ...uniqueFiles]);
@@ -369,7 +369,7 @@ const ActActivation = () => {
                           multiple
                           accept=".xls,.xlsx, application/vnd.ms-excel, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
                           onChange={(e) =>
-                            handleFileUpload(e, setTrainingSheet, trainingSheet)
+                            handleFileUpload(e, trainingSheet, setTrainingSheet)
                           }
                           disabled={trainingSheet.length >= MAX_FILES}
                         />
@@ -388,7 +388,7 @@ const ActActivation = () => {
                           multiple
                           accept=".xls,.xlsx, application/vnd.ms-excel, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
                           onChange={(e) =>
-                            handleFileUpload(e, setMasterDoc, masterDoc)
+                            handleFileUpload(e, masterDoc, setMasterDoc)
                           }
                           disabled={masterDoc.length >= MAX_FILES}
                         />
