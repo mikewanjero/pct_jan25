@@ -106,14 +106,14 @@ const ActActivation = () => {
     let newErrors = {};
 
     // Validate form data
-    if (!formData.email) newErrors.email = "Email is required";
-    if (!formData.username) newErrors.username = "Username is required";
-    if (!phoneNumber) newErrors.phoneNumber = "Please enter your phone number";
-    if (!formData.password) newErrors.password = "Password is required";
+    if (!formData.email) newErrors.email = "Email is required!";
+    if (!formData.username) newErrors.username = "Username is required!";
+    if (!phoneNumber) newErrors.phoneNumber = "Phone number is required!";
+    if (!formData.password) newErrors.password = "Password is required!";
     if (!termsChecked)
-      newErrors.termsChecked = "You must agree to the terms and conditions.";
+      newErrors.termsChecked = "You must agree to the terms and conditions!";
     if (trainingSheet.length === 0)
-      newErrors.trainingSheet = "Training Sheet(s) upload is required";
+      newErrors.trainingSheet = "Training Sheet(s) upload is required!";
 
     setErrors(newErrors);
 
@@ -351,9 +351,17 @@ const ActActivation = () => {
                 </Form.Group>
 
                 {/* Accordion - File Uploads */}
-                <Accordion className="mt-4">
+                <Accordion>
                   <Accordion.Item eventKey={0}>
-                    <Accordion.Header>Upload Training Sheet</Accordion.Header>
+                    <Accordion.Header>
+                      Upload Training Sheet |
+                      <span
+                        className="small"
+                        style={{ fontStyle: "italic", marginLeft: "4px" }}
+                      >
+                        3 files max
+                      </span>
+                    </Accordion.Header>
                     <Accordion.Body>
                       <Form.Group controlId="trainingSheet">
                         <Form.Control
@@ -388,12 +396,11 @@ const ActActivation = () => {
                     </Accordion.Body>
                   </Accordion.Item>
                 </Accordion>
-                <div className="d-flex w-100 mt-3">
+                <div className="d-flex w-100">
                   {/* Adjusted alignment */}
                   <Button
-                    className="activate-btn w-100"
+                    className="activate-btn"
                     disabled={!termsChecked}
-                    onSubmit={handleSubmit}
                     type="submit"
                   >
                     Activate My Account
@@ -437,7 +444,7 @@ const ActActivation = () => {
             ? "warning"
             : "success"
         }
-        className="position-fixed middle-0 end-0 m-4"
+        className="position-fixed top-50 translate-middle-y start-0 m-4"
       >
         <Toast.Body>{toastMessage}</Toast.Body>
       </Toast>
