@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { Button, Form, InputGroup, Toast, Accordion } from "react-bootstrap";
+import { BsEyeFill, BsEyeSlashFill } from "react-icons/bs";
 import axios from "axios";
 import phamacoreLogo from "../../assets/images/phamacoreLogo.png";
 import PhoneInput from "react-phone-input-2";
@@ -32,13 +33,12 @@ const ActActivation = () => {
     branches: "",
     users: "",
   });
-  // eslint-disable-next-line no-unused-vars
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [phoneNumber, setPhoneNumber] = useState("");
   const [termsChecked, setTermsChecked] = useState(false);
   const [errors, setErrors] = useState({});
-  const [toastMessage, setToastMessage] = useState(""); // Toast message
-  const [showToast, setShowToast] = useState(false); // Show toast
+  const [toastMessage, setToastMessage] = useState("");
+  const [showToast, setShowToast] = useState(false);
 
   const [trainingSheet, setTrainingSheet] = useState([]);
   const [masterDoc, setMasterDoc] = useState([]);
@@ -56,49 +56,23 @@ const ActActivation = () => {
     setErrors({ ...errors, [e.target.name]: "" }); // Clear errors when typing
   };
 
-  // Function to handle file uploads from accordion
-  const handleFileUpload = (e, currentFiles, setFiles) => {
-    const newFiles = Array.from(e.target.files);
+  // Function to handle file changes(upload)
+  const handleFileChange = (e) => {
+    const { name, files } = e.target;
 
-    if (currentFiles.length + newFiles.length > MAX_FILES) {
+    if (name === "trainingSheet") {
+      setTrainingSheet(Array.from(files).slice(0, MAX_FILES)); // Limit to 3 files
+    } else if (name === "masterDoc") {
+      setMasterDoc(Array.from(files).slice(0, MAX_FILES)); // Limit to 3 files
+    }
+
+    if (files.length > MAX_FILES) {
       setToastMessage(`You can only upload up to ${MAX_FILES} files.`);
       setShowToast(true);
       e.target.value = "";
       return;
     }
-
-    let invalidFile = newFiles.find(
-      (file) =>
-        ![
-          "application/vnd.ms-excel",
-          "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-        ].includes(file.type)
-    );
-
-    if (invalidFile) {
-      setToastMessage("Only Excel files (.xls, .xlsx) are allowed.");
-      setShowToast(true);
-      e.target.value = "";
-      return;
-    }
-
-    // Check for duplicates
-    const uniqueFiles = newFiles.filter(
-      (newFile) => !currentFiles.some((file) => file.name === newFile.name)
-    );
-
-    setFiles([...currentFiles, ...uniqueFiles]);
-    setToastMessage("File(s) uploaded successfully!");
-    setShowToast(true);
-    e.target.value = "";
   };
-
-  // Handle file removal
-  // const removeFile = (index, files, setFiles) => {
-  //   const updatedFiles = [...files];
-  //   updatedFiles.splice(index, 1);
-  //   setFiles(updatedFiles);
-  // };
 
   // Function to handle form submission
   const handleSubmit = async (e) => {
@@ -139,11 +113,19 @@ const ActActivation = () => {
         requestData.append(`trainingSheet`, file);
       });
 
+      if (masterDoc.length > 0) {
+        masterDoc.forEach((file) => {
+          requestData.append(`masterDoc`, file);
+        });
+      }
+
       console.log("Form submitted:", {
         ...requestData,
         password: "******",
         termsChecked,
         trainingSheet: trainingSheet.map((file) => file.name),
+        masterDoc:
+          masterDoc.length > 0 ? masterDoc.map((file) => file.name) : "None",
       });
       setLoading(true);
 
@@ -176,7 +158,8 @@ const ActActivation = () => {
         const errorMessage =
           error.response?.data?.message ||
           error.message ||
-          "Failed to activate account."; // Get the error message
+          "Failed to activate account.";
+
         setToastMessage(`Error: ${errorMessage}`);
         setShowToast(true);
 
@@ -344,6 +327,12 @@ const ActActivation = () => {
                       className={errors.password ? "is-invalid" : ""}
                       // required
                     />
+                    <Button
+                      variant="outline-secondary"
+                      onClick={() => setPasswordVisible(!passwordVisible)}
+                    >
+                      {passwordVisible ? <BsEyeSlashFill /> : <BsEyeFill />}
+                    </Button>
                     <Form.Control.Feedback type="invalid">
                       {errors.password}
                     </Form.Control.Feedback>
@@ -366,11 +355,10 @@ const ActActivation = () => {
                       <Form.Group controlId="trainingSheet">
                         <Form.Control
                           type="file"
+                          name="trainingSheet"
                           multiple
                           accept=".xls,.xlsx, application/vnd.ms-excel, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-                          onChange={(e) =>
-                            handleFileUpload(e, trainingSheet, setTrainingSheet)
-                          }
+                          onChange={handleFileChange}
                           disabled={trainingSheet.length >= MAX_FILES}
                         />
                       </Form.Group>
@@ -385,11 +373,10 @@ const ActActivation = () => {
                       <Form.Group controlId="masterDoc">
                         <Form.Control
                           type="file"
+                          name="masterDoc"
                           multiple
                           accept=".xls,.xlsx, application/vnd.ms-excel, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-                          onChange={(e) =>
-                            handleFileUpload(e, masterDoc, setMasterDoc)
-                          }
+                          onChange={handleFileChange}
                           disabled={masterDoc.length >= MAX_FILES}
                         />
                       </Form.Group>
@@ -441,7 +428,7 @@ const ActActivation = () => {
         bg={
           toastMessage?.includes("Error") ||
           toastMessage?.includes("upload up to")
-            ? "warning"
+            ? "danger"
             : "success"
         }
         className="position-fixed top-0 translate-middle-x start-50 mt-3"
