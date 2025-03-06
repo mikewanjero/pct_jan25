@@ -444,7 +444,7 @@ const ActActivation = () => {
             ? "warning"
             : "success"
         }
-        className="position-fixed top-50 translate-middle-y start-0 m-4"
+        className="position-fixed top-0 translate-middle-x start-50 mt-3"
       >
         <Toast.Body>{toastMessage}</Toast.Body>
       </Toast>
