@@ -51,7 +51,7 @@ export default function ForgotPassword() {
                 <Button
                   className="btn-sm"
                   style={{
-                    backgroundColor: "rgb(79, 204, 48)",
+                    backgroundColor: "#28A745",
                     borderColor: "rgb(79, 204, 48)",
                     width: 150,
                   }}
