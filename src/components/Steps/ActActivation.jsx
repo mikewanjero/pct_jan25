@@ -145,7 +145,8 @@ const ActActivation = () => {
       // Call the API to activate the client
       try {
         const response = await axios.post(
-          "http://corebasevm.southafricanorth.cloudapp.azure.com:5028/api/NewClients/ActivateClient",
+          // "http://corebasevm.southafricanorth.cloudapp.azure.com:5028/api/NewClients/ActivateClient",
+          "http://20.164.20.36:86/api/client/ActivateClient",
           requestData,
           {
             headers: {
@@ -196,7 +197,8 @@ const ActActivation = () => {
       try {
         const response = await axios.get(
           // `http://corebasevm.southafricanorth.cloudapp.azure.com:5028/api/Clients/GetClients?ccode=${cusCode}`,
-          `http://corebasevm.southafricanorth.cloudapp.azure.com:5028/api/NewClients/GetClientsDetails?cuscode=T7H1PN`,
+          // `http://corebasevm.southafricanorth.cloudapp.azure.com:5028/api/NewClients/GetClientsDetails?cuscode=T7H1PN`,
+          `http://20.164.20.36:86/api/client/GetClientDetails?cuscode=NMM3V3`,
           {
             headers: {
               accesskey:
