@@ -260,7 +260,7 @@ const ActActivation = () => {
           <div className="form-sections">
             <div className="form-inputs">
               {/* Left side: Form inputs */}
-              <h5 className="text-danger">Activate Subscription</h5>
+              <h5 className="text-danger fw-bold">Activate Subscription</h5>
               <Form
                 className="form-elements"
                 onSubmit={handleSubmit}
