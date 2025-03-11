@@ -9,20 +9,20 @@ export default function PackageInfo({ companyName, packageInfo }) {
           className="text-caramel fw-semibold text-center"
           style={{ fontSize: "1.5rem", color: "#c58c4f" }}
         >
-          <p>Package: {packageInfo.name}</p>
+          <p>Package: {packageInfo.name || "N/A"}</p>
         </h2>
 
         <div className="d-flex justify-content-around mt-2">
           <div className="text-center">
             <p>
               <strong>Branches: </strong>
-              {packageInfo.branches}
+              {packageInfo.branches || "N/A"}
             </p>
           </div>
           <div className="text-center">
             <p>
               <strong>Users: </strong>
-              {packageInfo.users}
+              {packageInfo.users || "N/A"}
             </p>
           </div>
         </div>
