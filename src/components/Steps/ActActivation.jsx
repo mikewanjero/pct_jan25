@@ -41,6 +41,10 @@ const ActActivation = () => {
   const [showToast, setShowToast] = useState(false);
   const [toastType, setToastType] = useState("");
   const [trainingSheet, setTrainingSheet] = useState([]);
+  const [uploadedFiles, setUploadedFiles] = useState({
+    trainingSheet: [],
+    masterDoc: [],
+  });
   const [masterDoc, setMasterDoc] = useState([]);
 
   // Set the customer code from the URL
@@ -56,10 +60,35 @@ const ActActivation = () => {
     setErrors({ ...errors, [e.target.name]: "" }); // Clear errors when typing
   };
 
+  // Function to fetch Uploaded files
+  const fetchUploadedFiles = async () => {
+    try {
+      const response = await axios.get(
+        `http://20.164.20.36:86/api/client/GetUploadedFiles?cuscode=${cusCode}`,
+        {
+          headers: {
+            accesskey:
+              "R0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9",
+          },
+        }
+      );
+
+      setUploadedFiles({
+        trainingSheet: response.data.trainingSheet || [],
+        masterDoc: response.data.masterDoc || [],
+      });
+    } catch (error) {
+      console.error("Error fetching uploaded files:", error);
+      setToastMessage("Failed to display file(s)");
+      setToastType("warning");
+      setShowToast(true);
+    }
+  };
+
   // Function to handle file changes(upload)
-  const handleFileChange = (e) => {
+  const handleFileChange = async (e) => {
     const { name, files } = e.target;
-    let newFiles = Array.from(files);
+    let newFiles = Array.from(files).slice(0, MAX_FILES);
 
     if (newFiles.length > MAX_FILES) {
       setToastMessage(`You can only upload up to ${MAX_FILES} files.`);
@@ -69,15 +98,37 @@ const ActActivation = () => {
       return;
     }
 
-    if (name === "trainingSheet") {
-      setTrainingSheet(newFiles.slice(0, MAX_FILES));
-    } else if (name === "masterDoc") {
-      setMasterDoc(newFiles.slice(0, MAX_FILES));
-    }
+    const formData = new FormData();
+    formData.append("psCusCode", cusCode);
+    newFiles.forEach((file) => formData.append(name, file));
 
-    setToastMessage("File(s) uploaded successfully!");
-    setToastType("success");
-    setShowToast(true);
+    try {
+      await axios.post(
+        "http://20.164.20.36:86/api/client/UploadFile",
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            accesskey:
+              "R0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9",
+          },
+        }
+      );
+
+      setToastMessage("File(s) uploaded successfully!");
+      setToastType("success");
+      setShowToast(true);
+
+      if (name === "trainingSheet") setTrainingSheet(newFiles);
+      else if (name === "masterDoc") setMasterDoc(newFiles);
+
+      fetchUploadedFiles();
+    } catch (error) {
+      console.error("Error uploading files:", error);
+      setToastMessage("Failed to upload files!");
+      setToastType("danger");
+      setShowToast(true);
+    }
   };
 
   // Function to handle form submission
@@ -375,11 +426,13 @@ const ActActivation = () => {
                           onChange={handleFileChange}
                         />
                         <div className="mt-2">
-                          {trainingSheet.length > 0 && (
+                          {uploadedFiles.trainingSheet.length > 0 && (
                             <ul>
-                              {trainingSheet.map((file, index) => (
-                                <li key={index}>{file.name}</li>
-                              ))}
+                              {uploadedFiles.trainingSheet.map(
+                                (file, index) => (
+                                  <li key={index}>{file}</li>
+                                )
+                              )}
                             </ul>
                           )}
                         </div>
@@ -401,10 +454,10 @@ const ActActivation = () => {
                           onChange={handleFileChange}
                         />
                         <div className="mt-2">
-                          {masterDoc.length > 0 && (
+                          {uploadedFiles.masterDoc.length > 0 && (
                             <ul>
-                              {masterDoc.map((file, index) => (
-                                <li key={index}>{file.name}</li>
+                              {uploadedFiles.masterDoc.map((file, index) => (
+                                <li key={index}>{file}</li>
                               ))}
                             </ul>
                           )}
