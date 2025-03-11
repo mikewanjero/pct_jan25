@@ -251,9 +251,7 @@ const ActActivation = () => {
             </h2>
           </div>
           <div className="form-header">
-            <h5 style={{ fontWeight: "bold" }}>
-              Complete the Account Activation
-            </h5>
+            <h5 className="fw-bold">Complete the Account Activation</h5>
             <p className="text-secondary fs-6">
               Fill in the details to activate your account.
             </p>
