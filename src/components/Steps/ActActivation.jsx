@@ -198,7 +198,7 @@ const ActActivation = () => {
         const response = await axios.get(
           // `http://corebasevm.southafricanorth.cloudapp.azure.com:5028/api/Clients/GetClients?ccode=${cusCode}`,
           // `http://corebasevm.southafricanorth.cloudapp.azure.com:5028/api/NewClients/GetClientsDetails?cuscode=T7H1PN`,
-          `http://20.164.20.36:86/api/client/GetClientDetails?cuscode=NMM3V3`,
+          `http://20.164.20.36:86/api/client/GetClientDetails?psCusCode=0SD3WL`,
           {
             headers: {
               accesskey:
@@ -210,11 +210,12 @@ const ActActivation = () => {
         const {
           psCompanyName: companyName,
           psCusCode: companyID,
-          packageName: name,
+          packageCode: name,
           psBranchCount: branches,
           psUserCount: users,
-        } = response.data;
+        } = response.data.data;
 
+        console.log(response);
         console.log(companyName, companyID);
         // Validation when companyID is empty
         if (!companyID) {
