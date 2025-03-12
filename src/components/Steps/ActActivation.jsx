@@ -10,6 +10,10 @@ import TermsSection from "../Subscription/TermsSection";
 import PackageInfo from "../Subscription/PackageInfo";
 
 const MAX_FILES = 3;
+const API_URL = "http://20.164.20.36:86/api/client";
+const API_HEADER = {
+  accesskey: "R0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9",
+};
 
 const ActActivation = () => {
   // const navigate = useNavigate();
@@ -64,15 +68,12 @@ const ActActivation = () => {
   const fetchUploadedFiles = async () => {
     try {
       const response = await axios.get(
-        `http://20.164.20.36:86/api/client/GetUploadedFiles?cuscode=${cusCode}`,
+        `${API_URL}/GetUploadedFiles?cuscode=${cusCode}`,
         {
-          headers: {
-            accesskey:
-              "R0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9",
-          },
+          headers: { API_HEADER },
         }
       );
-
+      console.log("Fetched Files:", response.data);
       setUploadedFiles({
         trainingSheet: response.data.trainingSheet || [],
         masterDoc: response.data.masterDoc || [],
@@ -90,7 +91,7 @@ const ActActivation = () => {
     const { name, files } = e.target;
     let newFiles = Array.from(files).slice(0, MAX_FILES);
 
-    if (newFiles.length > MAX_FILES) {
+    if (newFiles.length + uploadedFiles[name].length > MAX_FILES) {
       setToastMessage(`You can only upload up to ${MAX_FILES} files.`);
       setToastType("danger");
       setShowToast(true);
@@ -100,32 +101,36 @@ const ActActivation = () => {
 
     const formData = new FormData();
     formData.append("psCusCode", cusCode);
-    newFiles.forEach((file) => formData.append(name, file));
+    newFiles.forEach((file) => formData.append(`${name}[]`, file));
 
     try {
-      await axios.post(
-        "http://20.164.20.36:86/api/client/UploadFile",
-        formData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-            accesskey:
-              "R0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9",
-          },
-        }
-      );
+      const response = await axios.post(`${API_URL}/UploadFile`, formData, {
+        headers: {
+          ...API_HEADER,
+          "Content-Type": "multipart/form-data",
+        },
+      });
+
+      console.log("Upload Response:", response.data);
 
       setToastMessage("File(s) uploaded successfully!");
       setToastType("success");
       setShowToast(true);
 
+      setTimeout(() => {
+        setUploadedFiles((prev) => ({
+          ...prev,
+          [name]: [...prev[name], ...newFiles],
+        }));
+      }, 1500);
+
       if (name === "trainingSheet") setTrainingSheet(newFiles);
       else if (name === "masterDoc") setMasterDoc(newFiles);
 
-      fetchUploadedFiles();
+      fetchUploadedFiles(); //Refresh after uploading
     } catch (error) {
       console.error("Error uploading files:", error);
-      setToastMessage("Failed to upload files!");
+      setToastMessage("Failed to upload file(s)!");
       setToastType("danger");
       setShowToast(true);
     }
@@ -143,7 +148,7 @@ const ActActivation = () => {
     if (!formData.password) newErrors.password = "Password is required!";
     if (!termsChecked)
       newErrors.termsChecked = "You must agree to the terms and conditions!";
-    if (trainingSheet.length === 0)
+    if (uploadedFiles.trainingSheet.length === 0 && trainingSheet.length === 0)
       newErrors.trainingSheet = "Training Sheet(s) upload is required!";
 
     setErrors(newErrors);
@@ -247,15 +252,9 @@ const ActActivation = () => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          // `http://corebasevm.southafricanorth.cloudapp.azure.com:5028/api/Clients/GetClients?ccode=${cusCode}`,
           // `http://corebasevm.southafricanorth.cloudapp.azure.com:5028/api/NewClients/GetClientsDetails?cuscode=T7H1PN`,
-          `http://20.164.20.36:86/api/client/GetClientDetails?psCusCode=0SD3WL`,
-          {
-            headers: {
-              accesskey:
-                "R0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9",
-            },
-          }
+          `${API_URL}/GetClientDetails?psCusCode=0SD3WL`,
+          { headers: API_HEADER }
         );
         // Destructure the response data
         const {
@@ -279,6 +278,9 @@ const ActActivation = () => {
       } catch (error) {
         console.error("Error fetching data:", error);
         setError("Failed to fetch company details.");
+        setToastMessage("Failed to display company details!");
+        setToastType("danger");
+        setShowToast(true);
       } finally {
         setLoading(false);
       }
