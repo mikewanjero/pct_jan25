@@ -1,5 +1,5 @@
 // eslint-disable-next-line no-unused-vars
-import React, { useImperativeHandle, forwardRef, useState } from "react";
+import React, { useImperativeHandle, forwardRef } from "react";
 import { Form, Button, InputGroup, Accordion } from "react-bootstrap";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
@@ -24,13 +24,6 @@ const ActivationForm = forwardRef(
     },
     ref
   ) => {
-    // eslint-disable-next-line no-unused-vars
-    const [showToast, setShowToast] = useState(false);
-    // eslint-disable-next-line no-unused-vars
-    const [toastMessage, setToastMessage] = useState("");
-    // eslint-disable-next-line no-unused-vars
-    const [toastType, setToastType] = useState("success");
-
     const validateForm = () => {
       const newErrors = {};
 
@@ -173,7 +166,7 @@ const ActivationForm = forwardRef(
                   accept=".xls,.xlsx, application/vnd.ms-excel, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
                   onChange={handleFileChange}
                 />
-                <div className="mt-2">
+                {/* <div className="mt-2">
                   {uploadedFiles.trainingSheet.length > 0 && (
                     <ul>
                       {uploadedFiles.trainingSheet.map((file, index) => (
@@ -181,7 +174,7 @@ const ActivationForm = forwardRef(
                       ))}
                     </ul>
                   )}
-                </div>
+                </div> */}
               </Form.Group>
             </Accordion.Body>
           </Accordion.Item>
@@ -199,7 +192,7 @@ const ActivationForm = forwardRef(
                   accept=".xls,.xlsx, application/vnd.ms-excel, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
                   onChange={handleFileChange}
                 />
-                <div className="mt-2">
+                {/* <div className="mt-2">
                   {uploadedFiles.masterDoc.length > 0 && (
                     <ul>
                       {uploadedFiles.masterDoc.map((file, index) => (
@@ -207,7 +200,7 @@ const ActivationForm = forwardRef(
                       ))}
                     </ul>
                   )}
-                </div>
+                </div> */}
               </Form.Group>
             </Accordion.Body>
           </Accordion.Item>
