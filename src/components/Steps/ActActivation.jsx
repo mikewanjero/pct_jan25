@@ -128,29 +128,68 @@ const ActActivation = () => {
     }
   };
 
-  const handleChange = (e) =>
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value }); // Update form data
+    setErrors({ ...errors, [e.target.name]: "" }); // Clearing errors on change
+  };
 
   const handleFileChange = (e) => {
     const { name, files } = e.target;
-    const fileList = [...files].map((file) => file.name);
+    const formData = new FormData();
 
-    if (fileList.length > 3) {
-      setErrors((prevErrors) => ({
-        ...prevErrors,
-        [name]: `Maximum 3 files allowed for ${name}`,
-      }));
-    } else {
-      setErrors((prevErrors) => ({
-        ...prevErrors,
-        [name]: "",
-      }));
-      setUploadedFiles((prevFiles) => ({
-        ...prevFiles,
-        [name]: fileList,
-      }));
+    // Append files to FormData
+    for (let i = 0; i < files.length; i++) {
+      formData.append(name, files[i]);
+    }
+
+    try {
+      const response = axios.post(
+        `${API_URL}/UploadFile?cusCode=0SD3WL&userName&fileType=Excel`,
+        formData,
+        {
+          params: { cusCode: "0SD3WL", userName: "", fileType: "Excel" },
+          headers: API_HEADER,
+        }
+      );
+
+      if (response.status === 200) {
+        console.log("File(s) uploaded successfully: ", response);
+        setToastMessage("Uploaded files successfully!");
+        setToastType("success");
+        setShowToast(true);
+        setTimeout(() => {
+          fetchUploadedFiles();
+        }, 1000);
+      }
+    } catch (error) {
+      console.error("Error uploading file:", error);
+      setToastMessage("Failed to upload file(s)!");
+      setToastType("danger");
+      setShowToast(true);
     }
   };
+
+  const fetchUploadedFiles = async () => {
+    try {
+      const response = await axios.get(`${API_URL}/GetUploadedFiles`, {
+        params: { cusCode: "0SD3WL" },
+      });
+
+      if (response.data.success) {
+        console.log("Uploaded files:", response.data.data);
+        setUploadedFiles(response.data.data);
+      }
+    } catch (error) {
+      console.error("Error displaying uploaded files:", error);
+      setToastMessage("Failed to display uploaded files!");
+      setToastType("danger");
+      setShowToast(true);
+    }
+  };
+
+  useEffect(() => {
+    fetchUploadedFiles();
+  }, []);
 
   return (
     <div className="container">
