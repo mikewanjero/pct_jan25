@@ -89,7 +89,7 @@ const ActActivation = () => {
         }
       };
       fetchData();
-    }, 1000);
+    }, 500);
   }, [cusCode]);
 
   const handleSubmit = async (e) => {
