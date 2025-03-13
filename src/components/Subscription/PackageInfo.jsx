@@ -1,6 +1,10 @@
 /* eslint-disable react/prop-types */
 
 export default function PackageInfo({ companyName, packageInfo }) {
+  if (!packageInfo) {
+    return <p>Loading package information...</p>;
+  }
+
   return (
     <>
       <div className="w-100 border p-3 rounded shadow bg-light mb-2">
