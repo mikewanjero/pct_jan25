@@ -32,8 +32,7 @@ const ActActivation = () => {
   });
   const [termsChecked, setTermsChecked] = useState(false);
   const [showToast, setShowToast] = useState(false);
-  const [toastMessage, setToastMessage] = useState("");
-  const [toastType, setToastType] = useState("success");
+  const [toastData, setToastData] = useState({ message: "", type: "success" });
 
   // Company details
   const [companyDetails, setCompanyDetails] = useState({
@@ -46,12 +45,11 @@ const ActActivation = () => {
 
   // Set the customer code from the URL
   useEffect(() => {
-    if (id) {
-      setCusCode(id);
-    }
+    if (id) setCusCode(id);
   }, [id]);
+
   useEffect(() => {
-    // Simulate API call to fetch company details
+    // API call to fetch company details
     setTimeout(() => {
       const fetchData = async () => {
         try {
@@ -71,9 +69,7 @@ const ActActivation = () => {
           console.log(response);
           console.log(companyName, companyID);
           // Validation when companyID is empty
-          if (!companyID) {
-            throw new Error("Company ID is missing.");
-          }
+          if (!companyID) throw new Error("Company ID is missing.");
 
           setCompanyDetails({ companyName, companyID });
           setPackageInfo({ name, branches, users });
@@ -81,9 +77,7 @@ const ActActivation = () => {
         } catch (error) {
           console.error("Error fetching data:", error);
           setError("Failed to fetch company details.");
-          setToastMessage("Failed to display company details!");
-          setToastType("danger");
-          setShowToast(true);
+          setToast("Failed to display company details!", "danger");
         } finally {
           setLoading(false);
         }
@@ -92,14 +86,16 @@ const ActActivation = () => {
     }, 500);
   }, [cusCode]);
 
+  const setToast = (message, type = "success") => {
+    setToastData({ message, type });
+    setShowToast(true);
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     // Handle form submission
-
     if (!formRef.current || !formRef.current.validateForm()) {
-      setToastMessage("Please fill in all the required fields!");
-      setToastType("danger");
-      setShowToast(true);
+      setToast("Please fill in all the required fields!", "danger");
       return;
     }
 
@@ -109,41 +105,30 @@ const ActActivation = () => {
       const response = await axios.post(
         `${API_URL}/ActivateAccount`,
         formData,
-        {
-          headers: API_HEADER,
-        }
+        { headers: API_HEADER }
       );
-
       setLoading(false);
       console.log("Upload Response:", response.data);
-
-      setToastMessage("Account activated successfully!");
-      setToastType("success");
-      setShowToast(true);
+      setToast("Account activated successfully!");
     } catch (error) {
       console.error("Error activating account:", error);
-      setToastMessage("Activation failed! Try again.");
-      setToastType("danger");
-      setShowToast(true);
+      setToast("Activation failed! Try again.", "danger");
     }
   };
 
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value }); // Update form data
-    setErrors({ ...errors, [e.target.name]: "" }); // Clearing errors on change
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+    setErrors({ ...errors, [e.target.name]: "" });
   };
 
-  const handleFileChange = (e) => {
+  const handleFileChange = async (e) => {
     const { name, files } = e.target;
     const formData = new FormData();
-
     // Append files to FormData
-    for (let i = 0; i < files.length; i++) {
-      formData.append(name, files[i]);
-    }
+    for (let i = 0; i < files.length; i++) formData.append(name, files[i]);
 
     try {
-      const response = axios.post(
+      const response = await axios.post(
         `${API_URL}/UploadFile?cusCode=0SD3WL&userName&fileType=Excel`,
         formData,
         {
@@ -151,21 +136,16 @@ const ActActivation = () => {
           headers: API_HEADER,
         }
       );
-
       if (response.status === 200) {
         console.log("File(s) uploaded successfully: ", response);
-        setToastMessage("Uploaded files successfully!");
-        setToastType("success");
-        setShowToast(true);
+        setToast("Uploaded files successfully!");
         setTimeout(() => {
           fetchUploadedFiles();
         }, 1000);
       }
     } catch (error) {
       console.error("Error uploading file:", error);
-      setToastMessage("Failed to upload file(s)!");
-      setToastType("danger");
-      setShowToast(true);
+      setToast("Failed to upload file(s)!", "danger");
     }
   };
 
@@ -181,9 +161,7 @@ const ActActivation = () => {
       }
     } catch (error) {
       console.error("Error displaying uploaded files:", error);
-      setToastMessage("Failed to display uploaded files!");
-      setToastType("danger");
-      setShowToast(true);
+      setToast("Failed to display uploaded files!", "danger");
     }
   };
 
@@ -233,9 +211,6 @@ const ActActivation = () => {
                 setErrors={setErrors}
                 setPasswordVisible={setPasswordVisible}
                 setTermsChecked={setTermsChecked}
-                setToastMessage={setToastMessage}
-                setToastType={setToastType}
-                setShowToast={setShowToast}
                 termsChecked={termsChecked}
               />
             </div>
@@ -270,8 +245,8 @@ const ActActivation = () => {
       <ActivationToast
         showToast={showToast}
         setShowToast={setShowToast}
-        toastType={toastType}
-        toastMessage={toastMessage}
+        toastType={toastData.type}
+        toastMessage={toastData.message}
       />
     </div>
   );
