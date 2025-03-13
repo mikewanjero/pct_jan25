@@ -1,55 +1,48 @@
-import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
-import { Button, Form, InputGroup, Toast, Accordion } from "react-bootstrap";
-import { BsEyeFill, BsEyeSlashFill } from "react-icons/bs";
+import { useState, useEffect, useRef } from "react";
 import axios from "axios";
-import phamacoreLogo from "../../assets/images/phamacoreLogo.png";
-import PhoneInput from "react-phone-input-2";
-import "react-phone-input-2/lib/style.css";
+import ActivationForm from "./ActivationForm";
+import ActivationToast from "./ActivationToast";
 import TermsSection from "../Subscription/TermsSection";
 import PackageInfo from "../Subscription/PackageInfo";
+import phamacoreLogo from "../../assets/images/phamacoreLogo.png";
+import { useParams } from "react-router-dom";
 
-const MAX_FILES = 3;
 const API_URL = "http://20.164.20.36:86/api/client";
 const API_HEADER = {
   accesskey: "R0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9",
+  "Content-Type": "multipart/form-data",
 };
 
 const ActActivation = () => {
-  // const navigate = useNavigate();
+  // Form state and handlers
+  const formRef = useRef(null);
   const { id } = useParams();
-
+  const [cusCode, setCusCode] = useState(id);
   const [formData, setFormData] = useState({
     email: "",
-    businessEmail: "",
     username: "",
     password: "",
   });
-  const [companyDetails, setCompanyDetails] = useState({
-    companyName: "",
-    companyID: "",
-  });
-  const [cusCode, setCusCode] = useState(id);
-  const [error, setError] = useState(""); // Error state for the form
-  const [loading, setLoading] = useState(false);
-  const [packageInfo, setPackageInfo] = useState({
-    name: "",
-    branches: "",
-    users: "",
-  });
-  const [passwordVisible, setPasswordVisible] = useState(false);
-  const [phoneNumber, setPhoneNumber] = useState("");
-  const [termsChecked, setTermsChecked] = useState(false);
   const [errors, setErrors] = useState({});
-  const [toastMessage, setToastMessage] = useState("");
-  const [showToast, setShowToast] = useState(false);
-  const [toastType, setToastType] = useState("");
-  const [trainingSheet, setTrainingSheet] = useState([]);
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const [passwordVisible, setPasswordVisible] = useState(false);
   const [uploadedFiles, setUploadedFiles] = useState({
     trainingSheet: [],
     masterDoc: [],
   });
-  const [masterDoc, setMasterDoc] = useState([]);
+  const [termsChecked, setTermsChecked] = useState(false);
+  const [showToast, setShowToast] = useState(false);
+  const [toastMessage, setToastMessage] = useState("");
+  const [toastType, setToastType] = useState("success");
+
+  // Company details
+  const [companyDetails, setCompanyDetails] = useState({
+    companyName: "",
+    companyID: "",
+  });
+  const [packageInfo, setPackageInfo] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
 
   // Set the customer code from the URL
   useEffect(() => {
@@ -57,236 +50,107 @@ const ActActivation = () => {
       setCusCode(id);
     }
   }, [id]);
+  useEffect(() => {
+    // Simulate API call to fetch company details
+    setTimeout(() => {
+      const fetchData = async () => {
+        try {
+          const response = await axios.get(
+            `${API_URL}/GetClientDetails?psCusCode=0SD3WL`,
+            { headers: API_HEADER }
+          );
 
-  // Function to handle form changes
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value }); // Update form data
-    setErrors({ ...errors, [e.target.name]: "" }); // Clear errors when typing
-  };
+          const {
+            psCompanyName: companyName,
+            psCusCode: companyID,
+            packageCode: name,
+            psBranchCount: branches,
+            psUserCount: users,
+          } = response.data.data;
 
-  // Function to fetch Uploaded files
-  const fetchUploadedFiles = async () => {
-    try {
-      const response = await axios.get(
-        `${API_URL}/GetUploadedFiles?cuscode=${cusCode}`,
-        {
-          headers: { API_HEADER },
+          console.log(response);
+          console.log(companyName, companyID);
+          // Validation when companyID is empty
+          if (!companyID) {
+            throw new Error("Company ID is missing.");
+          }
+
+          setCompanyDetails({ companyName, companyID });
+          setPackageInfo({ name, branches, users });
+          setLoading(false);
+        } catch (error) {
+          console.error("Error fetching data:", error);
+          setError("Failed to fetch company details.");
+          setToastMessage("Failed to display company details!");
+          setToastType("danger");
+          setShowToast(true);
+        } finally {
+          setLoading(false);
         }
-      );
-      console.log("Fetched Files:", response.data);
-      setUploadedFiles({
-        trainingSheet: response.data.trainingSheet || [],
-        masterDoc: response.data.masterDoc || [],
-      });
-    } catch (error) {
-      console.error("Error fetching uploaded files:", error);
-      setToastMessage("Failed to display file(s)");
-      setToastType("warning");
-      setShowToast(true);
-    }
-  };
+      };
+      fetchData();
+    }, 1000);
+  }, [cusCode]);
 
-  // Function to handle file changes(upload)
-  const handleFileChange = async (e) => {
-    const { name, files } = e.target;
-    let newFiles = Array.from(files).slice(0, MAX_FILES);
-
-    if (newFiles.length + uploadedFiles[name].length > MAX_FILES) {
-      setToastMessage(`You can only upload up to ${MAX_FILES} files.`);
-      setToastType("danger");
-      setShowToast(true);
-      e.target.value = "";
-      return;
-    }
-
-    const formData = new FormData();
-    formData.append("psCusCode", cusCode);
-    newFiles.forEach((file) => formData.append(`${name}[]`, file));
-
-    try {
-      const response = await axios.post(`${API_URL}/UploadFile`, formData, {
-        headers: {
-          ...API_HEADER,
-          "Content-Type": "multipart/form-data",
-        },
-      });
-
-      console.log("Upload Response:", response.data);
-
-      setToastMessage("File(s) uploaded successfully!");
-      setToastType("success");
-      setShowToast(true);
-
-      setTimeout(() => {
-        setUploadedFiles((prev) => ({
-          ...prev,
-          [name]: [...prev[name], ...newFiles],
-        }));
-      }, 1500);
-
-      if (name === "trainingSheet") setTrainingSheet(newFiles);
-      else if (name === "masterDoc") setMasterDoc(newFiles);
-
-      fetchUploadedFiles(); //Refresh after uploading
-    } catch (error) {
-      console.error("Error uploading files:", error);
-      setToastMessage("Failed to upload file(s)!");
-      setToastType("danger");
-      setShowToast(true);
-    }
-  };
-
-  // Function to handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
-    let newErrors = {};
+    // Handle form submission
 
-    // Validate form data
-    if (!formData.email) newErrors.email = "Email is required!";
-    if (!formData.username) newErrors.username = "Username is required!";
-    if (!phoneNumber) newErrors.phoneNumber = "Phone number is required!";
-    if (!formData.password) newErrors.password = "Password is required!";
-    if (!termsChecked)
-      newErrors.termsChecked = "You must agree to the terms and conditions!";
-    if (uploadedFiles.trainingSheet.length === 0 && trainingSheet.length === 0)
-      newErrors.trainingSheet = "Training Sheet(s) upload is required!";
-
-    setErrors(newErrors);
-
-    if (trainingSheet.length === 0) {
-      setToastMessage("Please upload training sheet before submitting.");
-      setToastType("warning");
+    if (!formRef.current || !formRef.current.validateForm()) {
+      setToastMessage("Please fill in all the required fields!");
+      setToastType("danger");
       setShowToast(true);
       return;
     }
 
-    // If there are errors, prevent submission
-    if (Object.keys(newErrors).length > 0) {
-      setErrors(newErrors);
-      return;
-    }
     setLoading(true);
+    try {
+      // Proceed with API submission
+      const response = await axios.post(
+        `${API_URL}/ActivateAccount`,
+        formData,
+        {
+          headers: API_HEADER,
+        }
+      );
 
-    if (Object.keys(newErrors).length === 0) {
-      // Proceed with form submission
-      const requestData = new FormData();
-      requestData.append("cusCode", cusCode);
-      requestData.append("email", formData.email);
-      requestData.append("businessEmail", formData.businessEmail);
-      requestData.append("username", formData.username);
-      requestData.append("password", formData.password);
-      requestData.append("phone", phoneNumber);
+      setLoading(false);
+      console.log("Upload Response:", response.data);
 
-      // eslint-disable-next-line no-unused-vars
-      trainingSheet.forEach((file, index) => {
-        requestData.append(`trainingSheet`, file);
-      });
-
-      if (masterDoc.length > 0) {
-        masterDoc.forEach((file) => {
-          requestData.append(`masterDoc`, file);
-        });
-      }
-
-      console.log("Form submitted:", {
-        ...requestData,
-        password: "******",
-        termsChecked,
-        trainingSheet: trainingSheet.map((file) => file.name),
-        masterDoc:
-          masterDoc.length > 0 ? masterDoc.map((file) => file.name) : "None",
-      });
-      setLoading(true);
-
-      // Call the API to activate the client
-      try {
-        const response = await axios.post(
-          // "http://corebasevm.southafricanorth.cloudapp.azure.com:5028/api/NewClients/ActivateClient",
-          "http://20.164.20.36:86/api/client/ActivateClient",
-          requestData,
-          {
-            headers: {
-              Accept: "application/json",
-              "Content-Type": "multipart/form-data",
-              accesskey:
-                "R0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9",
-            },
-          }
-        );
-        setLoading(false);
-        setToastMessage("Account Activated Successfully!");
-        setToastType("success");
-        setShowToast(true);
-        console.log("Response:", response.data);
-
-        // Redirect to the next step
-        setTimeout(() => {
-          window.location.href = "https://phamacoreonline.co.ke/"; // Redirect to the next page
-        }, 2200);
-      } catch (error) {
-        setLoading(false);
-        console.error("Error activating account:", error.response?.data); // Log the error
-        const errorMessage = "Failed to activate account. Invalid credentials";
-        // error.response?.data?.message ||
-        // error.message ||
-        setToastMessage(`Error: ${errorMessage}`);
-        setToastType("danger");
-        setShowToast(true);
-
-        // Reset the form data after submission failure
-        setFormData({
-          email: "",
-          businessEmail: "",
-          username: "",
-          password: "",
-        });
-        setPhoneNumber("");
-        setTermsChecked(false);
-        setTrainingSheet([]);
-      }
+      setToastMessage("Account activated successfully!");
+      setToastType("success");
+      setShowToast(true);
+    } catch (error) {
+      console.error("Error activating account:", error);
+      setToastMessage("Activation failed! Try again.");
+      setToastType("danger");
+      setShowToast(true);
     }
   };
 
-  // Fetching client details
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get(
-          // `http://corebasevm.southafricanorth.cloudapp.azure.com:5028/api/NewClients/GetClientsDetails?cuscode=T7H1PN`,
-          `${API_URL}/GetClientDetails?psCusCode=0SD3WL`,
-          { headers: API_HEADER }
-        );
-        // Destructure the response data
-        const {
-          psCompanyName: companyName,
-          psCusCode: companyID,
-          packageCode: name,
-          psBranchCount: branches,
-          psUserCount: users,
-        } = response.data.data;
+  const handleChange = (e) =>
+    setFormData({ ...formData, [e.target.name]: e.target.value });
 
-        console.log(response);
-        console.log(companyName, companyID);
-        // Validation when companyID is empty
-        if (!companyID) {
-          throw new Error("Company ID is missing.");
-        }
+  const handleFileChange = (e) => {
+    const { name, files } = e.target;
+    const fileList = [...files].map((file) => file.name);
 
-        setCompanyDetails({ companyName, companyID });
-        setPackageInfo({ name, branches, users });
-        setLoading(false);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-        setError("Failed to fetch company details.");
-        setToastMessage("Failed to display company details!");
-        setToastType("danger");
-        setShowToast(true);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchData();
-  }, [id]);
+    if (fileList.length > 3) {
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        [name]: `Maximum 3 files allowed for ${name}`,
+      }));
+    } else {
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        [name]: "",
+      }));
+      setUploadedFiles((prevFiles) => ({
+        ...prevFiles,
+        [name]: fileList,
+      }));
+    }
+  };
 
   return (
     <div className="container">
@@ -313,182 +177,40 @@ const ActActivation = () => {
 
           <div className="form-sections">
             <div className="form-inputs">
-              {/* Left side: Form inputs */}
               <h5 className="text-danger fw-bold">Activate Subscription</h5>
-              <Form
-                className="form-elements"
-                onSubmit={handleSubmit}
-                autoComplete="off"
-              >
-                <div className="input-column">
-                  <Form.Group controlId="email" className="flex-grow-1">
-                    <Form.Control
-                      type="email"
-                      name="email"
-                      placeholder="Email"
-                      value={formData.email}
-                      onChange={handleChange}
-                      className={errors.email ? "is-invalid" : ""}
-                      // required
-                    />
-                    <Form.Control.Feedback type="invalid">
-                      {errors.email}
-                    </Form.Control.Feedback>
-                  </Form.Group>
-                  <Form.Group controlId="businessEmail" className="flex-grow-1">
-                    <Form.Control
-                      type="email"
-                      name="businessEmail"
-                      placeholder="Business Email (optional)"
-                      value={formData.businessEmail}
-                      onChange={handleChange}
-                    />
-                  </Form.Group>
-                </div>
-
-                <div className="input-column">
-                  <Form.Group controlId="username" className="flex-grow-1">
-                    <Form.Control
-                      type="text"
-                      name="username"
-                      placeholder="Username"
-                      value={formData.username}
-                      onChange={handleChange}
-                      isInvalid={!!errors.username}
-                      className={errors.username ? "is-invalid" : ""}
-                      // required
-                    />
-                    <Form.Control.Feedback type="invalid">
-                      {errors.username}
-                    </Form.Control.Feedback>
-                  </Form.Group>
-                  <Form.Group controlId="phone" className="flex-grow-1">
-                    <PhoneInput
-                      country={"ke"}
-                      value={phoneNumber}
-                      onChange={(phone) => {
-                        setPhoneNumber(phone);
-                        setErrors({ ...errors, phoneNumber: "" }); // Remove error message after the user inputs the number
-                      }}
-                      inputClass={`form-control phone-input ${
-                        errors.phoneNumber ? "is-invalid" : ""
-                      }`}
-                      containerClass="phone-container"
-                      buttonClass="phone-dropdown-btn"
-                    />
-                    {errors.phoneNumber && (
-                      <div className="text-danger">{errors.phoneNumber}</div>
-                    )}
-                  </Form.Group>
-                </div>
-
-                <Form.Group controlId="password">
-                  <InputGroup>
-                    <Form.Control
-                      type={passwordVisible ? "text" : "password"}
-                      name="password"
-                      placeholder="Password"
-                      value={formData.password}
-                      onChange={handleChange}
-                      isInvalid={!!errors.password}
-                      className={errors.password ? "is-invalid" : ""}
-                      // required
-                    />
-                    <Button
-                      variant="outline-secondary"
-                      onClick={() => setPasswordVisible(!passwordVisible)}
-                    >
-                      {passwordVisible ? <BsEyeSlashFill /> : <BsEyeFill />}
-                    </Button>
-                    <Form.Control.Feedback type="invalid">
-                      {errors.password}
-                    </Form.Control.Feedback>
-                  </InputGroup>
-                </Form.Group>
-
-                {/* Accordion - File Uploads */}
-                <Accordion>
-                  <Accordion.Item eventKey={0}>
-                    <Accordion.Header>
-                      Upload Training Sheet |
-                      <span
-                        className="small"
-                        style={{ fontStyle: "italic", marginLeft: "4px" }}
-                      >
-                        3 files max
-                      </span>
-                    </Accordion.Header>
-                    <Accordion.Body>
-                      <Form.Group controlId="trainingSheet">
-                        <Form.Control
-                          type="file"
-                          name="trainingSheet"
-                          multiple
-                          accept=".xls,.xlsx, application/vnd.ms-excel, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-                          onChange={handleFileChange}
-                        />
-                        <div className="mt-2">
-                          {uploadedFiles.trainingSheet.length > 0 && (
-                            <ul>
-                              {uploadedFiles.trainingSheet.map(
-                                (file, index) => (
-                                  <li key={index}>{file}</li>
-                                )
-                              )}
-                            </ul>
-                          )}
-                        </div>
-                      </Form.Group>
-                    </Accordion.Body>
-                  </Accordion.Item>
-
-                  <Accordion.Item eventKey={1} className="mt-3">
-                    <Accordion.Header>
-                      Upload Master Document (Optional)
-                    </Accordion.Header>
-                    <Accordion.Body>
-                      <Form.Group controlId="masterDoc">
-                        <Form.Control
-                          type="file"
-                          name="masterDoc"
-                          multiple
-                          accept=".xls,.xlsx, application/vnd.ms-excel, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-                          onChange={handleFileChange}
-                        />
-                        <div className="mt-2">
-                          {uploadedFiles.masterDoc.length > 0 && (
-                            <ul>
-                              {uploadedFiles.masterDoc.map((file, index) => (
-                                <li key={index}>{file}</li>
-                              ))}
-                            </ul>
-                          )}
-                        </div>
-                      </Form.Group>
-                    </Accordion.Body>
-                  </Accordion.Item>
-                </Accordion>
-                <div className="d-flex w-100">
-                  {/* Adjusted alignment */}
-                  <Button
-                    className="activate-btn"
-                    disabled={!termsChecked}
-                    type="submit"
-                  >
-                    Activate My Account
-                  </Button>
-                </div>
-              </Form>
+              <ActivationForm
+                ref={formRef}
+                handleSubmit={handleSubmit}
+                handleChange={handleChange}
+                handleFileChange={handleFileChange}
+                formData={formData}
+                error={error}
+                errors={errors}
+                uploadedFiles={uploadedFiles}
+                phoneNumber={phoneNumber}
+                setPhoneNumber={setPhoneNumber}
+                passwordVisible={passwordVisible}
+                setError={setError}
+                setErrors={setErrors}
+                setPasswordVisible={setPasswordVisible}
+                setTermsChecked={setTermsChecked}
+                setToastMessage={setToastMessage}
+                setToastType={setToastType}
+                setShowToast={setShowToast}
+                termsChecked={termsChecked}
+              />
             </div>
+
             {/* Divider line */}
             <div className="section-divider"></div>
+
+            {/* Right side: Package & Terms */}
             <div className="form-details">
-              {/* Right side: Package & Terms */}
               {companyDetails.companyName && companyDetails.companyID && (
                 <div className="company-info">
                   <h3>
                     {loading
-                      ? error || "Loading company details..."
+                      ? error || "Loading..."
                       : companyDetails.companyName
                       ? `${companyDetails.companyName} - ${companyDetails.companyID}`
                       : "Details not Fetched"}
@@ -504,26 +226,14 @@ const ActActivation = () => {
           </div>
         </div>
       </div>
+
       {/* Toast message */}
-      <Toast
-        show={showToast}
-        onClose={() => setShowToast(false)}
-        delay={2500}
-        autohide
-        bg={toastType}
-        className="position-fixed top-0 translate-middle-x start-50 mt-3"
-      >
-        <Toast.Body
-          style={{
-            color:
-              toastType === "danger" || toastType === "success"
-                ? "white"
-                : "black",
-          }}
-        >
-          {toastMessage}
-        </Toast.Body>
-      </Toast>
+      <ActivationToast
+        showToast={showToast}
+        setShowToast={setShowToast}
+        toastType={toastType}
+        toastMessage={toastMessage}
+      />
     </div>
   );
 };
