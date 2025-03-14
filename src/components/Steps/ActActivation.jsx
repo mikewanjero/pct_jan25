@@ -235,11 +235,7 @@ const ActActivation = () => {
                   </h3>
                 </div>
               )}
-              <PackageInfo
-                companyName={companyDetails.companyName}
-                packageInfo={packageInfo}
-                setToast={setToast}
-              />
+              <PackageInfo packageInfo={packageInfo} setToast={setToast} />
               <TermsSection
                 termsChecked={termsChecked}
                 onChange={(e) => setTermsChecked(e.target.checked)}

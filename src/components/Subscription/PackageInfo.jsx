@@ -2,7 +2,7 @@
 // eslint-disable-next-line no-unused-vars
 import { react, useEffect } from "react";
 
-export default function PackageInfo({ companyName, packageInfo, setToast }) {
+export default function PackageInfo({ packageInfo, setToast }) {
   useEffect(() => {
     if (!packageInfo) {
       setToast("Package Information not found!", "danger");
@@ -16,7 +16,7 @@ export default function PackageInfo({ companyName, packageInfo, setToast }) {
   return (
     <>
       <div className="w-100 border p-3 rounded shadow bg-light mb-2">
-        <h2 className="fw-semibold text-center">{companyName}</h2>
+        {/* <h2 className="fw-semibold text-center">{companyName}</h2> */}
         <h2
           className="text-caramel fw-semibold text-center"
           style={{ fontSize: "1.5rem", color: "#c58c4f" }}
