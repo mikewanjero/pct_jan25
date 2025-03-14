@@ -39,7 +39,11 @@ const ActActivation = () => {
     companyName: "",
     companyID: "",
   });
-  const [packageInfo, setPackageInfo] = useState(null);
+  const [packageInfo, setPackageInfo] = useState({
+    name: "",
+    branches: "",
+    users: "",
+  });
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
