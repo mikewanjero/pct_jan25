@@ -58,14 +58,14 @@ const ActActivation = () => {
       const fetchData = async () => {
         try {
           const response = await axios.get(
-            `${API_URL}/GetClientDetails?psCusCode=N0PVSZ `,
+            `${API_URL}/GetClientDetails?psCusCode=XTW0LL`,
             { headers: API_HEADER }
           );
 
           const {
             psCompanyName: companyName,
             psCusCode: companyID,
-            packageCode: name,
+            pkgCode: name,
             psBranchCount: branches,
             psUserCount: users,
           } = response.data.data;
