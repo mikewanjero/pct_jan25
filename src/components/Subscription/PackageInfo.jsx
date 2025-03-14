@@ -21,7 +21,7 @@ export default function PackageInfo({ packageInfo, setToast }) {
           className="text-caramel fw-semibold text-center"
           style={{ fontSize: "1.5rem", color: "#c58c4f" }}
         >
-          <p>{packageInfo.name || "N/A"}</p>
+          <p>{packageInfo.name || "Package: N/A"}</p>
         </h2>
 
         <div className="d-flex justify-content-around mt-2">
