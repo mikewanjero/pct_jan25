@@ -58,7 +58,7 @@ const ActActivation = () => {
       const fetchData = async () => {
         try {
           const response = await axios.get(
-            `${API_URL}/GetClientDetails?psCusCode=0SD3WL`,
+            `${API_URL}/GetClientDetails?psCusCode=N0PVSZ `,
             { headers: API_HEADER }
           );
 
