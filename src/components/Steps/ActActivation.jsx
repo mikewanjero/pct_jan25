@@ -133,7 +133,7 @@ const ActActivation = () => {
 
     try {
       const response = await axios.post(
-        `${API_URL}/UploadFile?cusCode=0SD3WL&userName&fileType=Excel`,
+        `${API_URL}/UploadFile?cusCode=${cusCode}&userName&fileType=${files[0].type}`,
         formData,
         {
           params: { cusCode: "0SD3WL", userName: "", fileType: "Excel" },
@@ -156,7 +156,7 @@ const ActActivation = () => {
   const fetchUploadedFiles = async () => {
     try {
       const response = await axios.get(`${API_URL}/GetUploadedFiles`, {
-        params: { cusCode: "0SD3WL" },
+        params: { cusCode: { cusCode } },
       });
 
       if (response.data.success) {
