@@ -1,6 +1,14 @@
 /* eslint-disable react/prop-types */
+// eslint-disable-next-line no-unused-vars
+import { react, useEffect } from "react";
 
-export default function PackageInfo({ companyName, packageInfo }) {
+export default function PackageInfo({ companyName, packageInfo, setToast }) {
+  useEffect(() => {
+    if (!packageInfo) {
+      setToast("Package Information not found!", "danger");
+    }
+  }, [packageInfo, setToast]);
+
   if (!packageInfo) {
     return <p>Loading package information...</p>;
   }
