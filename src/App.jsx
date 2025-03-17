@@ -12,6 +12,7 @@ function App() {
         <Routes>
           <Route index path="/" element={<Login />} />
           <Route path="/acct-activation" element={<ActActivation />} />
+          <Route path="/acct-activation/:id" element={<ActActivation />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
           <Route path="/privacy-policy" element={<Dpa />} />
         </Routes>
