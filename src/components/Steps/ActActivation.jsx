@@ -10,7 +10,7 @@ import { useParams } from "react-router-dom";
 const API_URL = "http://20.164.20.36:86/api/client";
 const API_HEADER = {
   accesskey: "R0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9",
-  "Content-Type": "multipart/form-data",
+  // "Content-Type": "multipart/form-data",
 };
 
 const ActActivation = () => {
@@ -109,7 +109,12 @@ const ActActivation = () => {
       const response = await axios.post(
         `${API_URL}/ActivateAccount`,
         formData,
-        { headers: API_HEADER }
+        {
+          headers: {
+            ...API_HEADER,
+            "Content-Type": "multipart/form-data",
+          },
+        }
       );
       setLoading(false);
       console.log("Upload Response:", response.data);
@@ -131,13 +136,23 @@ const ActActivation = () => {
     // Append files to FormData
     for (let i = 0; i < files.length; i++) formData.append(name, files[i]);
 
+    // Validate file type
+    const validFileTypes = [0, 1];
+    let fileType = files[0].type;
+    // Check if the file type is valid
+    if (!validFileTypes.includes(Number(fileType))) {
+      setToast("Invalid file type! Please upload a valid file.", "warning");
+      return;
+    }
+
     try {
       const response = await axios.post(
-        `${API_URL}/UploadFile?cusCode=${cusCode}&userName&fileType=${files[0].type}`,
+        `${API_URL}/UploadFile?cusCode=${cusCode}&userName&fileType=${fileType}`,
         formData,
         {
-          params: { cusCode: "0SD3WL", userName: "", fileType: "Excel" },
+          params: { cusCode: cusCode, userName: "", fileType: fileType },
           headers: API_HEADER,
+          "Content-Type": "multipart/form-data",
         }
       );
       if (response.status === 200) {
@@ -156,7 +171,9 @@ const ActActivation = () => {
   const fetchUploadedFiles = async () => {
     try {
       const response = await axios.get(`${API_URL}/GetUploadedFiles`, {
-        params: { cusCode: { cusCode } },
+        params: { cusCode: "XTWOLL" },
+        accesskey:
+          "R0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9",
       });
 
       if (response.data.success) {
