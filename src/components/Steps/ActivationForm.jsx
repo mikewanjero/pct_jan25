@@ -11,7 +11,7 @@ const ActivationForm = forwardRef(
     {
       handleSubmit,
       handleChange,
-      handleFileChange,
+      handleFileUpload,
       formData,
       errors,
       uploadedFiles,
@@ -164,7 +164,7 @@ const ActivationForm = forwardRef(
                   name="trainingSheet"
                   multiple
                   accept=".xls,.xlsx, application/vnd.ms-excel, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-                  onChange={handleFileChange}
+                  onChange={handleFileUpload}
                 />
               </Form.Group>
             </Accordion.Body>
@@ -181,7 +181,7 @@ const ActivationForm = forwardRef(
                   name="masterDoc"
                   multiple
                   accept=".xls,.xlsx, application/vnd.ms-excel, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-                  onChange={handleFileChange}
+                  onChange={handleFileUpload}
                 />
                 <div className="mt-2"></div>
               </Form.Group>
@@ -215,7 +215,7 @@ const ActivationForm = forwardRef(
 ActivationForm.propTypes = {
   handleSubmit: PropTypes.func.isRequired,
   handleChange: PropTypes.func.isRequired,
-  handleFileChange: PropTypes.func.isRequired,
+  handleFileUpload: PropTypes.func.isRequired,
   formData: PropTypes.shape({
     email: PropTypes.string.isRequired,
     businessEmail: PropTypes.string,

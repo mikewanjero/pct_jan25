@@ -163,7 +163,7 @@ const ActActivation = () => {
     setErrors({ ...errors, [e.target.name]: "" });
   };
 
-  const handleFileChange = async (e) => {
+  const handleFileUpload = async (e) => {
     const { files } = e.target;
     const formData = new FormData();
     // Append files to FormData
@@ -294,7 +294,7 @@ const ActActivation = () => {
                 ref={formRef}
                 handleSubmit={handleSubmit}
                 handleChange={handleChange}
-                handleFileChange={handleFileChange}
+                handleFileUpload={handleFileUpload}
                 formData={formData}
                 error={error}
                 errors={errors}
