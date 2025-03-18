@@ -191,7 +191,7 @@ export default function Login() {
                     style={{ color: "rgb(197, 140, 79)" }}
                   >
                     <a
-                      href="/forgot-password"
+                      href="/reset-password"
                       rel="noopener noreferrer"
                       style={{
                         color: "rgb(197, 140, 79)",
