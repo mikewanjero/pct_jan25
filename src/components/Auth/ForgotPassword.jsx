@@ -41,10 +41,10 @@ export default function ForgotPassword() {
             </p>
             <Form>
               <FormGroup className="mb-3">
-                <FormLabel>Username</FormLabel>
+                <FormLabel>Email Address</FormLabel>
                 <FormControl
-                  type="username"
-                  placeholder="Enter your username"
+                  type="email"
+                  placeholder="Enter your email address"
                 />
               </FormGroup>
               <div className="d-flex justify-content-between gap-2">
