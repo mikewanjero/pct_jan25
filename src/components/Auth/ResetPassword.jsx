@@ -50,6 +50,8 @@ export default function ResetPassword() {
               <div className="d-flex justify-content-between gap-2">
                 <Button
                   className="btn-sm"
+                  onClick={() => navigate("/forgot-password")}
+                  variant="primary"
                   style={{
                     backgroundColor: "#28A745",
                     borderColor: "rgb(79, 204, 48)",
