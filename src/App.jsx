@@ -13,7 +13,7 @@ function App() {
           <Route index path="/" element={<Login />} />
           <Route path="/acct-activation" element={<ActActivation />} />
           <Route path="/acct-activation/:id" element={<ActActivation />} />
-          <Route path="forgot-password" element={<ForgotPassword />} />
+          <Route path="/forgot-password" element={<ForgotPassword />} />
           <Route path="/reset-password" element={<ResetPassword />} />
           <Route path="/privacy-policy" element={<Dpa />} />
         </Routes>
