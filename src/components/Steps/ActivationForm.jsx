@@ -183,28 +183,7 @@ const ActivationForm = forwardRef(
                   accept=".xls,.xlsx, application/vnd.ms-excel, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
                   onChange={handleFileChange}
                 />
-                <div className="mt-2">
-                  {/* {uploadedFiles.masterDoc.length > 0 ? (
-                    <ul>
-                      {uploadedFiles.masterDoc.map((file, index) => (
-                        <li key={index}>
-                          <a
-                            href={file.fileurl.replace(
-                              "C:\\inetpub\\wwwroot\\ClientsAPI\\wwwroot\\uploads\\",
-                              "http://20.164.20.36/uploads/"
-                            )}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                          >
-                            {file.fileurl.split("\\").pop()}
-                          </a>
-                        </li>
-                      ))}
-                    </ul>
-                  ) : (
-                    <p>No files uploaded yet.</p>
-                  )} */}
-                </div>
+                <div className="mt-2"></div>
               </Form.Group>
             </Accordion.Body>
           </Accordion.Item>
