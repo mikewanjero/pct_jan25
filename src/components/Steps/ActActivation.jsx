@@ -27,11 +27,7 @@ const ActActivation = () => {
   const [errors, setErrors] = useState({});
   const [phoneNumber, setPhoneNumber] = useState("");
   const [passwordVisible, setPasswordVisible] = useState(false);
-  // eslint-disable-next-line no-unused-vars
-  const [uploadedFiles, setUploadedFiles] = useState({
-    trainingSheet: [],
-    masterDoc: [],
-  });
+  const [uploadedFiles, setUploadedFiles] = useState([]);
   const [termsChecked, setTermsChecked] = useState(false);
   const [showToast, setShowToast] = useState(false);
   const [toastData, setToastData] = useState({ message: "", type: "success" });
@@ -190,7 +186,7 @@ const ActActivation = () => {
         : 0;
 
     formData.append("FileType", fileTypeInt);
-    formData.append("Cuscode", "XTW0LL");
+    formData.append("Cuscode", id);
     console.log("fileType", fileType);
     console.log("files", files);
     // Check if the file type is valid
@@ -256,7 +252,7 @@ const ActActivation = () => {
 
       if (response.data.success) {
         console.log("Uploaded files:", response.data.data);
-        // setUploadedFiles(response.data.data);
+        setUploadedFiles(response.data.data);
       }
     } catch (error) {
       console.error("Error displaying uploaded files:", error);
