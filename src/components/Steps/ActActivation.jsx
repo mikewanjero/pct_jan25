@@ -292,21 +292,21 @@ const ActActivation = () => {
               <h5 className="text-danger fw-bold">Activate Subscription</h5>
               <ActivationForm
                 ref={formRef}
+                error={error}
+                errors={errors}
+                formData={formData}
                 handleSubmit={handleSubmit}
                 handleChange={handleChange}
                 handleFileUpload={handleFileUpload}
-                formData={formData}
-                error={error}
-                errors={errors}
-                uploadedFiles={uploadedFiles}
                 phoneNumber={phoneNumber}
-                setPhoneNumber={setPhoneNumber}
                 passwordVisible={passwordVisible}
                 setError={setError}
                 setErrors={setErrors}
                 setPasswordVisible={setPasswordVisible}
+                setPhoneNumber={setPhoneNumber}
                 setTermsChecked={setTermsChecked}
                 termsChecked={termsChecked}
+                uploadedFiles={uploadedFiles}
               />
             </div>
 
