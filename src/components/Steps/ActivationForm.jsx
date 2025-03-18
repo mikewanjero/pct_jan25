@@ -166,28 +166,6 @@ const ActivationForm = forwardRef(
                   accept=".xls,.xlsx, application/vnd.ms-excel, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
                   onChange={handleFileChange}
                 />
-                <div className="mt-2">
-                  {uploadedFiles.trainingSheet.length > 0 ? (
-                    <ul>
-                      {uploadedFiles.trainingSheet.map((file, index) => (
-                        <li key={index}>
-                          <a
-                            href={file.fileurl.replace(
-                              "C:\\inetpub\\wwwroot\\ClientsAPI\\wwwroot\\uploads\\",
-                              "http://20.164.20.36/uploads/"
-                            )}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                          >
-                            {file.fileurl.split("\\").pop()}
-                          </a>
-                        </li>
-                      ))}
-                    </ul>
-                  ) : (
-                    <p>No files uploaded yet!</p>
-                  )}
-                </div>
               </Form.Group>
             </Accordion.Body>
           </Accordion.Item>
@@ -206,7 +184,7 @@ const ActivationForm = forwardRef(
                   onChange={handleFileChange}
                 />
                 <div className="mt-2">
-                  {uploadedFiles.masterDoc.length > 0 ? (
+                  {/* {uploadedFiles.masterDoc.length > 0 ? (
                     <ul>
                       {uploadedFiles.masterDoc.map((file, index) => (
                         <li key={index}>
@@ -225,12 +203,21 @@ const ActivationForm = forwardRef(
                     </ul>
                   ) : (
                     <p>No files uploaded yet.</p>
-                  )}
+                  )} */}
                 </div>
               </Form.Group>
             </Accordion.Body>
           </Accordion.Item>
         </Accordion>
+
+        <div className="mt-2">
+          <ul>
+            {/* eslint-disable-next-line react/prop-types */}
+            {uploadedFiles.map((item, index) => (
+              <li key={index}>{item.originalFileName}</li>
+            ))}
+          </ul>
+        </div>
 
         <div className="d-flex w-100">
           <Button
@@ -255,6 +242,7 @@ ActivationForm.propTypes = {
     businessEmail: PropTypes.string,
     username: PropTypes.string.isRequired,
     password: PropTypes.string.isRequired,
+    phoneNumber: PropTypes.string,
   }).isRequired,
   errors: PropTypes.shape({
     email: PropTypes.string,
