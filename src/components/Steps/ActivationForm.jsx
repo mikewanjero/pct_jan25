@@ -1,9 +1,9 @@
 // eslint-disable-next-line no-unused-vars
 import React, { useImperativeHandle, forwardRef } from "react";
 import { Form, Button, InputGroup, Accordion } from "react-bootstrap";
+import { BsEyeFill, BsEyeSlashFill } from "react-icons/bs";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
-import { BsEyeFill, BsEyeSlashFill } from "react-icons/bs";
 import PropTypes from "prop-types";
 
 const ActivationForm = forwardRef(
