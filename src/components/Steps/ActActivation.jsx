@@ -17,8 +17,7 @@ const ActActivation = () => {
   // Form state and handlers
   const formRef = useRef(null);
   const { id } = useParams();
-  console.log(id);
-  // const [cusCode, setCusCode] = useState(id);
+  // console.log(id);
   const [formData, setFormData] = useState({
     email: "",
     username: "",
