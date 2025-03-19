@@ -45,49 +45,6 @@ const ActActivation = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
-  // Set the customer code from the URL
-  // useEffect(() => {
-  //   if (id) setCusCode(id);
-  // }, [id]);
-
-  // useEffect(() => {
-  //   // API call to fetch company details
-  //   setTimeout(() => {
-  //     const fetchData = async () => {
-  //       try {
-  //         const response = await axios.get(
-  //           `${API_URL}/GetClientDetails?psCusCode=XTW0LL`,
-  //           { headers: API_HEADER }
-  //         );
-
-  //         const {
-  //           psCompanyName: companyName,
-  //           psCusCode: companyID,
-  //           pkgCode: name,
-  //           psBranchCount: branches,
-  //           psUserCount: users,
-  //         } = response.data.data;
-
-  //         console.log(response);
-  //         console.log(companyName, companyID);
-  //         // Validation when companyID is empty
-  //         if (!companyID) throw new Error("Company ID is missing.");
-
-  //         setCompanyDetails({ companyName, companyID });
-  //         setPackageInfo({ name, branches, users });
-  //         setLoading(false);
-  //       } catch (error) {
-  //         console.error("Error fetching data:", error);
-  //         setError("Failed to fetch company details.");
-  //         setToast("Failed to display company details!", "danger");
-  //       } finally {
-  //         setLoading(false);
-  //       }
-  //     };
-  //     fetchData();
-  //   }, 500);
-  // }, [cusCode]);
-
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -212,32 +169,8 @@ const ActActivation = () => {
       }
     } catch (error) {
       console.log(error);
+      setToast("Error uploading file(s)!", "danger");
     }
-
-    // try {
-    //   const response = await axios.post(
-    //     `${API_URL}/UploadFile`,
-    //     {
-    //       Cuscode: "XTW0LL",
-    //       FileType: fileTypeInt,
-    //       File: formData.get("File"),
-    //     },
-    //     {
-    //       headers: API_HEADER,
-    //       // "Content-Type": "multipart/form-data",
-    //     }
-    //   );
-    //   if (response.status === 200) {
-    //     console.log("File(s) uploaded successfully: ", response);
-    //     setToast("Uploaded files successfully!");
-    //     setTimeout(() => {
-    //       fetchUploadedFiles();
-    //     }, 1000);
-    //   }
-    // } catch (error) {
-    //   console.error("Error uploading file:", error);
-    //   setToast("Failed to upload file(s)!", "danger");
-    // }
   };
 
   const fetchUploadedFiles = async () => {
