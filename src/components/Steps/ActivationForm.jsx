@@ -1,10 +1,10 @@
+/* eslint-disable react/prop-types */
 // eslint-disable-next-line no-unused-vars
 import React, { useImperativeHandle, forwardRef } from "react";
 import { Form, Button, InputGroup, Accordion } from "react-bootstrap";
 import { BsEyeFill, BsEyeSlashFill } from "react-icons/bs";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
-import PropTypes from "prop-types";
 
 const ActivationForm = forwardRef(
   (
@@ -212,36 +212,6 @@ const ActivationForm = forwardRef(
   }
 );
 
-ActivationForm.propTypes = {
-  handleSubmit: PropTypes.func.isRequired,
-  handleChange: PropTypes.func.isRequired,
-  handleFileUpload: PropTypes.func.isRequired,
-  formData: PropTypes.shape({
-    email: PropTypes.string.isRequired,
-    businessEmail: PropTypes.string,
-    username: PropTypes.string.isRequired,
-    password: PropTypes.string.isRequired,
-    phoneNumber: PropTypes.string,
-  }).isRequired,
-  errors: PropTypes.shape({
-    email: PropTypes.string,
-    username: PropTypes.string,
-    password: PropTypes.string,
-    phoneNumber: PropTypes.string,
-  }).isRequired,
-  uploadedFiles: PropTypes.shape({
-    trainingSheet: PropTypes.arrayOf(PropTypes.string).isRequired,
-    masterDoc: PropTypes.arrayOf(PropTypes.string).isRequired,
-  }).isRequired,
-  email: PropTypes.string,
-  phoneNumber: PropTypes.string.isRequired,
-  setPhoneNumber: PropTypes.func.isRequired,
-  setErrors: PropTypes.func.isRequired,
-  passwordVisible: PropTypes.bool.isRequired,
-  setPasswordVisible: PropTypes.func.isRequired,
-  termsChecked: PropTypes.bool.isRequired,
-  //   setTermsChecked: PropTypes.func.isRequired,
-};
 ActivationForm.displayName = "ActivationForm";
 
 export default ActivationForm;
