@@ -191,7 +191,6 @@ const ActivationForm = forwardRef(
 
         <div className="mt-2">
           <ul>
-            {/* eslint-disable-next-line react/prop-types */}
             {uploadedFiles.map((item, index) => (
               <li key={index}>{item.originalFileName}</li>
             ))}
