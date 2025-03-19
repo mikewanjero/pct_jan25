@@ -97,7 +97,7 @@ const ActActivation = () => {
     try {
       // Proceed with API submission
       const response = await axios.post(
-        `${API_URL}/ActivateAccount`,
+        `${API_URL}/ActivateClient`,
         formData,
         phoneNumber,
         id,
