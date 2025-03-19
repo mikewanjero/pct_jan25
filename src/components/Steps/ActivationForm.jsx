@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 // eslint-disable-next-line no-unused-vars
 import React, { useImperativeHandle, forwardRef } from "react";
-import { Form, Button, InputGroup, Accordion } from "react-bootstrap";
+import { Form, Button, InputGroup, Accordion, Table } from "react-bootstrap";
 import { BsEyeFill, BsEyeSlashFill } from "react-icons/bs";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
@@ -190,11 +190,46 @@ const ActivationForm = forwardRef(
         </Accordion>
 
         <div className="mt-2">
-          <ul>
-            {uploadedFiles.map((item, index) => (
-              <li key={index}>{item.originalFileName}</li>
-            ))}
-          </ul>
+          <h5>Uploaded Files</h5>
+          {uploadedFiles.length > 0 ? (
+            <Table bordered hover responsive className="mt-3">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>File Name</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                {uploadedFiles.map((file, index) => (
+                  <tr key={`file-${file.fileName}-${index}`}>
+                    <td>{index + 1}</td>
+                    <td>{file.originalFileName}</td>
+                    <td className="d-flex gap-2">
+                      <Button
+                        variant="outline-primary"
+                        size="sm"
+                        className="flew-grow-1"
+                      >
+                        Preview
+                      </Button>
+                      <Button
+                        variant="outline-danger"
+                        size="sm"
+                        className="flex-grow-1"
+                      >
+                        Remove
+                      </Button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </Table>
+          ) : (
+            <div className="text-muted p-3 border rounded">
+              No files uploaded (yet).
+            </div>
+          )}
         </div>
 
         <div className="d-flex w-100">
