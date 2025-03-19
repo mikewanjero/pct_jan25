@@ -26,10 +26,10 @@ const ActActivation = () => {
   const [errors, setErrors] = useState({});
   const [phoneNumber, setPhoneNumber] = useState("");
   const [passwordVisible, setPasswordVisible] = useState(false);
-  const [uploadedFiles, setUploadedFiles] = useState([]);
-  const [termsChecked, setTermsChecked] = useState(false);
   const [showToast, setShowToast] = useState(false);
+  const [termsChecked, setTermsChecked] = useState(false);
   const [toastData, setToastData] = useState({ message: "", type: "success" });
+  const [uploadedFiles, setUploadedFiles] = useState([]);
 
   // Company details
   const [companyDetails, setCompanyDetails] = useState({
