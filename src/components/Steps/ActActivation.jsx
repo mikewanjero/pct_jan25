@@ -99,6 +99,9 @@ const ActActivation = () => {
       const response = await axios.post(
         `${API_URL}/ActivateAccount`,
         formData,
+        phoneNumber,
+        id,
+        companyDetails.companyName,
         {
           headers: {
             ...API_HEADER,
