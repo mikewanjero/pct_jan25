@@ -167,49 +167,6 @@ const ActivationForm = forwardRef(
                   accept=".xls,.xlsx, application/vnd.ms-excel, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
                   onChange={handleFileUpload}
                 />
-                <div className="mt-2">
-                  <h5>Uploaded Files</h5>
-                  {uploadedFiles.length > 0 ? (
-                    <Table bordered hover responsive className="mt-3">
-                      <thead>
-                        <tr>
-                          <th>#</th>
-                          <th>File Name</th>
-                          <th>Actions</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {uploadedFiles.map((file, index) => (
-                          <tr key={`file-${file.fileName}-${index}`}>
-                            <td>{index + 1}</td>
-                            <td>{file.originalFileName}</td>
-                            <td className="d-flex gap-2">
-                              <Button
-                                variant="outline-primary"
-                                size="sm"
-                                className="flew-grow-1"
-                              >
-                                Preview
-                              </Button>
-                              <Button
-                                variant="outline-danger"
-                                size="sm"
-                                className="flex-grow-1"
-                                onClick={() => deleteUploadedFiles()}
-                              >
-                                Remove
-                              </Button>
-                            </td>
-                          </tr>
-                        ))}
-                      </tbody>
-                    </Table>
-                  ) : (
-                    <div className="text-muted p-3 border rounded">
-                      No files uploaded (yet).
-                    </div>
-                  )}
-                </div>
               </Form.Group>
             </Accordion.Body>
           </Accordion.Item>
@@ -232,6 +189,50 @@ const ActivationForm = forwardRef(
             </Accordion.Body>
           </Accordion.Item>
         </Accordion>
+
+        <div className="mt-2">
+          <h5>Uploaded Files</h5>
+          {uploadedFiles.length > 0 ? (
+            <Table bordered hover responsive className="mt-3">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>File Name</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                {uploadedFiles.map((file, index) => (
+                  <tr key={`file-${file.fileName}-${index}`}>
+                    <td>{index + 1}</td>
+                    <td>{file.originalFileName}</td>
+                    <td className="d-flex gap-2">
+                      <Button
+                        variant="outline-primary"
+                        size="sm"
+                        className="flew-grow-1"
+                      >
+                        Preview
+                      </Button>
+                      <Button
+                        variant="outline-danger"
+                        size="sm"
+                        className="flex-grow-1"
+                        onClick={() => deleteUploadedFiles()}
+                      >
+                        Remove
+                      </Button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </Table>
+          ) : (
+            <div className="text-muted p-3 border rounded">
+              No files uploaded (yet).
+            </div>
+          )}
+        </div>
 
         <div className="d-flex w-100">
           <Button
