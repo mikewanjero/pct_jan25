@@ -15,7 +15,7 @@ export default function PackageInfo({ packageInfo, setToast }) {
 
   return (
     <>
-      <div className="w-100 border p-3 rounded shadow bg-light mb-2">
+      <div className="w-100 border p-3 rounded shadow bg-light mb-2 flex-shrink-0">
         {/* <h2 className="fw-semibold text-center">{companyName}</h2> */}
         <h2
           className="text-caramel fw-semibold text-center"
