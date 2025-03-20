@@ -199,6 +199,27 @@ const ActActivation = () => {
     fetchUploadedFiles();
   }, []);
 
+  const deleteUploadedFiles = async (fileId) => {
+    try {
+      const response = await axios.delete(`${API_URL}/DeleteFile`, {
+        params: { fileId },
+        headers: API_HEADER,
+      });
+
+      if (response.data.success) {
+        console.log("File deleted successfully:", response.data);
+        setToast(`File ${fileId} deleted successfully!`, "success");
+        deleteUploadedFiles(fileId);
+      } else {
+        console.log("Error deleting file:", response.data);
+        setToast(`Failed to delete file ${fileId}!`, "danger");
+      }
+    } catch (error) {
+      console.error("Error removing file:", error);
+      setToast("Failed to delete file", "danger");
+    }
+  };
+
   return (
     <div className="container">
       <div className="form-container">
@@ -227,6 +248,7 @@ const ActActivation = () => {
               <h5 className="text-danger fw-bold">Activate Subscription</h5>
               <ActivationForm
                 ref={formRef}
+                deleteUploadedFiles={deleteUploadedFiles}
                 error={error}
                 errors={errors}
                 formData={formData}
