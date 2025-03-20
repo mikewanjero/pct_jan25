@@ -234,7 +234,7 @@ const ActivationForm = forwardRef(
           )}
         </div>
 
-        <div className="d-flex w-100">
+        <div className="d-flex w-100 mt-auto">
           <Button
             className="activate-btn"
             disabled={!termsChecked}
