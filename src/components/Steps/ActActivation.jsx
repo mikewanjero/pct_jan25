@@ -216,7 +216,7 @@ const ActActivation = () => {
       }
     } catch (error) {
       console.error("Error removing file:", error);
-      setToast("Failed to delete file", "danger");
+      setToast("Failed to delete file!", "danger");
     }
   };
 
