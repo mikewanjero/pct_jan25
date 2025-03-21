@@ -66,9 +66,14 @@ export default function Login() {
       });
 
       if (response.status === 200) {
-        const { token } = response.data;
+        const { token, message } = response.data;
         localStorage.setItem("authToken", token);
-        navigate("/change-password");
+        console.log(response.data);
+        if (message.includes("change your temporary password") && message) {
+          return navigate("/change-password");
+        } else {
+          return navigate("/acct-activation");
+        }
       } else {
         setToastMessage("Invalid credentials. Please try again");
         setShowToast(true);
