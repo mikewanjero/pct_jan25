@@ -48,7 +48,7 @@ const ActActivation = () => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          `${API_URL}/GetClientDetails?psCusCode=XTW0LL`,
+          `${API_URL}/GetClientDetails?psCusCode=LWWDYC`,
           { headers: API_HEADER }
         );
 
@@ -145,7 +145,7 @@ const ActActivation = () => {
         : 0;
 
     formData.append("FileType", fileTypeInt);
-    formData.append("Cuscode", id);
+    formData.append("Cuscode", "LWWDYC");
     console.log("fileType", fileType);
     console.log("files", files);
     // Check if the file type is valid
@@ -164,6 +164,7 @@ const ActActivation = () => {
         const data = await response.json();
         console.log("File(s) uploaded successfully: ", data);
         setToast("File(s) uploaded successfully!", "success");
+        fetchUploadedFiles();
       } else {
         const data = await response.json();
         console.log("Error uploading file:", data);
@@ -178,7 +179,7 @@ const ActActivation = () => {
   const fetchUploadedFiles = async () => {
     try {
       const response = await axios.get(`${API_URL}/GetUploadedFiles`, {
-        params: { cusCode: "XTW0LL" },
+        params: { cusCode: "LWWDYC" },
         headers: {
           accesskey:
             "R0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9",
