@@ -15,10 +15,6 @@ export default function TermsSection({ termsChecked, onChange }) {
           <br />
           <br />
           <br />
-          <br />
-          <br />
-          <br />
-          <br />
           <strong>My Subscription begins Today.</strong>
           <br />
           <br />
