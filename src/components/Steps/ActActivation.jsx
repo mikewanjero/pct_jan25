@@ -7,7 +7,7 @@ import PackageInfo from "../Subscription/PackageInfo";
 import phamacoreLogo from "../../assets/images/phamacoreLogo.png";
 import { useParams } from "react-router-dom";
 
-const API_URL = "http://20.164.20.36:86/api/client";
+const API_URL = "http://20.164.20.36:86/";
 const API_HEADER = {
   accesskey: "R0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9",
   // "Content-Type": "multipart/form-data",
@@ -48,7 +48,7 @@ const ActActivation = () => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          `${API_URL}/GetClientDetails?psCusCode=LWWDYC`,
+          `${API_URL}/api/client/GetClientDetails?psCusCode=LWWDYC`,
           { headers: API_HEADER }
         );
 
@@ -96,7 +96,7 @@ const ActActivation = () => {
     try {
       // Proceed with API submission
       const response = await axios.post(
-        `${API_URL}/ActivateClient`,
+        `${API_URL}/api/client/ActivateClient`,
         formData,
         phoneNumber,
         id,
@@ -155,7 +155,7 @@ const ActActivation = () => {
     }
 
     try {
-      const response = await fetch(`${API_URL}/UploadFile`, {
+      const response = await fetch(`${API_URL}/api/client/UploadFile`, {
         method: "POST",
         headers: API_HEADER,
         body: formData,
@@ -178,13 +178,16 @@ const ActActivation = () => {
 
   const fetchUploadedFiles = async () => {
     try {
-      const response = await axios.get(`${API_URL}/GetUploadedFiles`, {
-        params: { cusCode: "LWWDYC" },
-        headers: {
-          accesskey:
-            "R0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9",
-        },
-      });
+      const response = await axios.get(
+        `${API_URL}/api/client/GetUploadedFiles`,
+        {
+          params: { cusCode: "LWWDYC" },
+          headers: {
+            accesskey:
+              "R0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9",
+          },
+        }
+      );
 
       if (response.data.success) {
         console.log("Uploaded files:", response.data.data);
@@ -202,7 +205,7 @@ const ActActivation = () => {
 
   const deleteUploadedFiles = async (fileId) => {
     try {
-      const response = await axios.delete(`${API_URL}/DeleteFile`, {
+      const response = await axios.delete(`${API_URL}/api/client/DeleteFile`, {
         params: { fileId },
         headers: API_HEADER,
       });
