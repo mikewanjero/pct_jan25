@@ -17,7 +17,7 @@ import { FormGroup, Toast, ToastContainer } from "react-bootstrap";
 import { BsLockFill, BsEyeFill, BsEyeSlashFill } from "react-icons/bs";
 import axios from "axios";
 
-const API_URL = "http://20.164.20.36:86/";
+const API_URL = "http://20.164.20.36:86";
 const API_HEADER = {
   accesskey: "R0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9",
   // "Content-Type": "multipart/form-data",
@@ -60,7 +60,7 @@ export default function Login() {
     setError("");
 
     try {
-      const response = await axios.post("api_url", {
+      const response = await axios.post(`${API_URL}/api/auth/LoginClient`, {
         username: formData.username,
         password: formData.password,
       });
@@ -68,7 +68,7 @@ export default function Login() {
       if (response.status === 200) {
         const { token } = response.data;
         localStorage.setItem("authToken", token);
-        navigate("/acct-activation");
+        navigate("/change-password");
       } else {
         setToastMessage("Invalid credentials. Please try again");
         setShowToast(true);
