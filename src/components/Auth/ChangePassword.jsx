@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   Card,
@@ -12,9 +12,49 @@ import {
 } from "react-bootstrap";
 import phamacoreLogo from "../../assets/images/phamacoreLogo.png";
 import corebaseLogo from "../../assets/images/corebaseLogo.png";
+import axios from "axios";
+
+const API_URL = "http://20.164.20.36:86";
+const API_HEADER = {
+  accesskey: "R0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9",
+};
 
 export default function ChangePassword() {
+  const [formData, setFormData] = useState({
+    username: "",
+    newPassword: "",
+    confirmPassword: "",
+  });
+  const [showToast, setShowToast] = useState(false);
+  const [toastData, setToastData] = useState({ message: "", type: "success" });
   const navigate = useNavigate();
+
+  const handleConfirmPass = () => {
+    try {
+      const response = axios.post(
+        `${API_URL}/auth/ChangePassword`,
+        {
+          username: formData.username,
+          newPassword: formData.newPassword,
+          confirmPassword: formData.confirmPassword,
+        },
+        {
+          headers: { ...API_HEADER },
+        }
+      );
+      console.log(response);
+      setToast("Successfully reset password!", "success");
+      navigate("/");
+    } catch (error) {
+      console.log(error);
+      setToast("An error occurred while changing password!", "danger");
+    }
+  };
+
+  const setToast = (message, type = "success") => {
+    setToastData({ message, type });
+    setShowToast(true);
+  };
 
   return (
     <div
@@ -56,10 +96,10 @@ export default function ChangePassword() {
                   />
                 </FormGroup>
               </div>
-              <div className="d-flex justify-content-between gap-2 mt-3">
+              <div className="d-flex mt-4">
                 <Button
                   className="btn-sm"
-                  onClick={() => navigate("/login")}
+                  onClick={handleConfirmPass}
                   style={{
                     backgroundColor: "#28A745",
                     borderColor: "rgb(79, 204, 48)",
