@@ -7,7 +7,7 @@ import PackageInfo from "../Subscription/PackageInfo";
 import phamacoreLogo from "../../assets/images/phamacoreLogo.png";
 import { useParams } from "react-router-dom";
 
-const API_URL = "http://20.164.20.36:86/";
+const API_URL = "http://20.164.20.36:86";
 const API_HEADER = {
   accesskey: "R0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9",
   // "Content-Type": "multipart/form-data",
@@ -112,6 +112,7 @@ const ActActivation = () => {
       console.log("Upload Response:", response.data);
       setToast("Account activated successfully!");
     } catch (error) {
+      setLoading(false);
       console.error("Error activating account:", error);
       setToast("Activation failed! Try again.", "danger");
     }
