@@ -17,7 +17,7 @@ import { FormGroup, Toast, ToastContainer } from "react-bootstrap";
 import { BsLockFill, BsEyeFill, BsEyeSlashFill } from "react-icons/bs";
 import axios from "axios";
 
-const API_URL = "http://20.164.20.36:86/api/client";
+const API_URL = "http://20.164.20.36:86/";
 const API_HEADER = {
   accesskey: "R0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9",
   // "Content-Type": "multipart/form-data",
