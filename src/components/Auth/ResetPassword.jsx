@@ -93,7 +93,7 @@ export default function ResetPassword() {
             >
               Please enter a new password
             </p>
-            <Form autoComplete="off">
+            <Form autoComplete="off" onSubmit={handleReset}>
               <div className="input-column">
                 <FormGroup className="mb-2">
                   <FormLabel>New Password</FormLabel>
@@ -143,8 +143,7 @@ export default function ResetPassword() {
               <div className="d-flex justify-content-between gap-2 mt-3">
                 <Button
                   className="btn-sm"
-                  type="submit"
-                  onSubmit={handleReset}
+                  onClick={handleReset}
                   style={{
                     backgroundColor: "#28A745",
                     borderColor: "rgb(79, 204, 48)",
