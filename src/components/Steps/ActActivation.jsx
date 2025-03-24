@@ -204,17 +204,22 @@ const ActActivation = () => {
     fetchUploadedFiles();
   }, []);
 
-  const deleteUploadedFiles = async (Id) => {
+  const deleteUploadedFiles = async (Id, cusCode) => {
     try {
-      const response = await axios.delete(`${API_URL}/api/client/DeleteFile`, {
-        params: { Id },
-        headers: API_HEADER,
-      });
+      const response = await axios.delete(
+        `${API_URL}/api/client/DeleteFile/${cusCode}`,
+        {
+          headers: API_HEADER,
+          data: {
+            id: Id,
+            cusCode: cusCode,
+          },
+        }
+      );
 
       if (response.data.success) {
         console.log("File deleted successfully:", response.data);
         setToast(`File ${Id} deleted successfully!`, "success");
-        deleteUploadedFiles(Id);
       } else {
         console.log("Error deleting file:", response.data);
         setToast(`Failed to delete file ${Id}!`, "danger");
