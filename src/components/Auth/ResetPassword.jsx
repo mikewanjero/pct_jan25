@@ -1,5 +1,5 @@
 // eslint-disable-next-line no-unused-vars
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import corebaseLogo from "../../assets/images/corebaseLogo.png";
 import phamacoreLogo from "../../assets/images/phamacoreLogo.png";
@@ -11,10 +11,64 @@ import {
   FormControl,
   FormGroup,
   FormLabel,
+  ToastContainer,
+  Toast,
+  ToastBody,
+  InputGroup,
 } from "react-bootstrap";
+import { BsEyeFill, BsEyeSlashFill } from "react-icons/bs";
+import axios from "axios";
+
+const API_URL = "http://20.164.20.36:86";
+const API_HEADER = {
+  accesskey: "R0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9",
+  // "Content-Type": "multipart/form-data",
+};
 
 export default function ResetPassword() {
   const navigate = useNavigate();
+  const [newPassVisible, setNewPassVisible] = useState(false);
+  const [confirmPassVisible, setConfirmPassVisible] = useState(false);
+  const [formData, setFormData] = useState({
+    newPassword: "",
+    confirmPassword: "",
+  });
+  const [showToast, setShowToast] = useState(false);
+  const [toastData, setToastData] = useState({
+    message: "",
+    type: "success",
+  });
+
+  const handleReset = async () => {
+    if (formData.newPassword !== formData.confirmPassword) {
+      setToast("Both new and confirm password do not match", "danger");
+      return;
+    }
+
+    try {
+      const response = await axios.post(
+        `${API_URL}/api/Auth/ResetPassword`,
+        {
+          newPassword: formData.newPassword,
+          confirmPassword: formData.confirmPassword,
+        },
+        {
+          headers: { ...API_HEADER },
+        }
+      );
+      console.log(response);
+      setToast("Successfully reset password!", "success");
+      navigate("/");
+    } catch (error) {
+      console.log("Error resetting password:", error);
+      setToast("Error resetting password!", "danger");
+    }
+  };
+
+  const setToast = (message, type = "success") => {
+    setToastData({ message, type });
+    setShowToast(true);
+  };
 
   return (
     <div
@@ -43,22 +97,54 @@ export default function ResetPassword() {
               <div className="input-column">
                 <FormGroup className="mb-2">
                   <FormLabel>New Password</FormLabel>
-                  <FormControl
-                    type="password"
-                    placeholder="Enter your new password"
-                  />
+                  <InputGroup>
+                    <FormControl
+                      type={newPassVisible ? "text" : "password"}
+                      placeholder="Enter your new password"
+                      value={formData.newPassword}
+                      onChange={(e) => {
+                        setFormData({
+                          ...formData,
+                          newPassword: e.target.value,
+                        });
+                      }}
+                    />
+                    <Button
+                      variant="outline-secondary"
+                      onClick={() => setNewPassVisible(!newPassVisible)}
+                    >
+                      {newPassVisible ? <BsEyeSlashFill /> : <BsEyeFill />}
+                    </Button>
+                  </InputGroup>
                 </FormGroup>
                 <FormGroup>
                   <FormLabel>Confirm New Password</FormLabel>
-                  <FormControl
-                    type="password"
-                    placeholder="Confirm your new password"
-                  />
+                  <InputGroup>
+                    <FormControl
+                      type={confirmPassVisible ? "text" : "password"}
+                      placeholder="Confirm your new password"
+                      value={formData.confirmPassword}
+                      onChange={(e) => {
+                        setFormData({
+                          ...formData,
+                          confirmPassword: e.target.value,
+                        });
+                      }}
+                    />
+                    <Button
+                      variant="outline-secondary"
+                      onClick={() => setConfirmPassVisible(!confirmPassVisible)}
+                    >
+                      {confirmPassVisible ? <BsEyeSlashFill /> : <BsEyeFill />}
+                    </Button>
+                  </InputGroup>
                 </FormGroup>
               </div>
               <div className="d-flex justify-content-between gap-2 mt-3">
                 <Button
                   className="btn-sm"
+                  type="submit"
+                  onSubmit={handleReset}
                   style={{
                     backgroundColor: "#28A745",
                     borderColor: "rgb(79, 204, 48)",
@@ -95,6 +181,17 @@ export default function ResetPassword() {
             <p className="m-0 company-lg">CoreBase Solutions</p>
           </div>
         </footer>
+        <ToastContainer position="top-center" className="p-3">
+          <Toast
+            onClose={() => setShowToast(false)}
+            show={showToast}
+            bg={toastData.type}
+            delay={3000}
+            autohide
+          >
+            <ToastBody>{toastData.message}</ToastBody>
+          </Toast>
+        </ToastContainer>
       </div>
     </div>
   );
