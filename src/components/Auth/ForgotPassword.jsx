@@ -1,5 +1,5 @@
 // eslint-disable-next-line no-unused-vars
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import corebaseLogo from "../../assets/images/corebaseLogo.png";
 import phamacoreLogo from "../../assets/images/phamacoreLogo.png";
@@ -11,10 +11,58 @@ import {
   FormControl,
   FormGroup,
   FormLabel,
+  ToastContainer,
+  Toast,
+  ToastBody,
 } from "react-bootstrap";
+import axios from "axios";
+
+const API_URL = "http://20.164.20.36:86";
+const API_HEADER = {
+  accesskey: "R0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9",
+  // "Content-Type": "multipart/form-data",
+};
 
 export default function ForgotPassword() {
   const navigate = useNavigate();
+  const [showToast, setShowToast] = useState(false);
+  const [toastData, setToastData] = useState({
+    message: "",
+    type: "successs",
+  });
+
+  const handleReset = async (email) => {
+    try {
+      const response = await axios.post(
+        `${API_URL}/api/client/PasswordRequest`,
+        {
+          email: email,
+        },
+        {
+          header: API_HEADER,
+        }
+      );
+      if (response.data.success) {
+        console.log("Reset link obtained successfully", response);
+        setToast(
+          "Open your email to find link to reset your password",
+          "success"
+        );
+        navigate("/");
+      } else {
+        console.log("Error obtaining reset link!", response);
+        setToast("Failed to get reset link", "danger");
+      }
+    } catch (error) {
+      console.error(error);
+      setToast("Failed to get reset link", "danger");
+    }
+  };
+
+  const setToast = (message, type = "success") => {
+    setToastData({ message, type });
+    setShowToast(true);
+  };
 
   return (
     <div
@@ -63,7 +111,7 @@ export default function ForgotPassword() {
                 <Button
                   className="btn-sm"
                   variant="secondary"
-                  onClick={() => navigate("/")}
+                  onClick={handleReset}
                   style={{
                     backgroundColor: "rgb(197, 140, 79)",
                     borderColor: "rgb(197, 140, 79)",
@@ -88,6 +136,17 @@ export default function ForgotPassword() {
             <p className="m-0 company-lg">CoreBase Solutions</p>
           </div>
         </footer>
+        <ToastContainer position="top-center" className="p-3">
+          <Toast
+            onClose={() => setShowToast(false)}
+            show={showToast}
+            bg={toastData.type}
+            delay={3000}
+            autohide
+          >
+            <ToastBody>{toastData.message}</ToastBody>
+          </Toast>
+        </ToastContainer>
       </div>
     </div>
   );
