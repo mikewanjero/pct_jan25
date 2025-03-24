@@ -36,14 +36,14 @@ export default function ChangePassword() {
   const [toastData, setToastData] = useState({ message: "", type: "success" });
   const navigate = useNavigate();
 
-  const handleConfirmPass = () => {
+  const handleConfirmPass = async () => {
     if (formData.newPassword !== formData.confirmPassword) {
       setToast("Both new and confirm password do not match", "danger");
       return;
     }
 
     try {
-      const response = axios.post(
+      const response = await axios.post(
         `${API_URL}/auth/ChangePassword`,
         {
           username: formData.username,
