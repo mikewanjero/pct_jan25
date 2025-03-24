@@ -17,7 +17,7 @@ import {
 import phamacoreLogo from "../../assets/images/phamacoreLogo.png";
 import corebaseLogo from "../../assets/images/corebaseLogo.png";
 import axios from "axios";
-import { BsEyeSlash, BsEyeSlashFill } from "react-icons/bs";
+import { BsEyeFill, BsEyeSlashFill } from "react-icons/bs";
 
 const API_URL = "http://20.164.20.36:86";
 const API_HEADER = {
@@ -111,7 +111,7 @@ export default function ChangePassword() {
                       variant="outline-secondary"
                       onClick={() => setNewPasswordVisible(!newPasswordVisible)}
                     >
-                      {newPasswordVisible ? <BsEyeSlashFill /> : <BsEyeSlash />}
+                      {newPasswordVisible ? <BsEyeSlashFill /> : <BsEyeFill />}
                     </Button>
                   </InputGroup>
                 </FormGroup>
@@ -138,7 +138,7 @@ export default function ChangePassword() {
                       {confirmPasswordVisible ? (
                         <BsEyeSlashFill />
                       ) : (
-                        <BsEyeSlash />
+                        <BsEyeFill />
                       )}
                     </Button>
                   </InputGroup>
