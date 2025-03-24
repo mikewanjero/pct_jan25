@@ -122,9 +122,10 @@ export default function Login() {
                 <FormControl
                   type="text"
                   className={inputErrors.username ? "is-invalid" : ""}
-                  onChange={(e) =>
-                    setFormData({ ...formData, username: e.target.value })
-                  }
+                  onChange={(e) => {
+                    setFormData({ ...formData, username: e.target.value });
+                    setInputErrors((prev) => ({ ...prev, username: false }));
+                  }}
                 />
               </FormGroup>
               <FormGroup className="mb-1">
@@ -141,9 +142,10 @@ export default function Login() {
                   <FormControl
                     type={showPassword ? "text" : "password"}
                     className={inputErrors.password ? "is-invalid" : ""}
-                    onChange={(e) =>
-                      setFormData({ ...formData, password: e.target.value })
-                    }
+                    onChange={(e) => {
+                      setFormData({ ...formData, password: e.target.value });
+                      setInputErrors((prev) => ({ ...prev, password: false }));
+                    }}
                   />
                   <Button
                     variant="outline-secondary"
