@@ -9,10 +9,15 @@ import {
   FormLabel,
   FormControl,
   Button,
+  InputGroup,
+  Toast,
+  ToastContainer,
+  ToastBody,
 } from "react-bootstrap";
 import phamacoreLogo from "../../assets/images/phamacoreLogo.png";
 import corebaseLogo from "../../assets/images/corebaseLogo.png";
 import axios from "axios";
+import { BsEyeSlash, BsEyeSlashFill } from "react-icons/bs";
 
 const API_URL = "http://20.164.20.36:86";
 const API_HEADER = {
@@ -25,11 +30,18 @@ export default function ChangePassword() {
     newPassword: "",
     confirmPassword: "",
   });
+  const [confirmPasswordVisible, setConfirmPasswordVisible] = useState(false);
+  const [newPasswordVisible, setNewPasswordVisible] = useState(false);
   const [showToast, setShowToast] = useState(false);
   const [toastData, setToastData] = useState({ message: "", type: "success" });
   const navigate = useNavigate();
 
   const handleConfirmPass = () => {
+    if (formData.newPassword !== formData.confirmPassword) {
+      setToast("Both new and confirm password do not match", "danger");
+      return;
+    }
+
     try {
       const response = axios.post(
         `${API_URL}/auth/ChangePassword`,
@@ -83,20 +95,56 @@ export default function ChangePassword() {
               <div className="input-column">
                 <FormGroup className="mb-2">
                   <FormLabel>New Password</FormLabel>
-                  <FormControl
-                    type="password"
-                    placeholder="Enter your new password"
-                  />
+                  <InputGroup>
+                    <FormControl
+                      type={newPasswordVisible ? "text" : "password"}
+                      placeholder="Enter your new password"
+                      value={formData.newPassword}
+                      onChange={(e) =>
+                        setFormData({
+                          ...formData,
+                          newPassword: e.target.value,
+                        })
+                      }
+                    />
+                    <Button
+                      variant="outline-secondary"
+                      onClick={() => setNewPasswordVisible(!newPasswordVisible)}
+                    >
+                      {newPasswordVisible ? <BsEyeSlashFill /> : <BsEyeSlash />}
+                    </Button>
+                  </InputGroup>
                 </FormGroup>
                 <FormGroup>
                   <FormLabel>Confirm New Password</FormLabel>
-                  <FormControl
-                    type="password"
-                    placeholder="Confirm your new password"
-                  />
+                  <InputGroup>
+                    <FormControl
+                      type={confirmPasswordVisible ? "text" : "password"}
+                      placeholder="Confirm your new password"
+                      value={formData.confirmPassword}
+                      onChange={(e) =>
+                        setFormData({
+                          ...formData,
+                          confirmPassword: e.target.value,
+                        })
+                      }
+                    />
+                    <Button
+                      variant="outline-secondary"
+                      onClick={() =>
+                        setConfirmPasswordVisible(!confirmPasswordVisible)
+                      }
+                    >
+                      {confirmPasswordVisible ? (
+                        <BsEyeSlashFill />
+                      ) : (
+                        <BsEyeSlash />
+                      )}
+                    </Button>
+                  </InputGroup>
                 </FormGroup>
               </div>
-              <div className="d-flex mt-4">
+              <div className="d-grid mt-4">
                 <Button
                   className="btn-sm"
                   onClick={handleConfirmPass}
@@ -108,18 +156,6 @@ export default function ChangePassword() {
                 >
                   Reset Password
                 </Button>
-                {/* <Button
-                      className="btn-sm"
-                      variant="secondary"
-                      onClick={() => navigate("/")}
-                      style={{
-                        backgroundColor: "rgb(197, 140, 79)",
-                        borderColor: "rgb(197, 140, 79)",
-                        width: 150,
-                      }}
-                    >
-                      Back to Login
-                    </Button> */}
               </div>
             </Form>
           </CardBody>
@@ -136,6 +172,17 @@ export default function ChangePassword() {
             <p className="m-0 company-lg">CoreBase Solutions</p>
           </div>
         </footer>
+        <ToastContainer position="top-center" className="p-3">
+          <Toast
+            onClose={() => setShowToast(false)}
+            show={showToast}
+            bg={toastData.type}
+            delay={3000}
+            autohide
+          >
+            <ToastBody>{toastData.message}</ToastBody>
+          </Toast>
+        </ToastContainer>
       </div>
     </div>
   );
