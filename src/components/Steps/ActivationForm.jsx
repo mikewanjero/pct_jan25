@@ -207,13 +207,6 @@ const ActivationForm = forwardRef(
                     <td>{index + 1}</td>
                     <td>{file.originalFileName}</td>
                     <td className="d-flex">
-                      {/* <Button
-                        variant="outline-primary"
-                        size="sm"
-                        className="flew-grow-1"
-                      >
-                        Preview
-                      </Button> */}
                       <Button
                         variant="outline-danger"
                         size="sm"
