@@ -22,50 +22,43 @@ export default function ForgotPassword() {
       style={{ minWidth: 450, minHeight: 400 }}
     >
       <div className="mx-auto">
-        <Card className="shadow" style={{ width: "25rem" }}>
-          <CardBody className="p-4">
+        <Card className="shadow">
+          <CardBody className="p-5">
             <div className="text-center">
               <img
                 src={phamacoreLogo}
                 alt="brand"
-                className="d-flex img-fluid justify-content-center m-auto"
+                className="img-fluid d-flex justify-content-center m-auto"
                 width={120}
               />
             </div>
             <h2 className="text-center fs-4">Forgot Password</h2>
             <p
-              className="text-center text-secondary p-1 mb-2"
+              className="text-center text-secondary p-1 mb-4"
               style={{ fontSize: 12 }}
             >
-              Please enter a new password
+              Enter your username to reset your password
             </p>
-            <Form autoComplete="off">
-              <div className="input-column">
-                <FormGroup className="mb-2">
-                  <FormLabel>New Password</FormLabel>
-                  <FormControl
-                    type="password"
-                    placeholder="Enter your new password"
-                  />
-                </FormGroup>
-                <FormGroup>
-                  <FormLabel>Confirm New Password</FormLabel>
-                  <FormControl
-                    type="password"
-                    placeholder="Confirm your new password"
-                  />
-                </FormGroup>
-              </div>
-              <div className="d-flex justify-content-between gap-2 mt-3">
+            <Form>
+              <FormGroup className="mb-3">
+                <FormLabel>Email Address</FormLabel>
+                <FormControl
+                  type="email"
+                  placeholder="Enter your email address"
+                />
+              </FormGroup>
+              <div className="d-flex justify-content-between gap-2">
                 <Button
                   className="btn-sm"
+                  onClick={() => navigate("/reset-password")}
+                  variant="primary"
                   style={{
                     backgroundColor: "#28A745",
                     borderColor: "rgb(79, 204, 48)",
                     width: 150,
                   }}
                 >
-                  Reset Password
+                  Send Reset Link
                 </Button>
                 <Button
                   className="btn-sm"
@@ -77,7 +70,7 @@ export default function ForgotPassword() {
                     width: 150,
                   }}
                 >
-                  Back to Login
+                  Cancel
                 </Button>
               </div>
             </Form>
