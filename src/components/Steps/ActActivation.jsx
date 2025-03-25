@@ -236,10 +236,7 @@ const ActActivation = () => {
         },
       });
       console.log(response.data);
-      setToast(
-        `File ${response.data.message} deleted successfully!`,
-        "success"
-      );
+      setToast(`${response.data.message}`, "success");
 
       fetchUploadedFiles(companyDetails.companyID);
     } catch (error) {
