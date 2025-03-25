@@ -211,7 +211,7 @@ const ActivationForm = forwardRef(
                         variant="outline-danger"
                         size="sm"
                         className="flex-grow-1"
-                        onClick={() => deleteUploadedFiles()}
+                        onClick={() => deleteUploadedFiles(file.id)}
                       >
                         Remove
                       </Button>
