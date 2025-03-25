@@ -238,6 +238,7 @@ const ActActivation = () => {
           cusCode: cusCode,
         },
       });
+      console.log(response.data);
       setToast(
         `File ${response.data.message} deleted successfully!`,
         "success"
