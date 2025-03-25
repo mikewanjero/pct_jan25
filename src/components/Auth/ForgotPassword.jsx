@@ -28,7 +28,7 @@ export default function ForgotPassword() {
   const [showToast, setShowToast] = useState(false);
   const [toastData, setToastData] = useState({
     message: "",
-    type: "successs",
+    type: "success",
   });
 
   const handleReset = async (email) => {
