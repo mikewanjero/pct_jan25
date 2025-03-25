@@ -129,7 +129,8 @@ const ActActivation = () => {
         const data = await response.json();
         console.log("File(s) uploaded successfully: ", data);
         setToast("File(s) uploaded successfully!", "success");
-        fetchUploadedFiles();
+
+        fetchUploadedFiles(companyDetails.companyID);
       } else {
         const data = await response.json();
         console.log("Error uploading file:", data);
@@ -188,20 +189,16 @@ const ActActivation = () => {
       } = response.data;
 
       setCompanyDetails({ companyName, companyID });
-      setPackageInfo({ branches, users });
+      setPackageInfo((prev) => ({ ...prev, branches, users }));
       fetchUploadedFiles(response.data.psCusCode);
+      GetPackageName(response.data.psCusCode);
     } catch (error) {
       console.error("Error displaying client details:", error);
       setToast("Error displaying client details:", "danger");
     }
   };
 
-  useEffect(() => {
-    GetClientByUserNameOrEmail();
-  }, []);
-
-  const GetPackageName = async () => {
-    const cusCode = companyDetails.companyID;
+  const GetPackageName = async (cusCode) => {
     console.log("Cuscode:", cusCode);
     try {
       const response = await axios.get(
@@ -215,16 +212,15 @@ const ActActivation = () => {
 
       const { packageName: name } = response.data.data;
 
-      setPackageInfo({ name });
+      setPackageInfo((prev) => ({ ...prev, name }));
       fetchUploadedFiles(response.data.psCusCode);
     } catch (error) {
       console.error("Error displaying package name:", error);
       setToast("Failed to display package name!", "danger");
     }
   };
-
   useEffect(() => {
-    GetPackageName();
+    GetClientByUserNameOrEmail();
   }, []);
 
   const deleteUploadedFiles = async (
@@ -245,7 +241,7 @@ const ActActivation = () => {
         "success"
       );
 
-      fetchUploadedFiles();
+      fetchUploadedFiles(companyDetails.companyID);
     } catch (error) {
       console.error("Error removing file:", error);
       setToast("Failed to delete file!", "danger");
