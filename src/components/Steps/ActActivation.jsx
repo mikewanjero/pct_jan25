@@ -55,7 +55,7 @@ const ActActivation = () => {
         const {
           psCompanyName: companyName,
           psCusCode: companyID,
-          pkgCode: name,
+          pkgId: name,
           psBranchCount: branches,
           psUserCount: users,
         } = response.data.data;
@@ -204,26 +204,28 @@ const ActActivation = () => {
     fetchUploadedFiles();
   }, []);
 
-  const deleteUploadedFiles = async (Id, cusCode) => {
+  const deleteUploadedFiles = async (Id, cusCode = "LWWDYC") => {
     try {
-      const response = await axios.delete(
-        `${API_URL}/api/client/DeleteFile/${cusCode}`,
-        {
-          headers: API_HEADER,
-          data: {
-            id: Id,
-            cusCode: cusCode,
-          },
-        }
+      const response = await axios.delete(`${API_URL}/api/client/DeleteFile`, {
+        headers: API_HEADER,
+        data: {
+          id: Id,
+          cusCode: cusCode,
+        },
+      });
+      setToast(
+        `File ${response.data.message} deleted successfully!`,
+        "success"
       );
 
-      if (response.data.success) {
-        console.log("File deleted successfully:", response.data);
-        setToast(`File ${Id} deleted successfully!`, "success");
-      } else {
-        console.log("Error deleting file:", response.data);
-        setToast(`Failed to delete file ${Id}!`, "danger");
-      }
+      fetchUploadedFiles();
+      // if (response.data.success) {
+      //   console.log("File deleted successfully:", response.data);
+      //   setToast(`File ${Id} deleted successfully!`, "success");
+      // } else {
+      //   console.log("Error deleting file:", response.data);
+      //   setToast(`Failed to delete file ${Id}!`, "danger");
+      // }
     } catch (error) {
       console.error("Error removing file:", error);
       setToast("Failed to delete file!", "danger");
