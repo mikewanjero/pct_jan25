@@ -34,12 +34,12 @@ export default function ForgotPassword() {
   const handleReset = async (email) => {
     try {
       const response = await axios.post(
-        `${API_URL}/api/client/PasswordRequest`,
+        `${API_URL}/api/client/RequestPasswordReset`,
         {
           email: email,
         },
         {
-          header: API_HEADER,
+          header: { API_HEADER },
         }
       );
       if (response.data.success) {
@@ -48,7 +48,7 @@ export default function ForgotPassword() {
           "Open your email to find link to reset your password",
           "success"
         );
-        navigate("/");
+        navigate("/reset-password");
       } else {
         console.log("Error obtaining reset link!", response);
         setToast("Failed to get reset link", "danger");
@@ -98,7 +98,7 @@ export default function ForgotPassword() {
               <div className="d-flex justify-content-between gap-2">
                 <Button
                   className="btn-sm"
-                  onClick={() => navigate("/reset-password")}
+                  onClick={handleReset}
                   variant="primary"
                   style={{
                     backgroundColor: "#28A745",
@@ -111,7 +111,7 @@ export default function ForgotPassword() {
                 <Button
                   className="btn-sm"
                   variant="secondary"
-                  onClick={handleReset}
+                  onClick={() => navigate("/")}
                   style={{
                     backgroundColor: "rgb(197, 140, 79)",
                     borderColor: "rgb(197, 140, 79)",
