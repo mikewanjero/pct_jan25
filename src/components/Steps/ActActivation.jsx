@@ -163,6 +163,7 @@ const ActActivation = () => {
       setToast("Failed to display uploaded files!", "danger");
     }
   };
+
   const GetClientByUserNameOrEmail = async () => {
     try {
       const response = await axios.get(
