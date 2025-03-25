@@ -36,17 +36,6 @@ const ActivationForm = forwardRef(
       if (!phoneNumber.trim() || phoneNumber.length < 10) {
         newErrors.phoneNumber = "Phone number is required";
       }
-      // if (!uploadedFiles.trainingSheet.length) {
-      //   newErrors.trainingSheet = "You must upload at least one training sheet";
-      // }
-      // if (uploadedFiles.trainingSheet.length === 0) {
-      //   newErrors.trainingSheet = "You must upload at least one training sheet";
-      // } else if (uploadedFiles.trainingSheet.length > 3) {
-      //   newErrors.trainingSheet = "Maximum 3 training sheets allowed";
-      // }
-      // if (uploadedFiles.masterDoc.length > 3) {
-      //   newErrors.masterDoc = "Maximum 3 master documents allowed";
-      // }
 
       setErrors(newErrors);
       return Object.keys(newErrors).length === 0;
