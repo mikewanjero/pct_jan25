@@ -17,7 +17,6 @@ const ActActivation = () => {
   // Form state and handlers
   const formRef = useRef(null);
   const { id } = useParams();
-  // console.log(id);
   const [formData, setFormData] = useState({
     email: "",
     username: "",
@@ -43,41 +42,6 @@ const ActActivation = () => {
   });
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get(
-          `${API_URL}/api/client/GetClientDetails?psCusCode=LWWDYC`,
-          { headers: API_HEADER }
-        );
-
-        const {
-          psCompanyName: companyName,
-          psCusCode: companyID,
-          pkgId: name,
-          psBranchCount: branches,
-          psUserCount: users,
-        } = response.data.data;
-
-        console.log(response);
-        console.log(companyName, companyID);
-        // Validation when companyID is empty
-        if (!companyID) throw new Error("Company ID is missing.");
-
-        setCompanyDetails({ companyName, companyID });
-        setPackageInfo({ name, branches, users });
-        setLoading(false);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-        setError("Failed to fetch company details.");
-        setToast("Failed to display company details!", "danger");
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchData();
-  }, []);
 
   const setToast = (message, type = "success") => {
     setToastData({ message, type });
@@ -177,12 +141,12 @@ const ActActivation = () => {
     }
   };
 
-  const fetchUploadedFiles = async () => {
+  const fetchUploadedFiles = async (id) => {
     try {
       const response = await axios.get(
         `${API_URL}/api/client/GetUploadedFiles`,
         {
-          params: { cusCode: "LWWDYC" },
+          params: { cusCode: id },
           headers: {
             accesskey:
               "R0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9",
@@ -199,12 +163,76 @@ const ActActivation = () => {
       setToast("Failed to display uploaded files!", "danger");
     }
   };
+  const GetClientByUserNameOrEmail = async () => {
+    try {
+      const response = await axios.get(
+        `${API_URL}/api/auth/GetClientByUserNameOrEmail/${localStorage.getItem(
+          "username"
+        )}`,
+        {
+          headers: {
+            accesskey:
+              "R0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9",
+          },
+        }
+      );
+
+      console.log("clientDetails", response.data);
+
+      const {
+        psCompanyName: companyName,
+        psCusCode: companyID,
+        psBranchCount: branches,
+        psUserCount: users,
+      } = response.data;
+
+      setCompanyDetails({ companyName, companyID });
+      setPackageInfo({ branches, users });
+      fetchUploadedFiles(response.data.psCusCode);
+    } catch (error) {
+      console.error("Error displaying client details:", error);
+      setToast("Error displaying client details:", "danger");
+    }
+  };
 
   useEffect(() => {
-    fetchUploadedFiles();
+    GetClientByUserNameOrEmail();
   }, []);
 
-  const deleteUploadedFiles = async (Id, cusCode = "LWWDYC") => {
+  const GetPackageName = async () => {
+    try {
+      const response = await axios.get(
+        `${API_URL}/api/packages/clientpackage/${localStorage.getItem(
+          "username"
+        )}`,
+        {
+          headers: {
+            accesskey:
+              "R0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9",
+          },
+        }
+      );
+
+      console.log("Package Details", response.data);
+
+      const { packageName: name } = response.data;
+
+      setPackageInfo({ name });
+      fetchUploadedFiles(response.data.psCusCode);
+    } catch (error) {
+      console.error("Error displaying package name:", error);
+      setToast("Failed to display package name!", "danger");
+    }
+  };
+
+  useEffect(() => {
+    GetPackageName();
+  }, []);
+
+  const deleteUploadedFiles = async (
+    Id,
+    cusCode = companyDetails.companyID
+  ) => {
     try {
       const response = await axios.delete(`${API_URL}/api/client/DeleteFile`, {
         headers: API_HEADER,
@@ -219,13 +247,6 @@ const ActActivation = () => {
       );
 
       fetchUploadedFiles();
-      // if (response.data.success) {
-      //   console.log("File deleted successfully:", response.data);
-      //   setToast(`File ${Id} deleted successfully!`, "success");
-      // } else {
-      //   console.log("Error deleting file:", response.data);
-      //   setToast(`Failed to delete file ${Id}!`, "danger");
-      // }
     } catch (error) {
       console.error("Error removing file:", error);
       setToast("Failed to delete file!", "danger");
@@ -248,6 +269,7 @@ const ActActivation = () => {
               phAMACore<sup>™</sup>Cloud
             </h2>
           </div>
+          <h6>{localStorage.getItem("username")}</h6>
           <div className="form-header">
             <h5 className="fw-bold">Complete the Account Activation</h5>
             <p className="text-secondary" style={{ fontSize: 12 }}>
