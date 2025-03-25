@@ -44,7 +44,7 @@ export default function ChangePassword() {
 
     try {
       const response = await axios.post(
-        `${API_URL}/auth/ChangePassword`,
+        `${API_URL}/api/auth/ChangePassword`,
         {
           username: formData.username,
           newPassword: formData.newPassword,
@@ -93,6 +93,20 @@ export default function ChangePassword() {
             </p>
             <Form autoComplete="off">
               <div className="input-column">
+                <FormGroup className="mb-2">
+                  <FormLabel>Username</FormLabel>
+                  <FormControl
+                    type="text"
+                    placeholder="Enter your username"
+                    value={formData.username}
+                    onChange={(e) =>
+                      setFormData({
+                        ...formData,
+                        username: e.target.value,
+                      })
+                    }
+                  />
+                </FormGroup>
                 <FormGroup className="mb-2">
                   <FormLabel>New Password</FormLabel>
                   <InputGroup>
