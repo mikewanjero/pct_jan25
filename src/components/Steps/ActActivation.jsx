@@ -200,22 +200,19 @@ const ActActivation = () => {
   }, []);
 
   const GetPackageName = async () => {
+    const cusCode = companyDetails.companyID;
+    console.log("Cuscode:", cusCode);
     try {
       const response = await axios.get(
-        `${API_URL}/api/packages/clientpackage/${localStorage.getItem(
-          "username"
-        )}`,
+        `${API_URL}/api/packages/clientpackage/${cusCode}`,
         {
-          headers: {
-            accesskey:
-              "R0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9",
-          },
+          headers: { ...API_HEADER },
         }
       );
 
       console.log("Package Details", response.data);
 
-      const { packageName: name } = response.data;
+      const { packageName: name } = response.data.data;
 
       setPackageInfo({ name });
       fetchUploadedFiles(response.data.psCusCode);
@@ -310,8 +307,6 @@ const ActActivation = () => {
                 <div className="company-info">
                   <h3>
                     {loading
-                      ? error || "Loading..."
-                      : companyDetails.companyName
                       ? `${companyDetails.companyName} - ${companyDetails.companyID}`
                       : "Details not Fetched"}
                   </h3>
