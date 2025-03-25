@@ -13,6 +13,7 @@ import {
   Toast,
   ToastContainer,
   ToastBody,
+  Container,
 } from "react-bootstrap";
 import phamacoreLogo from "../../assets/images/phamacoreLogo.png";
 import corebaseLogo from "../../assets/images/corebaseLogo.png";
@@ -69,12 +70,13 @@ export default function ChangePassword() {
   };
 
   return (
-    <div
-      className="container-fluid d-flex align-items-center"
-      style={{ minWidth: 450, minHeight: 400 }}
+    <Container
+      fluid
+      className="d-flex align-items-center justify-content-center"
+      style={{ minHeight: "100vh" }}
     >
-      <div className="mx-auto">
-        <Card className="shadow" style={{ width: "25rem" }}>
+      <div className="mx-auto" style={{ width: "100%", maxWidth: "25rem" }}>
+        <Card className="shadow">
           <CardBody className="p-4">
             <div className="text-center">
               <img
@@ -174,7 +176,7 @@ export default function ChangePassword() {
             </Form>
           </CardBody>
         </Card>
-        <footer id="footer">
+        <footer id="footer" style={{ marginTop: "20px" }}>
           <div className="copy-right text-center my-2">
             <p className="m-0 company-sm">Powered by</p>
             <img
@@ -198,6 +200,6 @@ export default function ChangePassword() {
           </Toast>
         </ToastContainer>
       </div>
-    </div>
+    </Container>
   );
 }
