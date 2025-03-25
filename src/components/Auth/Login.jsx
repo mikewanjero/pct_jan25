@@ -68,6 +68,7 @@ export default function Login() {
       if (response.status === 200) {
         const { token, message } = response.data;
         localStorage.setItem("authToken", token);
+        localStorage.setItem("username", formData.username);
         console.log(response.data);
         if (message.includes("change your temporary password") && message) {
           return navigate("/change-password");
