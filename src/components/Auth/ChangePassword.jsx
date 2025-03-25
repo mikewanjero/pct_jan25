@@ -49,7 +49,7 @@ export default function ChangePassword() {
         {
           username: formData.username,
           newPassword: formData.newPassword,
-          confirmPassword: formData.confirmPassword,
+          confirmNewPassword: formData.confirmPassword,
         },
         {
           headers: { ...API_HEADER },
