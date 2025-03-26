@@ -55,7 +55,7 @@ export default function ForgotPassword() {
       }
     } catch (error) {
       console.error(error);
-      setToast("Error getting reset link", "danger");
+      setToast("Error getting reset link!", "danger");
     }
   };
 
