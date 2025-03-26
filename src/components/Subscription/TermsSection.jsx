@@ -6,7 +6,7 @@ import { Form } from "react-bootstrap";
 export default function TermsSection({ termsChecked, onChange }) {
   return (
     <>
-      <div className="d-flex flex-column flex-grow-1 text-muted text-sm mb-4 mt-auto overflow-y-auto">
+      <div className="d-flex flex-column flex-grow-1 justify-content-evenly text-muted text-sm mb-4 mt-auto overflow-y-auto">
         {/* <h4 className="text-dark">Terms & Conditions</h4> */}
         <p style={{ fontSize: 12 }}>
           By Activating My Account, I agree to the CoreBase Solutions
