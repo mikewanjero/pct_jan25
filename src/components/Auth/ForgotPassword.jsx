@@ -114,7 +114,7 @@ export default function ForgotPassword() {
                     width: 150,
                   }}
                 >
-                  Send Reset Link
+                  Request Reset Link
                 </Button>
                 <Button
                   className="btn-sm"
