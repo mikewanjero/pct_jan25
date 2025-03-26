@@ -1,4 +1,6 @@
 import { useState, useEffect, useRef } from "react";
+import Avatar from "react-avatar";
+import { OverlayTrigger, Popover } from "react-bootstrap";
 import axios from "axios";
 import ActivationForm from "./ActivationForm";
 import ActivationToast from "./ActivationToast";
@@ -42,6 +44,9 @@ const ActActivation = () => {
   });
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const username = localStorage.getItem("username") || "User";
+  const email = localStorage.getItem("email") || "example@example.com";
+  const phone = localStorage.getItem("phonenumber") || "123-456-7890";
 
   const setToast = (message, type = "success") => {
     setToastData({ message, type });
@@ -245,23 +250,60 @@ const ActActivation = () => {
     }
   };
 
+  const popoverContent = (
+    <Popover id="avatar-popover">
+      <Popover.Header as="h3">Profile</Popover.Header>
+      <Popover.Body>
+        <p>
+          <strong>Username:</strong> {username}
+        </p>
+        <p>
+          <strong>Email:</strong> {email}
+        </p>
+        <p>
+          <strong>Phone:</strong> {phone}
+        </p>
+      </Popover.Body>
+    </Popover>
+  );
+
   return (
     <div className="container">
       <div className="form-container">
         <div className="form-content">
-          {/* Header */}
-          <div className="d-flex flex-column align-items-center mb-3">
-            <img
-              src={phamacoreLogo}
-              alt="logo"
-              className="img-fluid d-flex justify-content-center m-auto"
-              width={160}
-            />
-            <h2 className="fw-bold mt-4" style={{ color: "#c58c4f" }}>
-              phAMACore<sup>™</sup>Cloud
-            </h2>
+          <div className="header-container d-flex align-items-center justify-content-between mb-3">
+            <div className="logo-text-container d-flex flex-column align-items-start">
+              <img
+                src={phamacoreLogo}
+                alt="logo"
+                className="img-fluid"
+                width={160}
+                style={{ marginLeft: "372px" }}
+              />
+              <h2
+                className="fw-bold mt-2"
+                style={{ color: "#c58c4f", marginLeft: "308px" }}
+              >
+                phAMACore<sup>™</sup>Cloud
+              </h2>
+            </div>
+
+            <OverlayTrigger
+              trigger="click"
+              placement="left"
+              overlay={popoverContent}
+            >
+              <div className="avatar-container d-flex flex-column align-items-center">
+                <Avatar
+                  name={localStorage.getItem("username") || "User"}
+                  size="40"
+                  round={true}
+                  style={{ marginBottom: "0.5rem" }}
+                />
+              </div>
+            </OverlayTrigger>
           </div>
-          <h6>{localStorage.getItem("username")}</h6>
+          {/* <h6>{localStorage.getItem("username")}</h6> */}
           <div className="form-header">
             <h5 className="fw-bold">Complete the Account Activation</h5>
             <p className="text-secondary" style={{ fontSize: 12 }}>
