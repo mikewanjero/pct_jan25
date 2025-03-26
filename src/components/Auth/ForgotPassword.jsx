@@ -25,37 +25,43 @@ const API_HEADER = {
 
 export default function ForgotPassword() {
   const navigate = useNavigate();
+  const [email, setEmail] = useState("");
   const [showToast, setShowToast] = useState(false);
   const [toastData, setToastData] = useState({
     message: "",
     type: "success",
   });
 
-  const handleReset = async (email) => {
+  const handleReset = async () => {
     try {
+      if (!email || !email.includes("@")) {
+        setToast("Please enter a valid email address!", "warning");
+        return;
+      }
+      const encodedEmail = encodeURIComponent(email);
+
       const response = await axios.post(
-        `${API_URL}/api/client/RequestPasswordReset`,
+        `${API_URL}/api/client/RequestPasswordReset?email=${encodedEmail}`,
+        {},
         {
-          email: email,
-        },
-        {
-          header: { API_HEADER },
+          headers: { ...API_HEADER, accept: "*/*" },
         }
       );
       if (response.data.success) {
         console.log("Reset link obtained successfully", response);
-        setToast(
-          "Open your email to find link to reset your password",
-          "success"
-        );
-        navigate("/reset-password");
+        setToast(`${response.data.message}`, "success");
+        setTimeout(() => {
+          navigate("/reset-password");
+        }, 2000);
       } else {
         console.log("Error obtaining reset link!", response);
         setToast("Failed to get reset link", "danger");
       }
     } catch (error) {
       console.error(error);
-      setToast("Error getting reset link!", "danger");
+      const serverMessage =
+        error.response?.data?.message || "Server connection failed";
+      setToast(`Error:${serverMessage}!`, "danger");
     }
   };
 
@@ -93,6 +99,8 @@ export default function ForgotPassword() {
                 <FormControl
                   type="email"
                   placeholder="Enter your email address"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                 />
               </FormGroup>
               <div className="d-flex justify-content-between gap-2">
