@@ -192,6 +192,14 @@ const ActActivation = () => {
         psBranchCount: branches,
         psUserCount: users,
       } = response.data;
+      setFormData((prevstate) => {
+        return {
+          ...prevstate,
+          email: response.data.email,
+          username: response.data.userName,
+        };
+      });
+      setPhoneNumber(response.data.phone || "");
 
       setCompanyDetails({ companyName, companyID });
       setPackageInfo((prev) => ({ ...prev, branches, users }));
@@ -263,6 +271,14 @@ const ActActivation = () => {
         <p>
           <strong>Phone:</strong> {phone}
         </p>
+        <button
+          className="btn btn-danger btn-sm w-100 mt-2"
+          onClick={() => {
+            console.log("Log out clicked");
+          }}
+        >
+          Log Out
+        </button>
       </Popover.Body>
     </Popover>
   );
