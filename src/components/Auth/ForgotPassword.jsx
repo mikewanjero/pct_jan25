@@ -48,11 +48,11 @@ export default function ForgotPassword() {
         }
       );
       if (response.data.success) {
-        console.log("Reset link obtained successfully", response);
+        console.log("Reset link obtained successfully:", response);
         setToast(`${response.data.message}`, "success");
         setTimeout(() => {
           navigate("/reset-password");
-        }, 2000);
+        }, 500);
       } else {
         console.log("Error obtaining reset link!", response);
         setToast("Failed to get reset link", "danger");
