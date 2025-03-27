@@ -49,16 +49,13 @@ export default function ForgotPassword() {
           headers: { ...API_HEADER, accept: "*/*" },
         }
       );
-      if (response.data.success) {
-        console.log("Reset link obtained successfully:", response);
-        setToast(`${response.data.message}`, "success");
-        setTimeout(() => {
-          navigate("/reset-password");
-        }, 1000);
-      } else {
-        console.log("Error obtaining reset link!", response);
-        setToast("Failed to get reset link", "danger");
-      }
+      const token = response.data.additionalData.token;
+      localStorage.setItem("resetauthToken", token);
+      console.log("Reset link obtained successfully:", response);
+      setToast(`${response.data.message}`, "success");
+      setTimeout(() => {
+        navigate(`/reset-password`);
+      }, 1000);
     } catch (error) {
       console.error(error);
       const serverMessage =
