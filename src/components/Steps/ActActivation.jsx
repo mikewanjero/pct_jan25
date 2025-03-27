@@ -276,7 +276,7 @@ const ActActivation = () => {
   }, [showPopover]);
 
   const popoverContent = (
-    <Popover id="avatar-popover">
+    <Popover id="avatar-popover" ref={popoverRef}>
       <Popover.Header as="h3" style={{ backgroundColor: "#f8f8ff" }}>
         Profile
       </Popover.Header>
@@ -327,13 +327,18 @@ const ActActivation = () => {
               trigger="click"
               placement="left"
               overlay={popoverContent}
+              rootClose
+              onToggle={(nextShow) => setShowPopover(nextShow)}
             >
-              <div className="avatar-container d-flex flex-column align-items-center">
+              <div
+                className="avatar-container d-flex flex-column align-items-center"
+                onClick={() => setShowPopover(!showPopover)}
+              >
                 <Avatar
                   name={localStorage.getItem("username") || "User"}
                   size="40"
                   round={true}
-                  style={{ marginBottom: "0.5rem" }}
+                  style={{ marginBottom: "0.5rem", cursor: "pointer" }}
                 />
               </div>
             </OverlayTrigger>
