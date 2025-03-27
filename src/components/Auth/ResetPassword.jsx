@@ -39,7 +39,8 @@ export default function ResetPassword() {
     type: "success",
   });
 
-  const handleReset = async () => {
+  const handleReset = async (e) => {
+    e.preventDefault();
     if (formData.newPassword !== formData.confirmPassword) {
       setToast("Both new and confirm password do not match", "danger");
       return;
@@ -49,6 +50,8 @@ export default function ResetPassword() {
       const response = await axios.post(
         `${API_URL}/api/Auth/ResetPassword`,
         {
+          token: localStorage.getItem("resetauthToken"),
+          role: "Client",
           newPassword: formData.newPassword,
           confirmPassword: formData.confirmPassword,
         },
