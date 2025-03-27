@@ -44,9 +44,9 @@ const ActActivation = () => {
   });
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [showPopover, setShowPopover] = useState(false);
+  const popoverRef = useRef(null);
   const username = localStorage.getItem("username") || "User";
-  const email = localStorage.getItem("email") || "example@example.com";
-  const phone = localStorage.getItem("phonenumber") || "123-456-7890";
 
   const setToast = (message, type = "success") => {
     setToastData({ message, type });
@@ -258,18 +258,37 @@ const ActActivation = () => {
     }
   };
 
+  // Function to handle clicking outside of the popover
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (popoverRef.current && !popoverRef.current.contains(event.target)) {
+        setShowPopover(false);
+      }
+    };
+
+    if (showPopover) {
+      document.addEventListener("mousedown", handleClickOutside);
+    } else {
+      document.removeEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, [showPopover]);
+
   const popoverContent = (
     <Popover id="avatar-popover">
-      <Popover.Header as="h3">Profile</Popover.Header>
-      <Popover.Body>
+      <Popover.Header as="h3" style={{ backgroundColor: "#f8f8ff" }}>
+        Profile
+      </Popover.Header>
+      <Popover.Body style={{ backgroundColor: "#f5f5f5" }}>
         <p>
           <strong>Username:</strong> {username}
         </p>
         <p>
-          <strong>Email:</strong> {email}
+          <strong>Email:</strong> {formData.email}
         </p>
         <p>
-          <strong>Phone:</strong> {phone}
+          <strong>Phone:</strong> {phoneNumber}
         </p>
         <button
           className="btn btn-danger btn-sm w-100 mt-2"
