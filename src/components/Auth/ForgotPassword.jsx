@@ -26,6 +26,7 @@ const API_HEADER = {
 export default function ForgotPassword() {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
+  const [loading, setLoading] = useState(false);
   const [showToast, setShowToast] = useState(false);
   const [toastData, setToastData] = useState({
     message: "",
@@ -33,6 +34,7 @@ export default function ForgotPassword() {
   });
 
   const handleReset = async () => {
+    setLoading(true);
     try {
       if (!email || !email.includes("@")) {
         setToast("Please enter a valid email address!", "warning");
@@ -52,7 +54,7 @@ export default function ForgotPassword() {
         setToast(`${response.data.message}`, "success");
         setTimeout(() => {
           navigate("/reset-password");
-        }, 500);
+        }, 1000);
       } else {
         console.log("Error obtaining reset link!", response);
         setToast("Failed to get reset link", "danger");
@@ -62,6 +64,8 @@ export default function ForgotPassword() {
       const serverMessage =
         error.response?.data?.message || "Server connection failed";
       setToast(`Error:${serverMessage}!`, "danger");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -114,12 +118,13 @@ export default function ForgotPassword() {
                     width: 150,
                   }}
                 >
-                  Request Reset Link
+                  {loading ? "Getting link..." : "Request Reset Link"}
                 </Button>
                 <Button
                   className="btn-sm"
                   variant="secondary"
                   onClick={() => navigate("/")}
+                  disabled={loading}
                   style={{
                     backgroundColor: "rgb(197, 140, 79)",
                     borderColor: "rgb(197, 140, 79)",
