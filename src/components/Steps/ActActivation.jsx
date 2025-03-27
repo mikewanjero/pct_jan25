@@ -7,7 +7,7 @@ import ActivationToast from "./ActivationToast";
 import TermsSection from "../Subscription/TermsSection";
 import PackageInfo from "../Subscription/PackageInfo";
 import phamacoreLogo from "../../assets/images/phamacoreLogo.png";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 const API_URL = "http://20.164.20.36:86";
 const API_HEADER = {
@@ -16,6 +16,7 @@ const API_HEADER = {
 };
 
 const ActActivation = () => {
+  const navigate = useNavigate();
   // Form state and handlers
   const formRef = useRef(null);
   const { id } = useParams();
@@ -80,6 +81,9 @@ const ActActivation = () => {
       setLoading(false);
       console.log("Upload Response:", response.data);
       setToast("Account activated successfully!");
+      setTimeout(() => {
+        window.location.href = "https://phamacoreonline.co.ke/";
+      }, 2200);
     } catch (error) {
       setLoading(false);
       console.error("Error activating account:", error);
@@ -293,7 +297,8 @@ const ActActivation = () => {
         <button
           className="btn btn-danger btn-sm w-100 mt-2"
           onClick={() => {
-            console.log("Log out clicked");
+            localStorage.clear();
+            navigate("/", { replace: true });
           }}
         >
           Log Out
