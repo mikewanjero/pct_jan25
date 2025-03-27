@@ -338,7 +338,11 @@ const ActActivation = () => {
                   name={localStorage.getItem("username") || "User"}
                   size="40"
                   round={true}
-                  style={{ marginBottom: "0.5rem", cursor: "pointer" }}
+                  color="#9c6e3f"
+                  style={{
+                    marginBottom: "0.5rem",
+                    cursor: "pointer",
+                  }}
                 />
               </div>
             </OverlayTrigger>
