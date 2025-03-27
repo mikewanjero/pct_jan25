@@ -66,7 +66,7 @@ const ActivationForm = forwardRef(
               {errors.email}
             </Form.Control.Feedback>
           </Form.Group>
-          <Form.Group controlId="businessEmail" className="flex-grow-1">
+          {/* <Form.Group controlId="businessEmail" className="flex-grow-1">
             <Form.Control
               type="email"
               name="businessEmail"
@@ -74,7 +74,7 @@ const ActivationForm = forwardRef(
               value={formData.businessEmail}
               onChange={handleChange}
             />
-          </Form.Group>
+          </Form.Group> */}
         </div>
 
         <div className="input-column">
