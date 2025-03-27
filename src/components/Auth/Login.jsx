@@ -76,10 +76,12 @@ export default function Login() {
           return navigate("/acct-activation");
         }
       } else {
+        console.log(error);
         setToastMessage("Invalid credentials. Please try again");
         setShowToast(true);
       }
     } catch (error) {
+      console.error("Server error:", error);
       setToastMessage("Failed to login. Please check your credentials.");
       setShowToast(true);
     } finally {
