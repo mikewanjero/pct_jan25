@@ -142,8 +142,8 @@ export default function ResetPassword() {
               </div>
               <div className="d-flex justify-content-between gap-2 mt-3">
                 <Button
+                  type="submit"
                   className="btn-sm"
-                  onClick={handleReset}
                   style={{
                     backgroundColor: "#28A745",
                     borderColor: "rgb(79, 204, 48)",
