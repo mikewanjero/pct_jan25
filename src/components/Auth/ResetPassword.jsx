@@ -33,6 +33,7 @@ export default function ResetPassword() {
     newPassword: "",
     confirmPassword: "",
   });
+  const [loading, setLoading] = useState(false);
   const [showToast, setShowToast] = useState(false);
   const [toastData, setToastData] = useState({
     message: "",
@@ -40,6 +41,7 @@ export default function ResetPassword() {
   });
 
   const handleReset = async (e) => {
+    setLoading(true);
     e.preventDefault();
     if (formData.newPassword !== formData.confirmPassword) {
       setToast("Both new and confirm password do not match", "danger");
@@ -61,10 +63,14 @@ export default function ResetPassword() {
       );
       console.log(response);
       setToast("Successfully reset password!", "success");
-      navigate("/");
+      setTimeout(() => {
+        navigate("/");
+      }, 1500);
     } catch (error) {
       console.log("Error resetting password:", error);
       setToast("Error resetting password!", "danger");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -153,7 +159,7 @@ export default function ResetPassword() {
                     width: 150,
                   }}
                 >
-                  Reset Password
+                  {loading ? "Resetting..." : "Reset Password"}
                 </Button>
                 <Button
                   className="btn-sm"
