@@ -201,7 +201,7 @@ const ActivationForm = forwardRef(
                   <tr key={`file-${file.fileName}-${index}`}>
                     <td>{index + 1}</td>
                     <td>{file.originalFileName}</td>
-                    <td className="d-flex">
+                    <td>
                       <Button
                         variant="outline-danger"
                         size="sm"
