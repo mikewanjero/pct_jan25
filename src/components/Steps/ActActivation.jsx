@@ -104,7 +104,6 @@ const ActActivation = () => {
     formData.append("File", files[0]);
 
     // Validate file type
-    // const validFileTypes = [0, 1];
     const validFileTypes = [
       "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
       "application/vnd.ms-excel",
@@ -119,7 +118,7 @@ const ActActivation = () => {
         : 0;
 
     formData.append("FileType", fileTypeInt);
-    formData.append("Cuscode", "LWWDYC");
+    formData.append("Cuscode", companyDetails.companyID);
     console.log("fileType", fileType);
     console.log("files", files);
     // Check if the file type is valid
