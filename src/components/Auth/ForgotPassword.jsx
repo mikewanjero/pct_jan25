@@ -60,7 +60,7 @@ export default function ForgotPassword() {
       console.error(error);
       const serverMessage =
         error.response?.data?.message || "Server connection failed";
-      setToast(`Error:${serverMessage}!`, "danger");
+      setToast(`Error: ${serverMessage}`, "danger");
     } finally {
       setLoading(false);
     }
