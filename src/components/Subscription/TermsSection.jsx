@@ -41,16 +41,16 @@ export default function TermsSection({ termsChecked, onChange }) {
               <>
                 By clicking Activate My Account, I agree to the
                 <a
-                  href={"/privacy-policy"}
-                  target="_blank"
+                  href={"#"}
+                  onClick={(e) => e.preventDefault()}
                   className="text-primary text-decoration-underline ms-1"
                 >
                   Terms & Conditions
                 </a>{" "}
                 and
                 <a
-                  href={"/privacy-policy"}
-                  target="_blank"
+                  href={"#"}
+                  onClick={(e) => e.preventDefault()}
                   className="text-primary text-decoration-underline ms-1"
                 >
                   Privacy Policy
