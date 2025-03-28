@@ -193,6 +193,7 @@ export default function ChangePassword() {
             onClose={() => setShowToast(false)}
             show={showToast}
             bg={toastData.type}
+            className={toastData.type === "warning" ? "" : "text-light"}
             delay={3000}
             autohide
           >
