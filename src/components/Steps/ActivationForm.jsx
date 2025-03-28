@@ -141,14 +141,20 @@ const ActivationForm = forwardRef(
             <Accordion.Header>
               Upload Training Sheet |{" "}
               <span
-                className="small"
-                style={{ fontStyle: "italic", marginLeft: "4px" }}
+                style={{
+                  fontStyle: "italic",
+                  fontSize: "0.7rem",
+                  marginLeft: "4px",
+                }}
               >
                 3 files max
               </span>
               <span
-                className="small"
-                style={{ fontStyle: "italic", marginLeft: "2px" }}
+                style={{
+                  fontStyle: "italic",
+                  fontSize: "0.7rem",
+                  marginLeft: "2px",
+                }}
               >
                 | Single Upload
               </span>
@@ -168,7 +174,15 @@ const ActivationForm = forwardRef(
 
           <Accordion.Item eventKey={1} className="mt-3">
             <Accordion.Header>
-              Upload Master Document (Optional)
+              Upload Master Document
+              <span
+                style={{
+                  fontSize: "0.8rem",
+                  marginLeft: "2px",
+                }}
+              >
+                (Optional)
+              </span>
             </Accordion.Header>
             <Accordion.Body>
               <Form.Group controlId="masterDoc">
