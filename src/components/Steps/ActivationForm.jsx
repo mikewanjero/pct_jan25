@@ -146,6 +146,12 @@ const ActivationForm = forwardRef(
               >
                 3 files max
               </span>
+              <span
+                className="small"
+                style={{ fontStyle: "italic", marginLeft: "2px" }}
+              >
+                | Single Upload
+              </span>
             </Accordion.Header>
             <Accordion.Body>
               <Form.Group controlId="trainingSheet">
