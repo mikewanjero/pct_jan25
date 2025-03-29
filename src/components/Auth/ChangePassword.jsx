@@ -189,14 +189,13 @@ export default function ChangePassword() {
                   </InputGroup>
                 </FormGroup>
               </div>
-              <div className="d-block mt-2">
+              <div className="d-grid mt-2">
                 <Button
-                  className="btn-sm"
+                  className="btn-sm w-100"
                   onClick={handleConfirmPass}
                   style={{
                     backgroundColor: "#28A745",
                     borderColor: "rgb(79, 204, 48)",
-                    width: 120,
                     fontSize: "12px",
                   }}
                 >
