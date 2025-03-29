@@ -109,7 +109,6 @@ export default function ResetPassword() {
                   <InputGroup>
                     <FormControl
                       type={newPassVisible ? "text" : "password"}
-                      placeholder="Enter your new password"
                       value={formData.newPassword}
                       onChange={(e) => {
                         setFormData({
@@ -131,7 +130,6 @@ export default function ResetPassword() {
                   <InputGroup>
                     <FormControl
                       type={confirmPassVisible ? "text" : "password"}
-                      placeholder="Confirm your new password"
                       value={formData.confirmPassword}
                       onChange={(e) => {
                         setFormData({
