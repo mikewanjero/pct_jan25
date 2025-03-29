@@ -75,31 +75,50 @@ export default function ChangePassword() {
       className="d-flex align-items-center justify-content-center"
       style={{ minHeight: "100vh" }}
     >
-      <div className="mx-auto" style={{ width: "100%", maxWidth: "25rem" }}>
-        <Card className="shadow">
-          <CardBody className="p-4">
+      <div
+        className="mx-auto"
+        style={{
+          width: "100%",
+          maxWidth: "22rem",
+        }}
+      >
+        <Card
+          className="shadow"
+          style={{
+            position: "fixed",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+            maxHeight: "80vh",
+            width: "375px",
+            overflowY: "auto",
+          }}
+        >
+          <CardBody className="p-3">
             <div className="text-center">
               <img
                 src={phamacoreLogo}
                 alt="brand"
                 className="d-flex img-fluid justify-content-center m-auto"
-                width={120}
+                width={80}
               />
             </div>
-            <h2 className="text-center fs-4">Change Password</h2>
+            <h2 className="text-center fs-6 fw-bold">Change Password</h2>
             <p
               className="text-center text-secondary p-1 mb-2"
-              style={{ fontSize: 12 }}
+              style={{ fontSize: 10 }}
             >
               Please enter a new password
             </p>
             <Form autoComplete="off">
               <div className="input-column">
-                <FormGroup className="mb-2">
-                  <FormLabel>Username</FormLabel>
+                <FormGroup className="mb-1">
+                  <FormLabel style={{ fontSize: "14px" }}>Username</FormLabel>
                   <FormControl
                     type="text"
                     placeholder="Enter your username"
+                    size="sm"
+                    style={{ fontSize: "12px" }}
                     value={formData.username}
                     onChange={(e) =>
                       setFormData({
@@ -109,12 +128,15 @@ export default function ChangePassword() {
                     }
                   />
                 </FormGroup>
-                <FormGroup className="mb-2">
-                  <FormLabel>New Password</FormLabel>
+                <FormGroup className="mb-1">
+                  <FormLabel style={{ fontSize: "12px" }}>
+                    New Password
+                  </FormLabel>
                   <InputGroup>
                     <FormControl
                       type={newPasswordVisible ? "text" : "password"}
-                      placeholder="Enter your new password"
+                      size="sm"
+                      style={{ fontSize: "12px" }}
                       value={formData.newPassword}
                       onChange={(e) =>
                         setFormData({
@@ -125,18 +147,24 @@ export default function ChangePassword() {
                     />
                     <Button
                       variant="outline-secondary"
+                      size="sm"
                       onClick={() => setNewPasswordVisible(!newPasswordVisible)}
                     >
-                      {newPasswordVisible ? <BsEyeSlashFill /> : <BsEyeFill />}
+                      {newPasswordVisible ? (
+                        <BsEyeSlashFill size={16} />
+                      ) : (
+                        <BsEyeFill size={16} />
+                      )}
                     </Button>
                   </InputGroup>
                 </FormGroup>
-                <FormGroup>
-                  <FormLabel>Confirm New Password</FormLabel>
+                <FormGroup className="mb-3">
+                  <FormLabel className="small">Confirm New Password</FormLabel>
                   <InputGroup>
                     <FormControl
                       type={confirmPasswordVisible ? "text" : "password"}
-                      placeholder="Confirm your new password"
+                      size="sm"
+                      style={{ fontSize: "12px" }}
                       value={formData.confirmPassword}
                       onChange={(e) =>
                         setFormData({
@@ -147,27 +175,29 @@ export default function ChangePassword() {
                     />
                     <Button
                       variant="outline-secondary"
+                      size="sm"
                       onClick={() =>
                         setConfirmPasswordVisible(!confirmPasswordVisible)
                       }
                     >
                       {confirmPasswordVisible ? (
-                        <BsEyeSlashFill />
+                        <BsEyeSlashFill size={16} />
                       ) : (
-                        <BsEyeFill />
+                        <BsEyeFill size={16} />
                       )}
                     </Button>
                   </InputGroup>
                 </FormGroup>
               </div>
-              <div className="d-grid mt-4">
+              <div className="d-block mt-2">
                 <Button
                   className="btn-sm"
                   onClick={handleConfirmPass}
                   style={{
                     backgroundColor: "#28A745",
                     borderColor: "rgb(79, 204, 48)",
-                    width: 150,
+                    width: 120,
+                    fontSize: "12px",
                   }}
                 >
                   Reset Password
