@@ -209,8 +209,8 @@ const ActActivation = () => {
       fetchUploadedFiles(response.data.psCusCode);
       GetPackageName(response.data.psCusCode);
     } catch (error) {
-      console.error("Error displaying client details:", error);
-      setToast("Error displaying client details:", "danger");
+      console.error("Error displaying client details!", error);
+      setToast("Error displaying client details!", "danger");
     }
   };
 
