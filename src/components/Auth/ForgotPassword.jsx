@@ -78,7 +78,7 @@ export default function ForgotPassword() {
     >
       <div className="mx-auto">
         <Card className="shadow">
-          <CardBody className="p-5">
+          <CardBody className="p-4">
             <div className="text-center">
               <img
                 src={phamacoreLogo}
@@ -87,19 +87,23 @@ export default function ForgotPassword() {
                 width={120}
               />
             </div>
-            <h2 className="text-center fs-4">Forgot Password</h2>
+            <h2 className="text-center fs-5 fw-bold">Forgot Password</h2>
             <p
               className="text-center text-secondary p-1 mb-4"
-              style={{ fontSize: 12 }}
+              style={{ fontSize: 10 }}
             >
               Enter your username to reset your password
             </p>
             <Form>
               <FormGroup className="mb-3">
-                <FormLabel>Email Address</FormLabel>
+                <FormLabel style={{ fontSize: "12px" }}>
+                  Email Address
+                </FormLabel>
                 <FormControl
                   type="email"
                   placeholder="Enter your email address"
+                  size="sm"
+                  style={{ fontSize: "12px" }}
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                 />
