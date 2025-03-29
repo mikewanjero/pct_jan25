@@ -103,9 +103,9 @@ export default function ChangePassword() {
                 width={80}
               />
             </div>
-            <h2 className="text-center fs-6 fw-bold">Change Password</h2>
+            <h2 className="text-center fs-6 fw-bold mt-2">Change Password</h2>
             <p
-              className="text-center text-secondary p-1 mb-2"
+              className="text-center text-secondary mb-2"
               style={{ fontSize: 10 }}
             >
               Please enter a new password
@@ -113,7 +113,7 @@ export default function ChangePassword() {
             <Form autoComplete="off">
               <div className="input-column">
                 <FormGroup className="mb-1">
-                  <FormLabel style={{ fontSize: "14px" }}>Username</FormLabel>
+                  <FormLabel style={{ fontSize: "12px" }}>Username</FormLabel>
                   <FormControl
                     type="text"
                     placeholder="Enter your username"
@@ -159,7 +159,9 @@ export default function ChangePassword() {
                   </InputGroup>
                 </FormGroup>
                 <FormGroup className="mb-3">
-                  <FormLabel className="small">Confirm New Password</FormLabel>
+                  <FormLabel style={{ fontSize: "12px" }}>
+                    Confirm New Password
+                  </FormLabel>
                   <InputGroup>
                     <FormControl
                       type={confirmPasswordVisible ? "text" : "password"}
