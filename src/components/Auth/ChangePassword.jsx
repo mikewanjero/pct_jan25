@@ -116,7 +116,6 @@ export default function ChangePassword() {
                   <FormLabel style={{ fontSize: "12px" }}>Username</FormLabel>
                   <FormControl
                     type="text"
-                    placeholder="Enter your username"
                     size="sm"
                     style={{ fontSize: "12px" }}
                     value={formData.username}
