@@ -308,6 +308,32 @@ const ActActivation = () => {
 
   return (
     <div className="container">
+      <div className="profile-container">
+        <OverlayTrigger
+          trigger="click"
+          placement="left"
+          overlay={popoverContent}
+          rootClose
+          onToggle={(nextShow) => setShowPopover(nextShow)}
+        >
+          <div
+            className="avatar-container d-flex flex-column align-items-center"
+            onClick={() => setShowPopover(!showPopover)}
+          >
+            <Avatar
+              name={localStorage.getItem("username") || "User"}
+              size="40"
+              round={true}
+              color="#9c6e3f"
+              style={{
+                marginBottom: "0.5rem",
+                cursor: "pointer",
+              }}
+            />
+          </div>
+        </OverlayTrigger>
+      </div>
+
       <div className="form-container">
         <div className="form-content">
           <div className="header-container d-flex align-items-center justify-content-between mb-3">
@@ -326,30 +352,6 @@ const ActActivation = () => {
                 phAMACore<sup>™</sup>Cloud
               </h2>
             </div>
-
-            <OverlayTrigger
-              trigger="click"
-              placement="left"
-              overlay={popoverContent}
-              rootClose
-              onToggle={(nextShow) => setShowPopover(nextShow)}
-            >
-              <div
-                className="avatar-container d-flex flex-column align-items-center"
-                onClick={() => setShowPopover(!showPopover)}
-              >
-                <Avatar
-                  name={localStorage.getItem("username") || "User"}
-                  size="40"
-                  round={true}
-                  color="#9c6e3f"
-                  style={{
-                    marginBottom: "0.5rem",
-                    cursor: "pointer",
-                  }}
-                />
-              </div>
-            </OverlayTrigger>
           </div>
           {/* <h6>{localStorage.getItem("username")}</h6> */}
           <div className="form-header">
