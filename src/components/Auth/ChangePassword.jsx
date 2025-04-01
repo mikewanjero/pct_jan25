@@ -38,11 +38,21 @@ export default function ChangePassword() {
   const navigate = useNavigate();
 
   const handleConfirmPass = async () => {
+    // Validation Checks
+    if (!formData.username) {
+      setToast("Please enter your username", "warning");
+    }
+
+    if (!formData.newPassword && !formData.confirmPassword) {
+      setToast("Please fill in all the required fields!", "danger");
+    }
+
     if (formData.newPassword !== formData.confirmPassword) {
-      setToast("Both new and confirm password do not match", "danger");
+      setToast("Both new and confirm password do not match!", "danger");
       return;
     }
 
+    // API Response
     try {
       const response = await axios.post(
         `${API_URL}/api/auth/ChangePassword`,
