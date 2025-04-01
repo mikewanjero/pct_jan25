@@ -41,10 +41,12 @@ export default function ChangePassword() {
     // Validation Checks
     if (!formData.username) {
       setToast("Please enter your username", "warning");
+      return;
     }
 
     if (!formData.newPassword && !formData.confirmPassword) {
       setToast("Please fill in all the required fields!", "danger");
+      return;
     }
 
     if (formData.newPassword !== formData.confirmPassword) {
