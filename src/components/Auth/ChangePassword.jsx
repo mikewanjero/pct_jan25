@@ -39,13 +39,20 @@ export default function ChangePassword() {
 
   const handleConfirmPass = async () => {
     // Validation Checks
-    if (!formData.username) {
-      setToast("Please enter your username", "warning");
+    if (
+      !formData.username ||
+      !formData.newPassword ||
+      !formData.confirmPassword
+    ) {
+      setToast("Please enter your username and/or password(s)!", "warning");
       return;
     }
 
-    if (!formData.newPassword && !formData.confirmPassword) {
-      setToast("Please fill in all the required fields!", "danger");
+    if (
+      formData.newPassword.length < 8 ||
+      formData.confirmPassword.length < 8
+    ) {
+      setToast("Password must be 8 characters long!", "danger");
       return;
     }
 
