@@ -145,7 +145,7 @@ const ActActivation = () => {
         setToast("Failed to upload file(s)!", "danger");
       }
     } catch (error) {
-      console.log(error);
+      console.log("Server error: ", error);
       setToast("Error uploading file(s)!", "danger");
     }
   };
