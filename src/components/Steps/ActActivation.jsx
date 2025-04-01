@@ -99,8 +99,8 @@ const ActActivation = () => {
   const handleFileUpload = async (e) => {
     const { files } = e.target;
     const formData = new FormData();
+
     // Append files to FormData
-    // for (let i = 0; i < files.length; i++) formData.append('File', files[i][0]);
     formData.append("File", files[0]);
 
     // Validate file type
