@@ -126,9 +126,9 @@ export default function ResetPassword() {
                       onClick={() => setNewPassVisible(!newPassVisible)}
                     >
                       {newPassVisible ? (
-                        <BsEyeSlashFill size={12} />
+                        <BsEyeSlashFill size={16} />
                       ) : (
-                        <BsEyeFill size={12} />
+                        <BsEyeFill size={16} />
                       )}
                     </Button>
                   </InputGroup>
@@ -155,9 +155,9 @@ export default function ResetPassword() {
                       onClick={() => setConfirmPassVisible(!confirmPassVisible)}
                     >
                       {confirmPassVisible ? (
-                        <BsEyeSlashFill size={12} />
+                        <BsEyeSlashFill size={16} />
                       ) : (
-                        <BsEyeFill size={12} />
+                        <BsEyeFill size={16} />
                       )}
                     </Button>
                   </InputGroup>
