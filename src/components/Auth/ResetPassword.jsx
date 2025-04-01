@@ -95,7 +95,7 @@ export default function ResetPassword() {
                 width={120}
               />
             </div>
-            <h2 className="text-center fs-4">Reset Password</h2>
+            <h2 className="text-center fs-5 fw-bold">Reset Password</h2>
             <p
               className="text-center text-secondary p-1 mb-2"
               style={{ fontSize: 12 }}
@@ -105,11 +105,15 @@ export default function ResetPassword() {
             <Form autoComplete="off" onSubmit={handleReset}>
               <div className="input-column">
                 <FormGroup className="mb-2">
-                  <FormLabel>New Password</FormLabel>
+                  <FormLabel style={{ fontSize: "12px" }}>
+                    New Password
+                  </FormLabel>
                   <InputGroup>
                     <FormControl
                       type={newPassVisible ? "text" : "password"}
                       value={formData.newPassword}
+                      size="sm"
+                      style={{ fontSize: "12px" }}
                       onChange={(e) => {
                         setFormData({
                           ...formData,
@@ -121,16 +125,24 @@ export default function ResetPassword() {
                       variant="outline-secondary"
                       onClick={() => setNewPassVisible(!newPassVisible)}
                     >
-                      {newPassVisible ? <BsEyeSlashFill /> : <BsEyeFill />}
+                      {newPassVisible ? (
+                        <BsEyeSlashFill size={12} />
+                      ) : (
+                        <BsEyeFill size={12} />
+                      )}
                     </Button>
                   </InputGroup>
                 </FormGroup>
                 <FormGroup>
-                  <FormLabel>Confirm New Password</FormLabel>
+                  <FormLabel style={{ fontSize: "12px" }}>
+                    Confirm New Password
+                  </FormLabel>
                   <InputGroup>
                     <FormControl
                       type={confirmPassVisible ? "text" : "password"}
                       value={formData.confirmPassword}
+                      size="sm"
+                      style={{ fontSize: "12px" }}
                       onChange={(e) => {
                         setFormData({
                           ...formData,
@@ -142,7 +154,11 @@ export default function ResetPassword() {
                       variant="outline-secondary"
                       onClick={() => setConfirmPassVisible(!confirmPassVisible)}
                     >
-                      {confirmPassVisible ? <BsEyeSlashFill /> : <BsEyeFill />}
+                      {confirmPassVisible ? (
+                        <BsEyeSlashFill size={12} />
+                      ) : (
+                        <BsEyeFill size={12} />
+                      )}
                     </Button>
                   </InputGroup>
                 </FormGroup>
