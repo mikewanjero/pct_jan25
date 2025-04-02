@@ -26,7 +26,8 @@ const API_HEADER = {
 export default function Login() {
   const [agreed, setAgreed] = useState(false);
   const [formData, setFormData] = useState({
-    username: "",
+    cusCode: "",
+    email: "",
     password: "",
   });
   const [error, setError] = useState("");
@@ -35,7 +36,8 @@ export default function Login() {
   const [showToast, setShowToast] = useState(false);
   const [toastMessage, setToastMessage] = useState("");
   const [inputErrors, setInputErrors] = useState({
-    username: false,
+    cusCode: false,
+    email: false,
     password: false,
   });
   const navigate = useNavigate();
@@ -45,13 +47,14 @@ export default function Login() {
     e.preventDefault();
 
     let errors = {
-      username: !formData.username,
+      cusCode: !formData.cusCode,
+      email: !formData.email,
       password: !formData.password,
     };
     setInputErrors(errors);
 
-    if (errors.password || errors.username) {
-      setToastMessage("Username and/or Password are required!");
+    if (errors.password || errors.cusCode || errors.email) {
+      setToastMessage("Please fill in all the required fields!");
       setShowToast(true);
       return;
     }
@@ -60,15 +63,27 @@ export default function Login() {
     setError("");
 
     try {
-      const response = await axios.post(`${API_URL}/api/auth/LoginClient`, {
-        username: formData.username,
+      const isEmail = formData.email.includes("@");
+
+      const requestData = {
         password: formData.password,
-      });
+        ...(isEmail
+          ? { email: formData.email }
+          : { cusCode: formData.cusCode }),
+      };
+
+      const response = await axios.post(
+        `${API_URL}/api/auth/LoginClient`,
+        requestData
+      );
 
       if (response.status === 200) {
         const { token, message } = response.data;
         localStorage.setItem("authToken", token);
-        localStorage.setItem("username", formData.username);
+        localStorage.setItem(
+          "cusCodeOrEmail",
+          formData.cusCode || formData.email
+        );
         console.log(response.data);
         if (message.includes("change your temporary password") && message) {
           return navigate("/change-password");
@@ -76,7 +91,6 @@ export default function Login() {
           return navigate("/acct-activation");
         }
       } else {
-        console.log(error);
         setToastMessage("Invalid credentials. Please try again");
         setShowToast(true);
       }
@@ -120,14 +134,27 @@ export default function Login() {
                     marginBottom: 1,
                   }}
                 >
-                  User Name
+                  Customer Code / Email
                 </FormLabel>
                 <FormControl
                   type="text"
-                  className={inputErrors.username ? "is-invalid" : ""}
+                  className={
+                    inputErrors.cusCode || inputErrors.email ? "is-invalid" : ""
+                  }
                   onChange={(e) => {
-                    setFormData({ ...formData, username: e.target.value });
-                    setInputErrors((prev) => ({ ...prev, username: false }));
+                    const value = e.target.value;
+                    const anEmail = value.includes("@");
+
+                    setFormData({
+                      ...formData,
+                      cusCode: anEmail ? "" : value,
+                      email: anEmail ? value : "",
+                    });
+                    setInputErrors((prev) => ({
+                      ...prev,
+                      cusCode: false,
+                      email: false,
+                    }));
                   }}
                 />
               </FormGroup>
