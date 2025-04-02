@@ -27,7 +27,8 @@ const API_HEADER = {
 
 export default function ChangePassword() {
   const [formData, setFormData] = useState({
-    username: "",
+    cusCode: "",
+    email: "",
     newPassword: "",
     confirmPassword: "",
   });
@@ -40,11 +41,12 @@ export default function ChangePassword() {
   const handleConfirmPass = async () => {
     // Validation Checks
     if (
-      !formData.username ||
+      !formData.cusCode ||
+      !formData.email ||
       !formData.newPassword ||
       !formData.confirmPassword
     ) {
-      setToast("Please enter your username and/or password(s)!", "warning");
+      setToast("Please enter the missing field(s)!", "warning");
       return;
     }
 
@@ -66,7 +68,8 @@ export default function ChangePassword() {
       const response = await axios.post(
         `${API_URL}/api/auth/ChangePassword`,
         {
-          username: formData.username,
+          cuscode: formData.cusCode,
+          email: formData.email,
           newPassword: formData.newPassword,
           confirmNewPassword: formData.confirmPassword,
         },
@@ -92,7 +95,7 @@ export default function ChangePassword() {
     <Container
       fluid
       className="d-flex align-items-center justify-content-center"
-      style={{ minHeight: "100vh" }}
+      style={{ minHeight: "100vh", position: "fixed", marginBottom: "55px" }}
     >
       <div
         className="mx-auto"
@@ -104,13 +107,10 @@ export default function ChangePassword() {
         <Card
           className="shadow"
           style={{
-            position: "fixed",
-            top: "50%",
-            left: "50%",
-            transform: "translate(-50%, -50%)",
-            maxHeight: "80vh",
-            width: "375px",
-            overflowY: "auto",
+            width: "100%",
+            maxWidth: "375px",
+            maxHeight: "85vh",
+            // overflowY: "auto",
           }}
         >
           <CardBody className="p-3">
@@ -132,16 +132,33 @@ export default function ChangePassword() {
             <Form autoComplete="off">
               <div className="input-column">
                 <FormGroup className="mb-1">
-                  <FormLabel style={{ fontSize: "12px" }}>Username</FormLabel>
+                  <FormLabel style={{ fontSize: "12px" }}>
+                    Customer Code
+                  </FormLabel>
                   <FormControl
                     type="text"
                     size="sm"
                     style={{ fontSize: "12px" }}
-                    value={formData.username}
+                    value={formData.cusCode}
                     onChange={(e) =>
                       setFormData({
                         ...formData,
-                        username: e.target.value,
+                        cusCode: e.target.value,
+                      })
+                    }
+                  />
+                </FormGroup>
+                <FormGroup className="mb-1">
+                  <FormLabel style={{ fontSize: "12px" }}>Email</FormLabel>
+                  <FormControl
+                    type="text"
+                    size="sm"
+                    style={{ fontSize: "12px" }}
+                    value={formData.email}
+                    onChange={(e) =>
+                      setFormData({
+                        ...formData,
+                        email: e.target.value,
                       })
                     }
                   />
@@ -225,7 +242,13 @@ export default function ChangePassword() {
             </Form>
           </CardBody>
         </Card>
-        <footer id="footer" style={{ marginTop: "20px" }}>
+        <footer
+          id="footer"
+          style={{
+            backgroundColor: "#ffffff",
+            textAlign: "center",
+          }}
+        >
           <div className="copy-right text-center my-2">
             <p className="m-0 company-sm">Powered by</p>
             <img
@@ -237,7 +260,7 @@ export default function ChangePassword() {
             <p className="m-0 company-lg">CoreBase Solutions</p>
           </div>
         </footer>
-        <ToastContainer position="top-center" className="p-3">
+        <ToastContainer position="top-center" className="p-3 mt-4">
           <Toast
             onClose={() => setShowToast(false)}
             show={showToast}
