@@ -23,7 +23,7 @@ const ActActivation = () => {
   const username = localStorage.getItem("username") || "User";
   const [formData, setFormData] = useState({
     email: "",
-    username: username || "",
+    username: "",
     password: "",
   });
   const [errors, setErrors] = useState({});
