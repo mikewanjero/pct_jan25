@@ -36,8 +36,7 @@ export default function Login() {
   const [showToast, setShowToast] = useState(false);
   const [toastMessage, setToastMessage] = useState("");
   const [inputErrors, setInputErrors] = useState({
-    cusCode: false,
-    email: false,
+    cusCodeOrEmail: false,
     password: false,
   });
   const navigate = useNavigate();
@@ -47,13 +46,14 @@ export default function Login() {
     e.preventDefault();
 
     let errors = {
-      cusCode: !formData.cusCode,
-      email: !formData.email,
+      // cusCode: !formData.cusCode,
+      // email: !formData.email,
+      cusCodeOrEmail: !formData.cusCode && !formData.email,
       password: !formData.password,
     };
     setInputErrors(errors);
 
-    if (errors.password || errors.cusCode || errors.email) {
+    if (errors.password || errors.cusCodeOrEmail) {
       setToastMessage("Please fill in all the required fields!");
       setShowToast(true);
       return;
@@ -138,9 +138,7 @@ export default function Login() {
                 </FormLabel>
                 <FormControl
                   type="text"
-                  className={
-                    inputErrors.cusCode || inputErrors.email ? "is-invalid" : ""
-                  }
+                  className={inputErrors.cusCodeOrEmail ? "is-invalid" : ""}
                   onChange={(e) => {
                     const value = e.target.value;
                     const anEmail = value.includes("@");
@@ -152,8 +150,7 @@ export default function Login() {
                     });
                     setInputErrors((prev) => ({
                       ...prev,
-                      cusCode: false,
-                      email: false,
+                      cusCodeOrEmail: false,
                     }));
                   }}
                 />
