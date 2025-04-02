@@ -203,10 +203,7 @@ const ActActivation = () => {
       const response = await axios.get(
         `${API_URL}/api/auth/GetClientByEmail/${email}`,
         {
-          headers: {
-            accesskey:
-              "R0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9",
-          },
+          headers: { ...API_HEADER },
         }
       );
 
