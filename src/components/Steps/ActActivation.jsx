@@ -20,6 +20,7 @@ const ActActivation = () => {
   // Form state and handlers
   const formRef = useRef(null);
   const { id } = useParams();
+  const username = localStorage.getItem("username") || "User";
   const [formData, setFormData] = useState({
     email: "",
     username: username || "",
@@ -47,7 +48,6 @@ const ActActivation = () => {
   const [error, setError] = useState("");
   const [showPopover, setShowPopover] = useState(false);
   const popoverRef = useRef(null);
-  const username = localStorage.getItem("username") || "User";
 
   const setToast = (message, type = "success") => {
     setToastData({ message, type });
