@@ -64,17 +64,33 @@ const ActActivation = () => {
 
     setLoading(true);
     try {
+      // File add-ons
+      const formattedFiles = uploadedFiles.map((file, index) => ({
+        id: index,
+        name: file.filename,
+        fullname: file.originalFilename,
+        url: file.fileurl,
+        type: file.filetype || 0,
+        uploaddate: new Date().toISOString(),
+        isActivated: true,
+        cuscode: id,
+      }));
+
+      // API payload
+      const requestBody = {
+        email: formData.email,
+        password: formData.password,
+        uploadedFiles: formattedFiles,
+      };
+
       // Proceed with API submission
       const response = await axios.post(
         `${API_URL}/api/client/ActivateClient`,
-        formData,
-        phoneNumber,
-        id,
-        companyDetails.companyName,
+        requestBody,
         {
           headers: {
             ...API_HEADER,
-            "Content-Type": "multipart/form-data",
+            "Content-Type": "application/json",
           },
         }
       );
@@ -185,7 +201,7 @@ const ActActivation = () => {
   const getClientDetails = async () => {
     try {
       const response = await axios.get(
-        `${API_URL}/api/auth/GetClientByEmail/${formData.email}`,
+        `${API_URL}/api/auth/GetClientByEmail/${email}`,
         {
           headers: {
             accesskey:
