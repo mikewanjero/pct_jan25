@@ -22,7 +22,7 @@ const ActActivation = () => {
   const { id } = useParams();
   const [formData, setFormData] = useState({
     email: "",
-    username: "",
+    username: username || "",
     password: "",
   });
   const [errors, setErrors] = useState({});
@@ -182,12 +182,10 @@ const ActActivation = () => {
     }
   };
 
-  const GetClientByUserNameOrEmail = async () => {
+  const getClientDetails = async () => {
     try {
       const response = await axios.get(
-        `${API_URL}/api/auth/GetClientByUserNameOrEmail/${localStorage.getItem(
-          "username"
-        )}`,
+        `${API_URL}/api/auth/GetClientByEmail/${formData.email}`,
         {
           headers: {
             accesskey:
@@ -203,31 +201,38 @@ const ActActivation = () => {
         psCusCode: companyID,
         psBranchCount: branches,
         psUserCount: users,
+        fullname,
+        email,
+        phone,
       } = response.data;
+
+      // Storing in localStorage
+      localStorage.setItem("User Name", fullname);
+
       setFormData((prevstate) => {
         return {
           ...prevstate,
-          email: response.data.email,
-          username: response.data.userName,
+          email: email,
+          username: fullname,
         };
       });
-      setPhoneNumber(response.data.phone || "");
+      setPhoneNumber(phone || "");
 
       setCompanyDetails({ companyName, companyID });
       setPackageInfo((prev) => ({ ...prev, branches, users }));
-      fetchUploadedFiles(response.data.psCusCode);
-      GetPackageName(response.data.psCusCode);
+      fetchUploadedFiles(companyID);
+      getPackageDetails(companyID);
     } catch (error) {
       console.error("Error displaying client details!", error);
       setToast("Error displaying client details!", "danger");
     }
   };
 
-  const GetPackageName = async (cusCode) => {
+  const getPackageDetails = async (cusCode) => {
     console.log("Cuscode:", cusCode);
     try {
       const response = await axios.get(
-        `${API_URL}/api/packages/clientpackage/${cusCode}`,
+        `${API_URL}/api/client/GetClientDetails/${cusCode}`,
         {
           headers: { ...API_HEADER },
         }
@@ -235,17 +240,20 @@ const ActActivation = () => {
 
       console.log("Package Details", response.data);
 
-      const { packageName: name } = response.data.data;
+      const { psUserCount: users, psBranchCount: branches } =
+        response.data.data;
 
-      setPackageInfo((prev) => ({ ...prev, name }));
+      const { packageName: name } = response.data.data.clientPackage;
+
+      setPackageInfo(name, users, branches);
       fetchUploadedFiles(response.data.psCusCode);
     } catch (error) {
-      console.error("Error displaying package name:", error);
-      setToast("Failed to display package name!", "danger");
+      console.error("Error displaying package details:", error);
+      setToast("Failed to display package details!", "danger");
     }
   };
   useEffect(() => {
-    GetClientByUserNameOrEmail();
+    getClientDetails();
   }, []);
 
   const deleteUploadedFiles = async (
