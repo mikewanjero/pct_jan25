@@ -97,8 +97,10 @@ const ActActivation = () => {
   };
 
   const handleFileUpload = async (e) => {
-    const { files } = e.target;
+    const { files, name } = e.target;
     const formData = new FormData();
+
+    if (files.length === 0) return;
 
     // Append files to FormData
     formData.append("File", files[0]);
@@ -110,17 +112,18 @@ const ActActivation = () => {
       "application/pdf",
     ];
     let fileType = files[0].type;
-    let fileTypeInt =
-      files[0].type ===
+    let acceptedFileType =
+      fileType ===
         "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" ||
-      files[0].type === "application/vnd.ms-excel"
+      fileType === "application/vnd.ms-excel"
         ? 1
         : 0;
 
-    formData.append("FileType", fileTypeInt);
+    formData.append("FileType", acceptedFileType);
     formData.append("Cuscode", companyDetails.companyID);
     console.log("fileType", fileType);
     console.log("files", files);
+
     // Check if the file type is valid
     if (!validFileTypes.includes(fileType)) {
       setToast("Invalid file type! Please upload a valid file.", "warning");
@@ -137,6 +140,12 @@ const ActActivation = () => {
         const data = await response.json();
         console.log("File(s) uploaded successfully: ", data);
         setToast("File(s) uploaded successfully!", "success");
+
+        e.target.value = "";
+        setUploadedFiles((prev) => ({
+          ...prev,
+          [name]: true,
+        }));
 
         fetchUploadedFiles(companyDetails.companyID);
       } else {
@@ -337,18 +346,14 @@ const ActActivation = () => {
       <div className="form-container">
         <div className="form-content">
           <div className="header-container d-flex align-items-center justify-content-between mb-3">
-            <div className="logo-text-container d-flex flex-column align-items-start">
+            <div className="logo-text-container d-flex flex-column">
               <img
                 src={phamacoreLogo}
                 alt="logo"
                 className="img-fluid"
                 width={160}
-                style={{ marginLeft: "372px" }}
               />
-              <h2
-                className="fw-bold mt-2"
-                style={{ color: "#c58c4f", marginLeft: "308px" }}
-              >
+              <h2 className="fw-bold mt-2" style={{ color: "#c58c4f" }}>
                 phAMACore<sup>™</sup>Cloud
               </h2>
             </div>
