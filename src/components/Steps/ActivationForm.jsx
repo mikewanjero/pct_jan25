@@ -167,6 +167,7 @@ const ActivationForm = forwardRef(
                   multiple
                   accept=".xls,.xlsx, application/vnd.ms-excel, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
                   onChange={handleFileUpload}
+                  placeholder={uploadedFiles ? "" : "Select a file..."}
                 />
               </Form.Group>
             </Accordion.Body>
@@ -192,6 +193,7 @@ const ActivationForm = forwardRef(
                   multiple
                   accept=".xls,.xlsx, application/vnd.ms-excel, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
                   onChange={handleFileUpload}
+                  placeholder={uploadedFiles ? "" : "Select a file..."}
                 />
                 <div className="mt-2"></div>
               </Form.Group>
