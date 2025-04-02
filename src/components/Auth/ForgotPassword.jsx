@@ -25,6 +25,7 @@ const API_HEADER = {
 
 export default function ForgotPassword() {
   const navigate = useNavigate();
+  const [cusCode, setCusCode] = useState("");
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
   const [showToast, setShowToast] = useState(false);
@@ -36,14 +37,23 @@ export default function ForgotPassword() {
   const handleReset = async () => {
     setLoading(true);
     try {
-      if (!email || !email.includes("@")) {
+      // Validation Checks
+      if (!cusCode) {
+        setToast("Please enter your customer code!", "warning");
+        return;
+      }
+      if (!email) {
+        setToast("Please enter your email address!", "warning");
+        return;
+      }
+      if (!email.includes("@")) {
         setToast("Please enter a valid email address!", "warning");
         return;
       }
       const encodedEmail = encodeURIComponent(email);
 
       const response = await axios.post(
-        `${API_URL}/api/client/RequestPasswordReset?email=${encodedEmail}`,
+        `${API_URL}/api/client/RequestPasswordReset?email=${encodedEmail}&cusCode=${cusCode}`,
         {},
         {
           headers: { ...API_HEADER, accept: "*/*" },
@@ -97,11 +107,24 @@ export default function ForgotPassword() {
             <Form>
               <FormGroup className="mb-3">
                 <FormLabel style={{ fontSize: "12px" }}>
+                  Customer Code
+                </FormLabel>
+                <FormControl
+                  type="cusCode"
+                  // placeholder="Enter your customer code"
+                  size="sm"
+                  style={{ fontSize: "12px" }}
+                  value={cusCode}
+                  onChange={(e) => setCusCode(e.target.value)}
+                />
+              </FormGroup>
+              <FormGroup className="mb-3">
+                <FormLabel style={{ fontSize: "12px" }}>
                   Email Address
                 </FormLabel>
                 <FormControl
                   type="email"
-                  placeholder="Enter your email address"
+                  // placeholder="Enter your email address"
                   size="sm"
                   style={{ fontSize: "12px" }}
                   value={email}
