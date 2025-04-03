@@ -198,29 +198,32 @@ const ActActivation = () => {
     }
   };
 
-  const getClientDetails = async () => {
+  const getClientDetails = async (cusCode) => {
     try {
       const response = await axios.get(
-        `${API_URL}/api/auth/GetClientByEmail/${email}`,
+        `${API_URL}/api/client/GetClientDetails/${cusCode}`,
         {
           headers: { ...API_HEADER },
         }
       );
 
-      console.log("clientDetails", response.data);
+      console.log("Client Details", response.data.data);
 
       const {
         psCompanyName: companyName,
         psCusCode: companyID,
-        // psBranchCount: branches,
-        // psUserCount: users,
+        psBranchCount: branches,
+        psUserCount: users,
         fullname,
         email,
         phone,
-      } = response.data;
+      } = response.data.data;
+
+      const { packageName: name } = response.data.data.clientPackage;
 
       // Storing in localStorage
-      localStorage.setItem("User Name", fullname);
+      localStorage.setItem("cusCodeOrEmail");
+      // localStorage.setItem("User Name", fullname);
 
       setFormData((prevstate) => {
         return {
@@ -232,42 +235,43 @@ const ActActivation = () => {
       setPhoneNumber(phone || "");
 
       setCompanyDetails({ companyName, companyID });
-      // setPackageInfo((prev) => ({ ...prev, branches, users }));
+      setPackageInfo({ name, branches, users });
       fetchUploadedFiles(companyID);
-      getPackageDetails(companyID);
+      // getPackageDetails(companyID);
     } catch (error) {
       console.error("Error displaying client details!", error);
       setToast("Error displaying client details!", "danger");
     }
   };
 
-  const getPackageDetails = async (cusCode) => {
-    console.log("Cuscode:", cusCode);
-    try {
-      const response = await axios.get(
-        `${API_URL}/api/client/GetClientDetails/${cusCode}`,
-        {
-          headers: { ...API_HEADER },
-        }
-      );
-
-      console.log("Package Details", response.data);
-
-      const { psUserCount: users, psBranchCount: branches } =
-        response.data.data;
-
-      const { packageName: name } = response.data.data.clientPackage;
-
-      setPackageInfo({ name, users, branches });
-      fetchUploadedFiles(response.data.psCusCode);
-    } catch (error) {
-      console.error("Error displaying package details:", error);
-      setToast("Failed to display package details!", "danger");
-    }
-  };
   useEffect(() => {
     getClientDetails();
   }, []);
+
+  // const getPackageDetails = async (cusCode) => {
+  //   console.log("Cuscode:", cusCode);
+  //   try {
+  //     const response = await axios.get(
+  //       `${API_URL}/api/client/GetClientDetails/${cusCode}`,
+  //       {
+  //         headers: { ...API_HEADER },
+  //       }
+  //     );
+
+  //     console.log("Package Details", response.data);
+
+  //     const { psUserCount: users, psBranchCount: branches } =
+  //       response.data.data;
+
+  //     const { packageName: name } = response.data.data.clientPackage;
+
+  //     setPackageInfo({ name, users, branches });
+  //     fetchUploadedFiles(response.data.psCusCode);
+  //   } catch (error) {
+  //     console.error("Error displaying package details:", error);
+  //     setToast("Failed to display package details!", "danger");
+  //   }
+  // };
 
   const deleteUploadedFiles = async (
     Id,
