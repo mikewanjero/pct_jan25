@@ -258,7 +258,7 @@ const ActActivation = () => {
 
       const { packageName: name } = response.data.data.clientPackage;
 
-      setPackageInfo(name, users, branches);
+      setPackageInfo({ name, users, branches });
       fetchUploadedFiles(response.data.psCusCode);
     } catch (error) {
       console.error("Error displaying package details:", error);
