@@ -59,7 +59,7 @@ export default function ForgotPassword() {
           headers: { ...API_HEADER, accept: "*/*" },
         }
       );
-      const token = response.data.additionalData.token;
+      const token = response.data.additionalData;
       localStorage.setItem("resetauthToken", token);
       console.log("Reset link obtained successfully:", response);
       setToast(`${response.data.message}`, "success");
