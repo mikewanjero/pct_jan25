@@ -212,8 +212,8 @@ const ActActivation = () => {
       const {
         psCompanyName: companyName,
         psCusCode: companyID,
-        psBranchCount: branches,
-        psUserCount: users,
+        // psBranchCount: branches,
+        // psUserCount: users,
         fullname,
         email,
         phone,
@@ -232,7 +232,7 @@ const ActActivation = () => {
       setPhoneNumber(phone || "");
 
       setCompanyDetails({ companyName, companyID });
-      setPackageInfo((prev) => ({ ...prev, branches, users }));
+      // setPackageInfo((prev) => ({ ...prev, branches, users }));
       fetchUploadedFiles(companyID);
       getPackageDetails(companyID);
     } catch (error) {
