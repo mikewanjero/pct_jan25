@@ -198,16 +198,18 @@ const ActActivation = () => {
     }
   };
 
-  const getClientDetails = async (cusCode) => {
+  const getClientDetails = async () => {
     try {
       const response = await axios.get(
-        `${API_URL}/api/client/GetClientDetails/${cusCode}`,
+        `${API_URL}/api/client/GetClientDetails`,
         {
+          params: {
+            psCusCode: JSON.parse(localStorage.getItem("authToken"))?.cusCode,
+          },
           headers: { ...API_HEADER },
         }
       );
-
-      console.log("Client Details", response.data.data);
+      console.log("Client Details", response.data);
 
       const {
         psCompanyName: companyName,
@@ -222,7 +224,7 @@ const ActActivation = () => {
       const { packageName: name } = response.data.data.clientPackage;
 
       // Storing in localStorage
-      localStorage.setItem("cusCodeOrEmail");
+      // localStorage.setItem("cusCodeOrEmail");
       // localStorage.setItem("User Name", fullname);
 
       setFormData((prevstate) => {
