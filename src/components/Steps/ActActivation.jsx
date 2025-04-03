@@ -20,7 +20,6 @@ const ActActivation = () => {
   // Form state and handlers
   const formRef = useRef(null);
   const { id } = useParams();
-  const username = localStorage.getItem("username") || "User";
   const [formData, setFormData] = useState({
     email: "",
     username: "",
@@ -248,32 +247,8 @@ const ActActivation = () => {
 
   useEffect(() => {
     getClientDetails();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  // const getPackageDetails = async (cusCode) => {
-  //   console.log("Cuscode:", cusCode);
-  //   try {
-  //     const response = await axios.get(
-  //       `${API_URL}/api/client/GetClientDetails/${cusCode}`,
-  //       {
-  //         headers: { ...API_HEADER },
-  //       }
-  //     );
-
-  //     console.log("Package Details", response.data);
-
-  //     const { psUserCount: users, psBranchCount: branches } =
-  //       response.data.data;
-
-  //     const { packageName: name } = response.data.data.clientPackage;
-
-  //     setPackageInfo({ name, users, branches });
-  //     fetchUploadedFiles(response.data.psCusCode);
-  //   } catch (error) {
-  //     console.error("Error displaying package details:", error);
-  //     setToast("Failed to display package details!", "danger");
-  //   }
-  // };
 
   const deleteUploadedFiles = async (
     Id,
@@ -321,7 +296,7 @@ const ActActivation = () => {
       </Popover.Header>
       <Popover.Body style={{ backgroundColor: "#f5f5f5" }}>
         <p>
-          <strong>Username:</strong> {username}
+          <strong>Username:</strong> {formData.username}
         </p>
         <p>
           <strong>Email:</strong> {formData.email}
@@ -357,7 +332,7 @@ const ActActivation = () => {
             onClick={() => setShowPopover(!showPopover)}
           >
             <Avatar
-              name={localStorage.getItem("username") || "User"}
+              name={formData.username || "User"}
               size="40"
               round={true}
               color="#9c6e3f"
