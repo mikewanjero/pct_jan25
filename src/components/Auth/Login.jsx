@@ -3,16 +3,9 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import corebaseLogo from "../../assets/images/corebaseLogo.png";
 import phamacoreLogo from "../../assets/images/phamacoreLogo.png";
-import {
-  Button,
-  Form,
-  FormControl,
-  FormLabel,
-  Card,
-  CardBody,
-  FormCheck,
-  InputGroup,
-} from "react-bootstrap";
+import { Button, InputGroup } from "react-bootstrap";
+import { Form, FormControl, FormLabel, FormCheck } from "react-bootstrap";
+import { Card, CardBody } from "react-bootstrap";
 import { FormGroup, Toast, ToastContainer } from "react-bootstrap";
 import { BsLockFill, BsEyeFill, BsEyeSlashFill } from "react-icons/bs";
 import axios from "axios";
