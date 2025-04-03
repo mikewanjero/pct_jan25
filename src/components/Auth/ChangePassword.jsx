@@ -132,7 +132,9 @@ export default function ChangePassword() {
             <Form autoComplete="off">
               <div className="input-column">
                 <FormGroup className="mb-1">
-                  <FormLabel style={{ fontSize: "12px" }}>
+                  <FormLabel
+                    style={{ fontSize: "12px", color: "rgb(150, 150, 150)" }}
+                  >
                     Customer Code
                   </FormLabel>
                   <FormControl
@@ -149,7 +151,11 @@ export default function ChangePassword() {
                   />
                 </FormGroup>
                 <FormGroup className="mb-1">
-                  <FormLabel style={{ fontSize: "12px" }}>Email</FormLabel>
+                  <FormLabel
+                    style={{ fontSize: "12px", color: "rgb(150, 150, 150)" }}
+                  >
+                    Email
+                  </FormLabel>
                   <FormControl
                     type="text"
                     size="sm"
@@ -164,7 +170,9 @@ export default function ChangePassword() {
                   />
                 </FormGroup>
                 <FormGroup className="mb-1">
-                  <FormLabel style={{ fontSize: "12px" }}>
+                  <FormLabel
+                    style={{ fontSize: "12px", color: "rgb(150, 150, 150)" }}
+                  >
                     New Password
                   </FormLabel>
                   <InputGroup>
@@ -194,7 +202,9 @@ export default function ChangePassword() {
                   </InputGroup>
                 </FormGroup>
                 <FormGroup className="mb-3">
-                  <FormLabel style={{ fontSize: "12px" }}>
+                  <FormLabel
+                    style={{ fontSize: "12px", color: "rgb(150, 150, 150)" }}
+                  >
                     Confirm New Password
                   </FormLabel>
                   <InputGroup>
