@@ -105,7 +105,9 @@ export default function ResetPassword() {
             <Form autoComplete="off" onSubmit={handleReset}>
               <div className="input-column">
                 <FormGroup className="mb-2">
-                  <FormLabel style={{ fontSize: "12px" }}>
+                  <FormLabel
+                    style={{ fontSize: "12px", color: "rgb(150, 150, 150)" }}
+                  >
                     New Password
                   </FormLabel>
                   <InputGroup>
@@ -134,7 +136,9 @@ export default function ResetPassword() {
                   </InputGroup>
                 </FormGroup>
                 <FormGroup>
-                  <FormLabel style={{ fontSize: "12px" }}>
+                  <FormLabel
+                    style={{ fontSize: "12px", color: "rgb(150, 150, 150)" }}
+                  >
                     Confirm New Password
                   </FormLabel>
                   <InputGroup>
