@@ -80,6 +80,7 @@ export default function Login() {
       if (response.status === 200) {
         const { token, message } = response.data;
         localStorage.setItem("authToken", token);
+        // localStorage.setItem("username", fullname);
         localStorage.setItem(
           "cusCodeOrEmail",
           formData.cusCode || formData.email
