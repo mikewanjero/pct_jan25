@@ -78,7 +78,9 @@ export default function ChangePassword() {
         }
       );
       console.log(response);
-      setToast("Successfully reset password!", "success");
+      setTimeout(() => {
+        setToast("Successfully reset password!", "success");
+      }, 2500);
       navigate("/");
     } catch (error) {
       console.log(error);
