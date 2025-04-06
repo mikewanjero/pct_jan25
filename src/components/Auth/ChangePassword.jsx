@@ -65,14 +65,25 @@ export default function ChangePassword() {
 
     // API Response
     try {
+      const isEmail = formData.email.includes("@");
+
+      const requestData = {
+        newPassword: formData.newPassword,
+        confirmNewPassword: formData.confirmPassword,
+        ...(isEmail
+          ? { email: formData.email }
+          : { cusCode: formData.cusCode }),
+      };
+
       const response = await axios.post(
         `${API_URL}/api/auth/ChangePassword`,
-        {
-          cuscode: formData.cusCode,
-          email: formData.email,
-          newPassword: formData.newPassword,
-          confirmNewPassword: formData.confirmPassword,
-        },
+        requestData,
+        // {
+        //   cuscode: formData.cusCode,
+        //   email: formData.email,
+        //   newPassword: formData.newPassword,
+        //   confirmNewPassword: formData.confirmPassword,
+        // },
         {
           headers: { ...API_HEADER },
         }
