@@ -102,7 +102,7 @@ export default function ForgotPassword() {
               className="text-center text-secondary p-1 mb-4"
               style={{ fontSize: 10 }}
             >
-              Enter your username to reset your password
+              Enter your customer code or email address to reset your password
             </p>
             <Form>
               <FormGroup className="mb-3">
