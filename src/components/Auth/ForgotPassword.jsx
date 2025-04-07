@@ -106,7 +106,9 @@ export default function ForgotPassword() {
             </p>
             <Form>
               <FormGroup className="mb-3">
-                <FormLabel style={{ fontSize: "12px" }}>
+                <FormLabel
+                  style={{ fontSize: "12px", color: "rgb(150, 150, 150)" }}
+                >
                   Customer Code
                 </FormLabel>
                 <FormControl
@@ -119,7 +121,9 @@ export default function ForgotPassword() {
                 />
               </FormGroup>
               <FormGroup className="mb-3">
-                <FormLabel style={{ fontSize: "12px" }}>
+                <FormLabel
+                  style={{ fontSize: "12px", color: "rgb(150, 150, 150)" }}
+                >
                   Email Address
                 </FormLabel>
                 <FormControl
