@@ -77,16 +77,16 @@ export default function ChangePassword() {
 
       const response = await axios.post(
         `${API_URL}/api/auth/ChangePassword`,
-        requestData,
+        requestData
         // {
         //   cuscode: formData.cusCode,
         //   email: formData.email,
         //   newPassword: formData.newPassword,
         //   confirmNewPassword: formData.confirmPassword,
         // },
-        {
-          headers: { ...API_HEADER },
-        }
+        // {
+        //   headers: { ...API_HEADER },
+        // }
       );
       console.log(response);
       setTimeout(() => {
@@ -148,22 +148,25 @@ export default function ChangePassword() {
                   <FormLabel
                     style={{ fontSize: "12px", color: "rgb(150, 150, 150)" }}
                   >
-                    Customer Code
+                    Customer Code / Email
                   </FormLabel>
                   <FormControl
                     type="text"
                     size="sm"
                     style={{ fontSize: "12px" }}
                     value={formData.cusCode}
-                    onChange={(e) =>
+                    onChange={(e) => {
+                      const value = e.target.value;
+                      const isEmail = value.includes("@");
                       setFormData({
                         ...formData,
-                        cusCode: e.target.value,
-                      })
-                    }
+                        email: isEmail ? value : "",
+                        cusCode: isEmail ? "" : value,
+                      });
+                    }}
                   />
                 </FormGroup>
-                <FormGroup className="mb-1">
+                {/* <FormGroup className="mb-1">
                   <FormLabel
                     style={{ fontSize: "12px", color: "rgb(150, 150, 150)" }}
                   >
@@ -181,7 +184,7 @@ export default function ChangePassword() {
                       })
                     }
                   />
-                </FormGroup>
+                </FormGroup> */}
                 <FormGroup className="mb-1">
                   <FormLabel
                     style={{ fontSize: "12px", color: "rgb(150, 150, 150)" }}
