@@ -40,61 +40,66 @@ export default function ChangePassword() {
 
   const handleConfirmPass = async () => {
     // Validation Checks
-    if (
-      !formData.cusCode ||
-      !formData.email ||
-      !formData.newPassword ||
-      !formData.confirmPassword
-    ) {
-      setToast("Please enter the missing field(s)!", "warning");
+    const { cusCode, email, newPassword, confirmPassword } = formData;
+
+    // Check for no cusCode/email entered
+    if (!cusCode && !email) {
+      setToast("Please provide either Customer Code or Email!", "warning");
       return;
     }
 
-    if (
-      formData.newPassword.length < 8 ||
-      formData.confirmPassword.length < 8
-    ) {
-      setToast("Password must be 8 characters long!", "danger");
+    // Check for both cusCode and email - return only 1 field
+    if (cusCode && email) {
+      setToast(
+        "Please provide either Customer Code or Email, not both!",
+        "warning"
+      );
       return;
     }
 
-    if (formData.newPassword !== formData.confirmPassword) {
-      setToast("Both new and confirm password do not match!", "danger");
+    // Enter both new password and confirm password
+    if (!newPassword || !confirmPassword) {
+      setToast(
+        "Please enter both New Password and Confirm Password!",
+        "danger"
+      );
+      return;
+    }
+
+    // Check password length
+    if (newPassword.length < 8 || confirmPassword.length < 8) {
+      setToast("Password must be at least 8 characters long!", "danger");
+      return;
+    }
+
+    // Password matching
+    if (newPassword !== confirmPassword) {
+      setToast("New Password and Confirm Password do not match!", "danger");
       return;
     }
 
     // API Response
     try {
-      const isEmail = formData.email.includes("@");
+      const isEmail = email && email.includes("@");
 
       const requestData = {
-        newPassword: formData.newPassword,
-        confirmNewPassword: formData.confirmPassword,
-        ...(isEmail
-          ? { email: formData.email }
-          : { cusCode: formData.cusCode }),
+        newPassword: newPassword,
+        confirmNewPassword: confirmPassword,
+        ...(isEmail ? { email } : { cusCode }),
       };
 
       const response = await axios.post(
         `${API_URL}/api/auth/ChangePassword`,
         requestData
-        // {
-        //   cuscode: formData.cusCode,
-        //   email: formData.email,
-        //   newPassword: formData.newPassword,
-        //   confirmNewPassword: formData.confirmPassword,
-        // },
-        // {
-        //   headers: { ...API_HEADER },
-        // }
       );
+
       console.log(response);
       setTimeout(() => {
         setToast("Successfully reset password!", "success");
-      }, 2500);
-      navigate("/");
+        navigate("/");
+      }, 500);
     } catch (error) {
-      console.log(error);
+      console.error(error);
       setToast("An error occurred while changing password!", "danger");
     }
   };
