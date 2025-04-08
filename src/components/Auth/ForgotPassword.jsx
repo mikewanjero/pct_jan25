@@ -35,21 +35,23 @@ export default function ForgotPassword() {
   });
 
   const handleReset = async () => {
+    // Validation Checks
+    if (!cusCode) {
+      setToast("Please enter your customer code!", "warning");
+      return;
+    }
+    if (!email) {
+      setToast("Please enter your email address!", "warning");
+      return;
+    }
+    if (!email.includes("@")) {
+      setToast("Please enter a valid email address!", "warning");
+      return;
+    }
+
     setLoading(true);
+
     try {
-      // Validation Checks
-      if (!cusCode) {
-        setToast("Please enter your customer code!", "warning");
-        return;
-      }
-      if (!email) {
-        setToast("Please enter your email address!", "warning");
-        return;
-      }
-      if (!email.includes("@")) {
-        setToast("Please enter a valid email address!", "warning");
-        return;
-      }
       const encodedEmail = encodeURIComponent(email);
 
       const response = await axios.post(
