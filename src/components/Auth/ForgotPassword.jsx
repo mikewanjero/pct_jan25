@@ -36,6 +36,10 @@ export default function ForgotPassword() {
 
   const handleReset = async () => {
     // Validation Checks
+    if (!cusCode && !email) {
+      setToast("Please enter your customer code and email!", "warning");
+      return;
+    }
     if (!cusCode) {
       setToast("Please enter your customer code!", "warning");
       return;
